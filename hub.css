@@ -1,0 +1,37 @@
+/* Chapter hub pages */
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7ff;color:#152b55;line-height:1.6}
+header{background:#102957;color:#fff;padding:22px 15px;text-align:center}
+header .brand{font-size:24px;font-weight:bold}
+header p{margin:8px 0 0;color:#d3e1ff;font-size:15px}
+nav{background:#175ac4;padding:13px;text-align:center}
+nav a{color:#fff;text-decoration:none;margin:0 10px;font-size:14px;display:inline-block;padding:4px 0}
+main{max-width:980px;margin:auto;padding:18px 16px 30px}
+h1{font-size:28px;line-height:1.25;margin:6px 0 10px;color:#102957}
+h2{font-size:21px;margin:0 0 10px;color:#102957}
+h3{font-size:17px;margin:0 0 6px}
+.lead{font-size:17px;color:#33497a;margin:0 0 18px}
+.panel{background:#fff;border:1px solid #d5e2f7;border-radius:14px;padding:18px;margin:0 0 18px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:15px}
+th,td{border-bottom:1px solid #e1eafa;padding:9px 8px;text-align:left;vertical-align:top}
+th{background:#eef4ff;font-size:14px}
+td.f{font-family:"Courier New",monospace;font-weight:bold;white-space:nowrap}
+.note{font-size:14px;color:#4a5f86;margin:12px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.tool{display:block;background:#f8fbff;border:1px solid #cfe0fa;border-radius:12px;padding:14px;color:#152b55;text-decoration:none}
+.tool:hover,.tool:focus-visible{border-color:#1458c7;background:#eef4ff}
+.tool b{display:block;color:#1458c7;font-size:16px;margin-bottom:4px}
+.tool span{font-size:14px;color:#4a5f86}
+.example ol{margin:8px 0 0;padding-left:22px}
+.example li{margin:6px 0}
+.question{background:#eef4ff;border-radius:10px;padding:12px;margin:0 0 6px}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{margin:7px 0}
+details{border-top:1px solid #e1eafa;padding:10px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:bold}
+.chips a{display:inline-block;margin:4px 6px 4px 0;padding:8px 13px;border-radius:20px;background:#fff;border:1px solid #1458c7;color:#1458c7;text-decoration:none;font-size:14px;font-weight:bold}
+footer{background:#102957;color:#d3e1ff;text-align:center;padding:22px 12px;font-size:14px}
+footer a{color:#fff}
+@media(max-width:600px){h1{font-size:23px}main{padding:14px 12px 24px}.panel{padding:14px}}
