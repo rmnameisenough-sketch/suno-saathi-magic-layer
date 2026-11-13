@@ -1,0 +1,12 @@
+{
+ "circular-motion-calculator": "a = v²/r = ω²r; F = mv²/r; ω = v/r; T = 2πr/v; f = 1/T; v = ωr",
+ "fluid-mechanics-calculator": "P = ρgh; F_buoyant = ρVg; ρ = m/V; Q = A·v; A₁v₁ = A₂v₂; P₁ − P₂ = ½ρ(v₂² − v₁²)",
+ "gravitation-orbital-calculator": "F = Gm₁m₂/r²; g = GM/r²; v_orbit = √(GM/r); v_escape = √(2GM/r); T = 2πr/v; W = mg",
+ "kinematics-equation-solver": "v = u + at; s = ut + ½at²; v² = u² + 2as; s = (u + v)t/2",
+ "rotational-motion-calculator": "τ = Iα; L = Iω; KE_rot = ½Iω²; τ = rF sinθ; ω = θ/t; α = (ω₂ − ω₁)/t",
+ "shm-advanced-calculator": "ω = 2π/T; x = A cos(ωt); v = −Aω sin(ωt); a = −ω²x; v_max = Aω; a_max = Aω²; T = 2π√(m/k); E = ½mω²A²",
+ "thermodynamics-calculator": "Q = mcΔT; W = PΔV; PV = nRT; ΔU = nC_vΔT; ΔU = Q − W",
+ "molar-mass-calculator": "Molar mass = sum of (atomic mass × number of atoms) for every element in the formula",
+ "molarity-calculator": "M = n / V (mol per litre); n = mass / molar mass; mass = M × V × molar mass",
+ "mole-calculator": "n = m / M; N = n × N_A, where N_A = 6.022 × 10²³ per mole"
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscillations &amp; Waves: Formulas &amp; Calculators | Suno Saathi Tools</title>
+<meta name="description" content="Formulas for simple harmonic motion, spring and pendulum periods, Hooke’s law, SHM energy and wave speed, with linked calculators and a worked example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/chapters/oscillations-and-waves">
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/hub.css">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+<header>
+<div class="brand">Suno Saathi Tools</div>
+<p>Chapter-wise formulas and calculators</p>
+</header>
+<nav>
+<a href="../index.html">🏠 Home</a>
+<a href="../physics/index.html">⚛ Physics</a>
+<a href="../chemistry/index.html">🧪 Chemistry</a>
+<a href="index.html">📚 All Chapters</a>
+</nav>
+<main>
+<h1>〰️ Oscillations and Waves: Formulas and Calculators</h1>
+<p class="lead">Oscillations repeat in time and waves repeat in time and space. Both rely on the same ideas of amplitude, period, frequency and angular frequency, so the calculators here share notation.</p>
+
+<section class="panel">
+<h2>Key formulas</h2>
+<div class="tablewrap">
+<table>
+<tr><th>What you find</th><th>Formula</th><th>Unit</th></tr>
+<tr><td>Frequency from period</td><td class="f">f = 1 / T</td><td>Hz</td></tr>
+<tr><td>Angular frequency</td><td class="f">ω = 2πf = 2π / T</td><td>rad/s</td></tr>
+<tr><td>Displacement in SHM</td><td class="f">x = A cos(ωt)</td><td>m</td></tr>
+<tr><td>Velocity in SHM</td><td class="f">v = −Aω sin(ωt)</td><td>m/s</td></tr>
+<tr><td>Acceleration in SHM</td><td class="f">a = −ω²x</td><td>m/s²</td></tr>
+<tr><td>Maximum velocity</td><td class="f">v_max = Aω</td><td>m/s</td></tr>
+<tr><td>Maximum acceleration</td><td class="f">a_max = Aω²</td><td>m/s²</td></tr>
+<tr><td>Spring force (Hooke’s law)</td><td class="f">F = kx</td><td>N</td></tr>
+<tr><td>Spring potential energy</td><td class="f">U = ½kx²</td><td>J</td></tr>
+<tr><td>Total SHM energy</td><td class="f">E = ½kA²</td><td>J</td></tr>
+<tr><td>Spring–mass period</td><td class="f">T = 2π√(m / k)</td><td>s</td></tr>
+<tr><td>Simple pendulum period</td><td class="f">T = 2π√(L / g)</td><td>s</td></tr>
+<tr><td>Wave speed</td><td class="f">v = fλ</td><td>m/s</td></tr>
+</table>
+</div>
+<p class="note">x = A cos(ωt) assumes the motion starts at maximum displacement. The pendulum formula holds for small angles only (roughly under 15°).</p>
+</section>
+
+<section class="panel">
+<h2>Calculators for this chapter</h2>
+<div class="grid">
+<a class="tool" href="../physics/shm-calculator.html"><b>SHM Time Period &amp; Frequency</b><span>Find the time period and frequency of simple harmonic motion, including spring-mass systems and the simple pendulum.</span></a>
+<a class="tool" href="../physics/shm-advanced-calculator.html"><b>SHM Displacement &amp; Velocity</b><span>Calculate displacement, velocity, acceleration, angular frequency, maximum values and total energy in simple harmonic motion.</span></a>
+<a class="tool" href="../physics/shm-energy-calculator.html"><b>SHM Energy</b><span>Calculate kinetic, potential and total energy of a spring or oscillator, plus velocity and amplitude from energy.</span></a>
+<a class="tool" href="../physics/simple-pendulum-calculator.html"><b>Simple Pendulum</b><span>Calculate the time period, length, frequency or local gravity of a simple pendulum using T = 2π√(L/g).</span></a>
+<a class="tool" href="../physics/hookes-law-calculator.html"><b>Hooke&#x27;s Law</b><span>Calculate spring force, spring constant, extension and elastic potential energy using Hooke&#x27;s law, with a worked example.</span></a>
+<a class="tool" href="../physics/wave-frequency-calculator.html"><b>Wave Speed, Frequency &amp; Wavelength</b><span>Use v = fλ to find wave speed, frequency, wavelength or time period. Includes formulas, a worked example and a short FAQ.</span></a>
+</div>
+</section>
+
+<section class="panel example">
+<h2>Worked example</h2>
+<p class="question">A simple pendulum is 1 m long. Find its time period and frequency (g = 9.8 m/s²).</p>
+<ol>
+<li>Time period: T = 2π√(L/g) = 2π√(1/9.8) ≈ 2 × 3.1416 × 0.3194 ≈ 2.007 s.</li>
+<li>Frequency: f = 1/T ≈ 0.498 Hz.</li>
+</ol>
+<p class="note">Try the same numbers in the calculators above to check each step.</p>
+</section>
+
+<section class="panel">
+<h2>Common mistakes to avoid</h2>
+<ul class="plain">
+<li>Using a large starting angle with the pendulum formula. It is only accurate for small swings.</li>
+<li>Forgetting that the pendulum period does not depend on the mass of the bob.</li>
+<li>Mixing frequency f (Hz) and angular frequency ω (rad/s).</li>
+<li>Using centimetres for length or extension while using SI units for the other values.</li>
+</ul>
+</section>
+
+<section class="panel">
+<h2>Quick questions</h2>
+<details><summary>Does amplitude change the period in SHM?</summary><p>For ideal simple harmonic motion, no. The period depends only on the mass and spring constant (or on length and g for a pendulum).</p></details>
+<details><summary>How are wave speed, frequency and wavelength related?</summary><p>v = fλ. For the same medium, a higher frequency means a shorter wavelength.</p></details>
+</section>
+
+<section class="panel chips">
+<h2>Other chapter guides</h2>
+<a href="motion-and-forces.html">🚀 Motion and Forces</a><a href="work-energy-and-gravitation.html">⚡ Work, Energy and Gravitation</a><a href="circular-and-rotational-motion.html">🌀 Circular and Rotational Motion</a><a href="properties-of-matter-and-heat.html">🌡️ Properties of Matter, Fluids and Heat</a><a href="electricity-and-optics.html">💡 Electricity and Optics</a><a href="mole-concept-and-molar-mass.html">⚗️ Mole Concept and Molar Mass</a><a href="solutions-and-concentration.html">🧫 Solutions, Molarity and Dilution</a><a href="acids-bases-and-ph.html">🧪 Acids, Bases and pH</a>
+</section>
+
+<p class="note">Chapter groups follow how these topics are commonly taught in Class 11–12 physics and chemistry. Exact chapter order and conventions (such as the value of g) vary by board and textbook, so follow your own syllabus where it differs.</p>
+</main>
+<footer>
+<a href="../index.html">Suno Saathi Tools</a> • <a href="index.html">Chapter Guides</a> • <a href="../about.html">About</a> • <a href="../contact.html">Contact</a> • <a href="../privacy-policy.html">Privacy</a> • <a href="../terms.html">Terms</a><br><br>
+© 2026 Suno Saathi Tools
+</footer>
+</body>
+</html>

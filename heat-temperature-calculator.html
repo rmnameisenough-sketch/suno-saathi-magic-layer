@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heat (Q = mcΔT) &amp; Temperature Converter | Suno Saathi Tools</title>
+<meta name="description" content="Calculate heat energy, temperature change, mass or specific heat capacity, and convert between Celsius, Fahrenheit and Kelvin.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/heat-temperature-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17233b}
+header{background:#102a56;color:white;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+nav a{color:white;text-decoration:none;margin-right:15px}
+.logo{font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 4px 18px #102a5610}
+h1,h2{color:#163d78}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd6e5;border-radius:9px;font-size:16px}
+button{background:#1769e0;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;cursor:pointer;margin-top:18px}
+button:hover{background:#1055b8}
+.result{background:#eafff1;border:1px solid #b6edcb;padding:18px;border-radius:12px;margin-top:20px}
+.result h2{color:#08783b;margin:0 0 10px}
+.tick{color:#0b9d50;font-size:24px}
+.formula{background:#edf4ff;padding:15px;border-radius:10px;text-align:center;font-size:20px;font-weight:bold;color:#174b91}
+.small{color:#617089;font-size:14px}
+svg{max-width:100%;display:block;margin:auto}
+footer{text-align:center;padding:25px;color:#66748b}
+.hidden{display:none}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<nav>
+<div class="logo">🔬 Suno Saathi Tools</div>
+<div>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<section class="card" style="text-align:center">
+<h1>Heat & Temperature Calculator</h1>
+<p>Calculate heat energy and convert temperature units.</p>
+
+<svg width="250" height="150" viewBox="0 0 250 150">
+<rect x="90" y="20" width="25" height="100" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<circle cx="102" cy="122" r="22" fill="#ef4444"/>
+<rect x="98" y="55" width="9" height="67" rx="4" fill="#ef4444"/>
+<path d="M150 45C140 60 160 70 150 85" stroke="#f59e0b" stroke-width="4" fill="none"/>
+<path d="M175 35C165 50 185 60 175 75" stroke="#f59e0b" stroke-width="4" fill="none"/>
+<text x="125" y="148" text-anchor="middle" fill="#163d78" font-size="13">Heat & Temperature</text>
+</svg>
+</section>
+
+<section class="card">
+<h2>Calculator</h2>
+
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="changeMode()">
+<option value="heat">Heat Energy (Q = mcΔT)</option>
+<option value="delta">Temperature Change (ΔT = Q/mc)</option>
+<option value="mass">Mass (m = Q/cΔT)</option>
+<option value="specific">Specific Heat (c = Q/mΔT)</option>
+<option value="convert">Temperature Conversion</option>
+</select>
+
+<div id="heatFields">
+<div id="massBox">
+<label for="mass">Mass (kg)</label>
+<input id="mass" type="number" min="0" step="any" placeholder="Enter mass">
+</div>
+
+<div id="specificBox">
+<label for="specific">Specific Heat Capacity (J/kg·K)</label>
+<input id="specific" type="number" min="0" step="any" placeholder="Enter specific heat">
+</div>
+
+<div id="deltaBox">
+<label for="delta">Temperature Change (ΔT in K or °C)</label>
+<input id="delta" type="number" step="any" placeholder="Enter temperature change">
+</div>
+
+<div id="heatBox">
+<label for="heat">Heat Energy (Q in J)</label>
+<input id="heat" type="number" step="any" placeholder="Enter heat energy">
+</div>
+</div>
+
+<div id="convertFields" class="hidden">
+<label for="temperature">Temperature Value</label>
+<input id="temperature" type="number" step="any" placeholder="Enter temperature">
+
+<label for="fromUnit">Convert From</label>
+<select id="fromUnit">
+<option value="C">Celsius (°C)</option>
+<option value="F">Fahrenheit (°F)</option>
+<option value="K">Kelvin (K)</option>
+</select>
+
+<label for="toUnit">Convert To</label>
+<select id="toUnit">
+<option value="F">Fahrenheit (°F)</option>
+<option value="C">Celsius (°C)</option>
+<option value="K">Kelvin (K)</option>
+</select>
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetAll()" style="background:#64748b">Reset</button>
+
+<div id="result" class="result hidden"></div>
+</section>
+
+<section class="card">
+<h2>Formula</h2>
+<div id="formula" class="formula">Q = mcΔT</div>
+<p class="small">Q = heat energy, m = mass, c = specific heat capacity, ΔT = temperature change.</p>
+</section>
+
+<section class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select the quantity you want to calculate.</li>
+<li>Enter the required values.</li>
+<li>Use SI units for accurate calculations.</li>
+<li>Click Calculate to see the result and steps.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Example</h2>
+<p>Mass = 2 kg, Specific heat = 4200 J/kg·K, Temperature change = 5 K</p>
+<div class="formula">Q = 2 × 4200 × 5 = 42,000 J</div>
+</section>
+
+<section class="card">
+<h2>FAQs</h2>
+<p><b>1. What is heat energy?</b><br>Energy transferred because of a temperature difference.</p>
+<p><b>2. What is the SI unit of heat?</b><br>Joule (J).</p>
+<p><b>3. What is specific heat capacity?</b><br>Heat required to raise 1 kg of a substance by 1 K.</p>
+<p><b>4. Is temperature change in Celsius equal to Kelvin?</b><br>Yes, a change of 1°C equals a change of 1 K.</p>
+</section>
+
+<section class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="thermodynamics-calculator.html">Thermodynamics</a></li>
+<li><a href="pressure-calculator.html">Pressure Calculator</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="electrical-energy.html">Electrical Energy</a></li>
+<li><a href="../chapters/properties-of-matter-and-heat.html">Chapter guide: Properties of Matter, Fluids and Heat</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</section>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Science Better<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function changeMode(){
+const mode=$("mode").value;
+$("heatFields").classList.toggle("hidden",mode==="convert");
+$("convertFields").classList.toggle("hidden",mode!=="convert");
+
+$("massBox").classList.toggle("hidden",mode==="mass");
+$("specificBox").classList.toggle("hidden",mode==="specific");
+$("deltaBox").classList.toggle("hidden",mode==="delta");
+$("heatBox").classList.toggle("hidden",mode==="heat");
+
+const formulas={
+heat:"Q = mcΔT",
+delta:"ΔT = Q / mc",
+mass:"m = Q / cΔT",
+specific:"c = Q / mΔT",
+convert:"Temperature Conversion"
+};
+$("formula").textContent=formulas[mode];
+$("result").classList.add("hidden");
+}
+
+function calculate(){
+const mode=$("mode").value;
+let answer,unit,steps,title;
+
+if(mode==="heat"){
+const m=+$("mass").value,c=+$("specific").value,d=+$("delta").value;
+if($("mass").value===""||$("specific").value===""||$("delta").value===""||m<0||c<0)
+return alert("Enter valid mass, specific heat and temperature change.");
+answer=m*c*d;unit="J";title="Heat Energy";
+steps=`Q = mcΔT<br>Q = ${m} × ${c} × ${d}<br>Q = ${answer} J`;
+}
+else if(mode==="delta"){
+const Q=+$("heat").value,m=+$("mass").value,c=+$("specific").value;
+if($("heat").value===""||$("mass").value===""||$("specific").value===""||m<=0||c<=0)
+return alert("Enter valid values. Mass and specific heat must be greater than zero.");
+answer=Q/(m*c);unit="K";title="Temperature Change";
+steps=`ΔT = Q / mc<br>ΔT = ${Q} / (${m} × ${c})<br>ΔT = ${answer} K`;
+}
+else if(mode==="mass"){
+const Q=+$("heat").value,c=+$("specific").value,d=+$("delta").value;
+if($("heat").value===""||$("specific").value===""||$("delta").value===""||c<=0||d===0)
+return alert("Enter valid values. Specific heat must be positive and temperature change non-zero.");
+answer=Q/(c*d);unit="kg";title="Mass";
+steps=`m = Q / cΔT<br>m = ${Q} / (${c} × ${d})<br>m = ${answer} kg`;
+}
+else if(mode==="specific"){
+const Q=+$("heat").value,m=+$("mass").value,d=+$("delta").value;
+if($("heat").value===""||$("mass").value===""||$("delta").value===""||m<=0||d===0)
+return alert("Enter valid values. Mass must be positive and temperature change non-zero.");
+answer=Q/(m*d);unit="J/kg·K";title="Specific Heat Capacity";
+steps=`c = Q / mΔT<br>c = ${Q} / (${m} × ${d})<br>c = ${answer} J/kg·K`;
+}
+else{
+const t=+$("temperature").value,from=$("fromUnit").value,to=$("toUnit").value;
+if($("temperature").value==="")return alert("Enter temperature.");
+
+let C;
+if(from==="C")C=t;
+else if(from==="F")C=(t-32)*5/9;
+else C=t-273.15;
+
+if(to==="C")answer=C;
+else if(to==="F")answer=C*9/5+32;
+else answer=C+273.15;
+
+if(from==="K"&&t<0)return alert("Kelvin cannot be negative.");
+if(to==="K"&&answer<0)return alert("Temperature cannot be below absolute zero.");
+
+unit=to==="C"?"°C":to==="F"?"°F":"K";
+title="Converted Temperature";
+steps=`${t} ${from==="C"?"°C":from==="F"?"°F":"K"} = ${answer} ${unit}`;
+}
+
+if(!Number.isFinite(answer))return alert("Calculation error.");
+
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> ${title}</h2>
+<h3>${answer.toLocaleString(undefined,{maximumFractionDigits:8})} ${unit}</h3>
+<hr><b>Step-by-step solution</b><br>${steps}`;
+$("result").classList.remove("hidden");
+}
+
+function resetAll(){
+document.querySelectorAll("input").forEach(x=>x.value="");
+$("result").classList.add("hidden");
+}
+changeMode();
+</script>
+</body>
+</html>

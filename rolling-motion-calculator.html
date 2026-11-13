@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rolling Motion Calculator (v = ωr) | Suno Saathi Tools</title>
+<meta name="description" content="Relate linear and angular velocity for rolling without slipping, and find distance rolled and total kinetic energy.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/rolling-motion-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#182338}
+header{background:#102b55;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{margin:9px 0 0;color:#c9dcff}
+nav{background:#1769d2;padding:12px;text-align:center;color:white;font-weight:bold}
+.container{max-width:850px;margin:22px auto;padding:0 14px}
+.card{background:white;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 4px 14px #162c5010}
+h2{font-size:20px;margin-top:0;color:#123565}
+label{display:block;font-weight:bold;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd6e5;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:13px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;margin-top:18px;cursor:pointer}
+button:hover{background:#1055ad}
+.result{background:#e7f8ed;border:1px solid #b6e8c9;padding:17px;border-radius:10px;margin-top:17px;color:#145b35}
+.result h3{margin:0 0 10px}
+.result p{margin:8px 0}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;text-align:center;color:#174d9b;font-weight:bold;margin:10px 0}
+.diagram{text-align:center;padding:10px}
+.diagram svg{max-width:100%;height:auto}
+ul{line-height:1.8;padding-left:22px}
+footer{text-align:center;background:#102b55;color:white;padding:22px;margin-top:25px}
+.small{font-size:13px;color:#64748b}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#123565}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="brand">Suno Saathi Tools</div>
+<p>Rolling Motion Calculator</p>
+</header>
+
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card">
+<h1 class="page-title">Rolling Motion Calculator</h1>
+<p>Calculate linear velocity, angular velocity, distance and kinetic energy for rolling without slipping.</p>
+
+<label for="mode">Select calculation</label>
+<select id="mode" onchange="changeMode()">
+<option value="omega">Angular Velocity (ω)</option>
+<option value="velocity">Linear Velocity (v)</option>
+<option value="distance">Distance (s)</option>
+<option value="energy">Total Kinetic Energy (K)</option>
+</select>
+
+<div id="inputs">
+<label for="velocity">Linear Velocity (v) in m/s</label>
+<input id="velocity" type="number" step="any" placeholder="e.g. 5">
+
+<label for="radius">Radius (R) in metres</label>
+<input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<div id="result" class="result" style="display:none" aria-live="polite"></div>
+</div>
+
+<div class="card">
+<h2>Rolling Motion Illustration</h2>
+<div class="diagram">
+<svg viewBox="0 0 320 190" role="img" aria-label="Wheel rolling on a horizontal surface">
+<line x1="25" y1="145" x2="295" y2="145" stroke="#334155" stroke-width="3"/>
+<circle cx="150" cy="95" r="50" fill="#edf4ff" stroke="#1769d2" stroke-width="3"/>
+<circle cx="150" cy="95" r="6" fill="#334155"/>
+<line x1="150" y1="95" x2="200" y2="95" stroke="#22a06b" stroke-width="3"/>
+<text x="172" y="85" fill="#22a06b" font-size="15" font-weight="bold">R</text>
+<path d="M110 60 A48 48 0 0 1 190 60" fill="none" stroke="#f59e0b" stroke-width="3"/>
+<polygon points="190,60 182,55 183,65" fill="#f59e0b"/>
+<line x1="150" y1="95" x2="150" y2="145" stroke="#94a3b8" stroke-dasharray="4 4"/>
+<text x="150" y="175" text-anchor="middle" font-size="13" fill="#334155">Rolling without slipping</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h2>Rolling Motion Formulas</h2>
+<div class="formula">v = ωR</div>
+<div class="formula">s = Rθ</div>
+<div class="formula">K = ½mv² + ½Iω²</div>
+<ul>
+<li>v = Linear velocity (m/s)</li>
+<li>ω = Angular velocity (rad/s)</li>
+<li>R = Radius (m)</li>
+<li>s = Distance travelled (m)</li>
+<li>θ = Angular displacement (rad)</li>
+<li>m = Mass (kg)</li>
+<li>I = Moment of inertia (kg·m²)</li>
+</ul>
+<p class="small">For rolling without slipping, the contact point has zero instantaneous velocity relative to the ground.</p>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>Wheel radius = 0.5 m and linear velocity = 5 m/s.</p>
+<p>ω = v/R = 5/0.5</p>
+<p><b>Angular velocity = 10 rad/s</b></p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li>Select the quantity you want to calculate.</li>
+<li>Enter the known values.</li>
+<li>For distance, enter angular displacement in radians.</li>
+<li>For energy, enter mass, linear velocity and moment of inertia.</li>
+<li>Click Calculate.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>FAQs</h2>
+<p><b>Q. What is rolling without slipping?</b><br>It is motion where the surface contact does not slide relative to the ground.</p>
+<p><b>Q. What is the relation between v and ω?</b><br>For rolling without slipping, v = ωR.</p>
+<p><b>Q. Does rolling object have rotational energy?</b><br>Yes. It has both translational and rotational kinetic energy.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="moment-of-inertia-calculator.html">Moment of Inertia</a></li>
+<li><a href="rotational-motion-calculator.html">Torque &amp; Angular Momentum</a></li>
+<li><a href="rotational-kinematics-calculator.html">Rotational Kinematics</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="../chapters/circular-and-rotational-motion.html">Chapter guide: Circular and Rotational Motion</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>
+<p><b>Suno Saathi Tools</b></p>
+<p>Free educational calculators for students.</p>
+<p class="small">Learn • Calculate • Understand</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+function changeMode(){
+ const mode=document.getElementById("mode").value;
+ const box=document.getElementById("inputs");
+ let html="";
+
+ if(mode==="omega"){
+ html='<label for="velocity">Linear Velocity (v) in m/s</label><input id="velocity" type="number" step="any" placeholder="e.g. 5"><label for="radius">Radius (R) in metres</label><input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5">';
+ }else if(mode==="velocity"){
+ html='<label for="omega">Angular Velocity (ω) in rad/s</label><input id="omega" type="number" step="any" placeholder="e.g. 10"><label for="radius">Radius (R) in metres</label><input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5">';
+ }else if(mode==="distance"){
+ html='<label for="radius">Radius (R) in metres</label><input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="theta">Angular Displacement (θ) in radians</label><input id="theta" type="number" step="any" placeholder="e.g. 6.28">';
+ }else{
+ html='<label for="mass">Mass (m) in kg</label><input id="mass" type="number" min="0" step="any" placeholder="e.g. 2"><label for="velocity">Linear Velocity (v) in m/s</label><input id="velocity" type="number" step="any" placeholder="e.g. 5"><label for="inertia">Moment of Inertia (I) in kg·m²</label><input id="inertia" type="number" min="0" step="any" placeholder="e.g. 0.25"><label for="omega">Angular Velocity (ω) in rad/s</label><input id="omega" type="number" step="any" placeholder="e.g. 10">';
+ }
+ box.innerHTML=html;
+ document.getElementById("result").style.display="none";
+}
+
+function calculate(){
+ const mode=document.getElementById("mode").value;
+ const get=id=>Number(document.getElementById(id)?.value);
+ const result=document.getElementById("result");
+ let answer,title,unit;
+
+ if(mode==="omega"){
+ const v=get("velocity"),R=get("radius");
+ if(!Number.isFinite(v)||!(R>0))return error("Enter valid velocity and positive radius.");
+ answer=v/R;title="Angular Velocity";unit="rad/s";
+ }else if(mode==="velocity"){
+ const w=get("omega"),R=get("radius");
+ if(!Number.isFinite(w)||!(R>0))return error("Enter valid angular velocity and positive radius.");
+ answer=w*R;title="Linear Velocity";unit="m/s";
+ }else if(mode==="distance"){
+ const R=get("radius"),theta=get("theta");
+ if(!(R>0)||!Number.isFinite(theta))return error("Enter positive radius and valid angular displacement.");
+ answer=R*theta;title="Distance Travelled";unit="m";
+ }else{
+ const m=get("mass"),v=get("velocity"),I=get("inertia"),w=get("omega");
+ if(!(m>=0&&I>=0)||!Number.isFinite(m+v+I+w))return error("Enter valid mass, velocities and moment of inertia.");
+ answer=0.5*m*v*v+0.5*I*w*w;title="Total Kinetic Energy";unit="J";
+ }
+
+ if(!Number.isFinite(answer))return error("Calculation is outside the supported numeric range.");
+
+ result.style.display="block";
+ result.innerHTML="<h3>Calculation Result</h3><p><b>"+title+": "+answer.toLocaleString("en-IN",{maximumFractionDigits:6})+" "+unit+"</b></p>";
+}
+
+function error(message){
+ const result=document.getElementById("result");
+ result.style.display="block";
+ result.innerHTML="<h3>Check Inputs</h3><p>"+message+"</p>";
+}
+</script>
+
+</body>
+</html>

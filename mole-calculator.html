@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mole Calculator: Grams, Moles &amp; Particles | Suno Saathi Tools</title>
+<meta name="description" content="Convert between grams, moles and number of particles using molar mass and Avogadro's number, with steps and a worked example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/chemistry/mole-calculator">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f7fc;color:#17233c;line-height:1.6;overflow-x:hidden}
+header{background:#102a56;color:white;padding:14px 18px}
+nav{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:bold}
+.logo span{color:#60d6a5}
+.navlinks{display:flex;gap:15px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px}
+
+.hero{background:linear-gradient(135deg,#123c7b,#2875d5);color:white;padding:30px 16px}
+.hero-inner{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.hero h1{font-size:32px;line-height:1.25;margin-bottom:10px}
+.hero p{color:#e0ecff;max-width:600px}
+.hero-art{width:150px;flex-shrink:0}
+
+.container{max-width:950px;margin:25px auto;padding:0 15px}
+.card{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #16345e0b;min-width:0}
+h2{font-size:21px;color:#16345e;margin-bottom:12px}
+h3{font-size:17px;margin:14px 0 7px}
+.muted{font-size:14px;color:#64748b}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:white}
+input:focus,select:focus{outline:2px solid #b9d8ff;border-color:#2875d5}
+button{border:0;border-radius:9px;padding:12px 18px;font-size:15px;font-weight:bold;cursor:pointer}
+.primary{width:100%;background:#1769ce;color:white;margin-top:15px}
+.primary:hover{background:#1055ac}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.examples button{background:#eaf2ff;color:#185bb1;padding:8px 12px;font-size:13px}
+.result{display:none;background:#e8fff2;border:1px solid #a5e9c3;border-radius:12px;padding:18px;margin-top:18px;gap:12px}
+.tick{background:#20a565;color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.result h3{margin:0;color:#126a42}
+.big{font-size:26px;font-weight:bold;color:#087b4b;overflow-wrap:anywhere}
+.result p{font-size:14px;color:#28734e}
+.error{display:none;background:#fff0ed;color:#b42318;padding:12px;border-radius:8px;margin-top:12px}
+.steps{background:#f1f6ff;padding:15px;border-radius:10px;margin-top:15px;overflow-wrap:anywhere}
+.steps p{margin:6px 0}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+th,td{padding:11px 8px;text-align:left;border:1px solid #dce5f0}
+th{background:#edf4ff;color:#214a83}
+.total{background:#effff6;font-weight:bold}
+.table-wrap{width:100%;overflow-x:auto}
+ul{padding-left:22px}
+li{margin:6px 0}
+footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
+footer a{color:#2366bd;text-decoration:none}
+
+@media(max-width:600px){
+ header{padding:12px}
+ nav{align-items:flex-start}
+ .logo{font-size:18px}
+ .navlinks{gap:10px}
+ .navlinks a{font-size:12px}
+ .hero{padding:25px 15px}
+ .hero-inner{flex-direction:column;align-items:flex-start}
+ .hero h1{font-size:27px}
+ .hero-art{align-self:center;width:120px}
+ .container{margin:16px auto;padding:0 11px}
+ .card{padding:16px;margin-bottom:15px}
+ h2{font-size:19px}
+ .row{grid-template-columns:1fr}
+ .big{font-size:23px}
+ th,td{padding:8px 5px;font-size:12px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">⚗ Suno Saathi <span>Tools</span></div>
+<div class="navlinks">
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+<a href="../index.html">Chemistry</a>
+<a href="../index.html">About</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-inner">
+<div>
+<h1>Mole–Gram–Particles Calculator</h1>
+<p>Convert chemical mass, moles and particles instantly with accurate formulas and step-by-step calculations.</p>
+</div>
+
+<svg class="hero-art" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#c4e8ff" stroke-width="4">
+<path d="M35 30L75 55L115 30M75 55L75 105L115 105"/>
+</g>
+<g fill="#68d0ff" stroke="white" stroke-width="3">
+<circle cx="35" cy="30" r="12"/>
+<circle cx="75" cy="55" r="12"/>
+<circle cx="115" cy="30" r="12"/>
+<circle cx="75" cy="105" r="12"/>
+<circle cx="115" cy="105" r="12"/>
+</g>
+<path d="M20 115H50V125L40 140H115L105 125V115H140" fill="none" stroke="#d8f5ff" stroke-width="4"/>
+</svg>
+</div>
+</section>
+
+<main class="container">
+
+<section class="card">
+<h2>🧪 Mole Conversion Calculator</h2>
+<p class="muted">Enter chemical formula and your known quantity.</p>
+
+<label for="formula">Chemical Formula</label>
+<input id="formula" value="H2O" placeholder="Example: H2O">
+
+<div class="row">
+<div>
+<label for="quantity">Known Quantity</label>
+<input id="quantity" type="number" min="0" step="any" value="18">
+</div>
+<div>
+<label for="unit">Input Unit</label>
+<select id="unit">
+<option value="grams">Grams (g)</option>
+<option value="moles">Moles (mol)</option>
+<option value="particles">Particles</option>
+</select>
+</div>
+
+<button class="primary" onclick="calculate()">Calculate Conversion</button>
+
+<div class="examples">
+<button onclick="setFormula('H2O')">H₂O</button>
+<button onclick="setFormula('CO2')">CO₂</button>
+<button onclick="setFormula('NaCl')">NaCl</button>
+<button onclick="setFormula('Ca(OH)2')">Ca(OH)₂</button>
+<button onclick="setFormula('H2SO4')">H₂SO₄</button>
+</div>
+
+<div class="error" id="error"></div>
+
+<div class="result" id="result">
+<div class="tick">✓</div>
+<div>
+<h3>Conversion Successful</h3>
+<div class="big" id="molesResult"></div>
+<p id="massResult"></p>
+<p id="particleResult"></p>
+</div>
+</section>
+
+<section class="card" id="breakdown" style="display:none">
+<h2>📊 Step-by-Step Calculation</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Quantity</th><th>Value</th></tr>
+</thead>
+<tbody id="stepsTable"></tbody>
+</table>
+</div>
+<div class="steps">
+<h3>Calculation Formula</h3>
+<p id="calculation"></p>
+<p id="finalCalculation"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>📘 How It Works</h2>
+<p>A mole is a unit used to measure the amount of substance. One mole contains approximately 6.022 × 10²³ particles.</p>
+
+<div class="steps">
+<p><strong>Grams = Moles × Molar Mass</strong></p>
+<p><strong>Moles = Grams ÷ Molar Mass</strong></p>
+<p><strong>Particles = Moles × Avogadro Constant</strong></p>
+</div>
+
+<h3>Example: 18 g of H₂O</h3>
+<ul>
+<li>Molar mass of water = 18.015 g/mol</li>
+<li>Moles = 18 ÷ 18.015 ≈ 0.999 mol</li>
+<li>Particles ≈ 0.999 × 6.022 × 10²³</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>❓ Frequently Asked Questions</h2>
+<h3>What is Avogadro's number?</h3>
+<p class="muted">It is 6.02214076 × 10²³ particles per mole.</p>
+
+<h3>What is the difference between mole and particle?</h3>
+<p class="muted">A mole represents a fixed number of particles such as atoms, molecules or formula units.</p>
+
+<h3>Can this calculator convert grams to particles?</h3>
+<p class="muted">Yes. Enter the chemical formula, mass in grams and select Grams.</p>
+</section>
+
+<section class="card">
+<h2>Related Chemistry Tools</h2>
+<ul>
+<li><a href="molar-mass-calculator.html">Molar Mass Calculator</a></li>
+<li><a href="molarity-calculator.html">Molarity Calculator</a></li>
+<li><a href="dilution-calculator.html">Dilution Calculator</a></li>
+<li><a href="ph-calculator.html">pH &amp; pOH Calculator</a></li>
+<li><a href="../chapters/mole-concept-and-molar-mass.html">Chapter guide: Mole Concept and Molar Mass</a></li>
+<li><a href="index.html">All Chemistry Calculators</a></li>
+</ul>
+</section>
+
+</main>
+
+<footer>
+<p>© Suno Saathi Tools | Chemistry Calculators</p>
+<p><a href="../index.html">Home</a> · <a href="../index.html#tools">All Tools</a></p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const atomicMass={
+H:1.008,He:4.002602,Li:6.94,Be:9.012183,
+B:10.81,C:12.011,N:14.007,O:15.999,
+F:18.998403,Ne:20.1797,Na:22.989769,
+Mg:24.305,Al:26.981538,Si:28.085,P:30.973762,
+S:32.06,Cl:35.45,Ar:39.948,K:39.0983,
+Ca:40.078,Sc:44.955908,Ti:47.867,
+V:50.9415,Cr:51.9961,Mn:54.938044,
+Fe:55.845,Co:58.933194,Ni:58.6934,
+Cu:63.546,Zn:65.38,Ga:69.723,
+Ge:72.630,As:74.921595,Se:78.971,
+Br:79.904,Kr:83.798,Rb:85.4678,
+Sr:87.62,Y:88.90584,Zr:91.224,
+Nb:92.90637,Mo:95.95,Tc:98,Ru:101.07,
+Rh:102.9055,Pd:106.42,Ag:107.8682,
+Cd:112.414,In:114.818,Sn:118.710,
+Sb:121.760,Te:127.60,I:126.90447,
+Xe:131.293,Cs:132.905452,Ba:137.327,
+La:138.90547,Ce:140.116,Pr:140.90766,
+Nd:144.242,Sm:150.36,Eu:151.964,
+Gd:157.25,Tb:158.92535,Dy:162.500,
+Ho:164.93033,Er:167.259,Tm:168.93422,
+Yb:173.045,Lu:174.9668,Hf:178.49,
+Ta:180.94788,W:183.84,Re:186.207,
+Os:190.23,Ir:192.217,Pt:195.084,
+Au:196.96657,Hg:200.592,Tl:204.38,
+Pb:207.2,Bi:208.9804,Po:209,At:210,
+Rn:222,Fr:223,Ra:226,Ac:227,
+Th:232.0377,Pa:231.03588,U:238.02891
+};
+
+const AVOGADRO=6.02214076e23;
+
+function parseFormula(formula){
+ let i=0;
+
+ function group(){
+  const counts={};
+
+  while(i<formula.length){
+   const ch=formula[i];
+
+   if(ch==="("){
+    i++;
+    const inner=group();
+    if(formula[i]!==")")throw Error("Missing closing bracket.");
+    i++;
+    const mult=number();
+    for(const el in inner)
+     counts[el]=(counts[el]||0)+inner[el]*mult;
+   }
+   else if(ch===")")break;
+   else if(/[A-Z]/.test(ch)){
+    let el=ch;i++;
+    if(i<formula.length&&/[a-z]/.test(formula[i])){
+     el+=formula[i++];
+    }
+    if(!(el in atomicMass))throw Error("Unknown element: "+el);
+    const n=number();
+    counts[el]=(counts[el]||0)+n;
+   }
+   else throw Error("Invalid character: "+ch);
+  }
+  return counts;
+ }
+
+ function number(){
+  let start=i;
+  while(i<formula.length&&/[0-9]/.test(formula[i]))i++;
+  return start===i?1:Number(formula.slice(start,i));
+ }
+
+ const counts=group();
+ if(i!==formula.length)throw Error("Invalid formula or unmatched bracket.");
+ return counts;
+}
+
+function molarMass(formula){
+ const counts=parseFormula(formula);
+ let total=0;
+ for(const el in counts)total+=counts[el]*atomicMass[el];
+ return total;
+}
+
+function fmt(n){
+ if(!Number.isFinite(n))return "Too large to display";
+ if(n===0)return "0";
+ const a=Math.abs(n);
+if(a<0.0001||a>=1e15)return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+return Number(n.toPrecision(a<1?5:8)).toLocaleString("en-US",{maximumFractionDigits:a<1?8:3});
+}
+
+function sci(n){
+ if(n===0)return "0";
+ return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+}
+
+function setFormula(f){
+ document.getElementById("formula").value=f;
+ calculate();
+}
+
+function calculate(){
+ const formula=document.getElementById("formula").value.trim();
+ const quantity=Number(document.getElementById("quantity").value);
+ const unit=document.getElementById("unit").value;
+ const error=document.getElementById("error");
+ const result=document.getElementById("result");
+ const breakdown=document.getElementById("breakdown");
+
+ error.style.display="none";
+ result.style.display="none";
+ breakdown.style.display="none";
+
+ try{
+  if(!formula)throw Error("Enter a chemical formula.");
+  if(!/^[A-Za-z0-9()]+$/.test(formula))
+   throw Error("Use chemical symbols, numbers and brackets only.");
+  if(document.getElementById("quantity").value===""||
+     !Number.isFinite(quantity)||quantity<0)
+   throw Error("Enter a valid quantity (zero or greater).");
+
+  const mass=molarMass(formula);
+  if(!Number.isFinite(mass)||mass<=0)
+   throw Error("Invalid molar mass.");
+
+  let moles,grams,particles,calculation,finalCalculation;
+
+  if(unit==="grams"){
+   grams=quantity;
+   moles=grams/mass;
+   particles=moles*AVOGADRO;
+   calculation=`Moles = Grams ÷ Molar Mass`;
+   finalCalculation=`${quantity} ÷ ${mass.toFixed(3)} = ${fmt(moles)} mol`;
+  }
+  else if(unit==="moles"){
+   moles=quantity;
+   grams=moles*mass;
+   particles=moles*AVOGADRO;
+   calculation=`Grams = Moles × Molar Mass`;
+   finalCalculation=`${quantity} × ${mass.toFixed(3)} = ${fmt(grams)} g`;
+  }
+  else{
+   particles=quantity;
+   moles=particles/AVOGADRO;
+   grams=moles*mass;
+   calculation=`Moles = Particles ÷ Avogadro's Number`;
+   finalCalculation=`${sci(particles)} ÷ ${sci(AVOGADRO)} = ${fmt(moles)} mol`;
+  }
+
+  document.getElementById("molesResult").textContent=
+   fmt(moles)+" mol";
+  document.getElementById("massResult").textContent=
+   fmt(grams)+" g";
+  document.getElementById("particleResult").textContent=
+   sci(particles)+" particles";
+
+  document.getElementById("stepsTable").innerHTML=`
+   <tr><td>Chemical Formula</td><td>${formula}</td></tr>
+   <tr><td>Molar Mass</td><td>${mass.toFixed(3)} g/mol</td></tr>
+   <tr><td>Input Quantity</td><td>${fmt(quantity)} ${unit}</td></tr>
+   <tr><td>Moles</td><td>${fmt(moles)} mol</td></tr>
+   <tr><td>Grams</td><td>${fmt(grams)} g</td></tr>
+   <tr><td>Particles</td><td>${sci(particles)}</td></tr>`;
+
+  document.getElementById("calculation").textContent=calculation;
+  document.getElementById("finalCalculation").textContent=finalCalculation;
+
+  result.style.display="flex";
+  breakdown.style.display="block";
+
+ }catch(e){
+  error.textContent=e.message;
+  error.style.display="block";
+ }
+}
+
+document.getElementById("quantity").addEventListener("keydown",e=>{
+ if(e.key==="Enter")calculate();
+});
+document.getElementById("formula").addEventListener("keydown",e=>{
+ if(e.key==="Enter")calculate();
+});
+calculate();
+</script>
+
+</body>
+</html>

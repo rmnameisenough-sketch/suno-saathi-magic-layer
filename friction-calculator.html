@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friction Calculator (F = μN) | Suno Saathi Tools</title>
+<meta name="description" content="Calculate friction force, coefficient of friction and normal force, including normal force from mass, with formulas and an example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/friction-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:#101d40;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{color:#cbd8f5;margin:10px 0 0}
+nav{background:#1769d2;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 14px #00000008}
+h2{font-size:20px;margin-top:0;color:#14264d}
+h3{color:#1769d2}
+.hero{text-align:center}
+.hero svg{max-width:100%;height:150px}
+select,input{width:100%;padding:12px;border:1px solid #ccd5e4;border-radius:8px;font-size:16px;margin:7px 0 13px;background:white}
+label{font-weight:bold;font-size:14px}
+button{width:100%;padding:14px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#1056ad}
+.result{background:#e5f8ed;border:1px solid #a5dfbd;border-radius:10px;padding:17px;margin-top:15px;display:none}
+.result strong{color:#087b42;font-size:22px}
+.formula{background:#edf3ff;padding:13px;border-radius:8px;font-size:18px;text-align:center;font-weight:bold;color:#174eaa}
+.small{font-size:13px;color:#667085}
+footer{text-align:center;padding:25px;color:#65718a}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#14264d}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+<header>
+<div class="brand">Suno Saathi Physics Tools</div>
+<p>Friction Calculator</p>
+</header>
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card hero">
+<h1 class="page-title">Friction Force Calculator</h1>
+<svg viewBox="0 0 400 150" role="img" aria-label="Block experiencing friction on a surface">
+<line x1="35" y1="115" x2="365" y2="115" stroke="#8fa4c4" stroke-width="4"/>
+<rect x="140" y="65" width="100" height="50" rx="7" fill="#1769d2"/>
+<text x="190" y="95" font-size="18" fill="white" text-anchor="middle">Block</text>
+<path d="M140 90 H65 M80 75 L65 90 L80 105" stroke="#e45757" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="90" y="65" fill="#e45757" font-size="15" text-anchor="middle">Friction</text>
+<path d="M190 65 V25 M175 40 L190 25 L205 40" stroke="#16a36a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="215" y="32" fill="#16a36a" font-size="15">N</text>
+</svg>
+<p>Calculate the force opposing relative motion between surfaces.</p>
+</div>
+
+<div class="card">
+<h2>1. Select Calculation</h2>
+<label for="mode">What do you want to calculate?</label>
+<select id="mode" onchange="renderFields()">
+<option value="force">Friction Force (F = μN)</option>
+<option value="mu">Coefficient of Friction (μ = F/N)</option>
+<option value="normal">Normal Force (N = F/μ)</option>
+<option value="weight">Normal Force from Mass (N = mg)</option>
+</select>
+
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+<div class="result" id="result"></div>
+<p class="small">SI units: force in newtons (N), mass in kg, coefficient of friction is dimensionless.</p>
+</div>
+
+<div class="card">
+<h2>2. Friction Formulas</h2>
+<div class="formula">F = μN</div>
+<p>Friction force = coefficient × normal force.</p>
+<div class="formula">μ = F / N</div>
+<p>Coefficient of friction.</p>
+<div class="formula">N = F / μ</div>
+<p>Normal force when friction and coefficient are known.</p>
+<div class="formula">N = mg</div>
+<p>Normal force on a horizontal surface when no other vertical forces act.</p>
+</div>
+
+<div class="card">
+<h2>3. Example</h2>
+<p>A block has normal force 50 N and coefficient of friction 0.4.</p>
+<p>F = μN</p>
+<p>F = 0.4 × 50</p>
+<p><b>Friction force = 20 N</b></p>
+</div>
+
+<div class="card">
+<h2>4. How It Works</h2>
+<ul>
+<li>Select the required calculation.</li>
+<li>Enter the known values.</li>
+<li>Click Calculate.</li>
+<li>Get the answer and calculation steps.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>5. FAQs</h2>
+<h3>What is friction?</h3>
+<p>Friction is a force that opposes relative motion or the tendency of relative motion between surfaces.</p>
+<h3>What is μ?</h3>
+<p>μ represents the coefficient of friction between two surfaces.</p>
+<h3>Does friction always equal μN?</h3>
+<p>For kinetic friction, F = μkN. For static friction, friction adjusts up to a maximum μsN.</p>
+<h3>What is normal force?</h3>
+<p>Normal force is the perpendicular contact force exerted by a surface.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="hookes-law-calculator.html">Hooke's Law</a></li>
+<li><a href="momentum-impulse-calculator.html">Momentum &amp; Impulse</a></li>
+<li><a href="../chapters/motion-and-forces.html">Chapter guide: Motion and Forces</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Physics Smartly<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields={
+force:[
+["mu","Coefficient of friction μ"],
+["N","Normal force N (newtons)"]
+],
+mu:[
+["F","Friction force F (newtons)"],
+["N","Normal force N (newtons)"]
+],
+normal:[
+["F","Friction force F (newtons)"],
+["mu","Coefficient of friction μ"]
+],
+weight:[
+["m","Mass m (kg)"]
+]
+};
+
+function renderFields(){
+const mode=document.getElementById("mode").value;
+document.getElementById("fields").innerHTML=fields[mode].map(f=>
+`<label for="${f[0]}">${f[1]}</label>
+<input type="number" id="${f[0]}" step="any" min="0" placeholder="Enter value">`
+).join("");
+document.getElementById("result").style.display="none";
+}
+
+function val(id){
+const el=document.getElementById(id);
+if(!el||el.value.trim()==="")throw new Error("Please fill all fields.");
+const n=Number(el.value);
+if(!Number.isFinite(n)||n<0)throw new Error("Enter valid non-negative values.");
+return n;
+}
+
+function show(answer,unit,steps){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<strong>Answer: ${(answer!==0&&Math.abs(answer)<0.0001)?answer.toExponential(4):answer.toFixed(4)} ${unit}</strong><hr>${steps}`;
+}
+
+function calculate(){
+try{
+const mode=document.getElementById("mode").value;
+let answer,steps;
+
+if(mode==="force"){
+const mu=val("mu"),N=val("N");
+answer=mu*N;
+steps=`F = μN<br>F = ${mu} × ${N}<br>F = ${answer} N`;
+show(answer,"N",steps);
+}
+else if(mode==="mu"){
+const F=val("F"),N=val("N");
+if(N===0)throw new Error("Normal force must be greater than zero.");
+answer=F/N;
+steps=`μ = F/N<br>μ = ${F}/${N}<br>μ = ${answer}`;
+show(answer,"",steps);
+}
+else if(mode==="normal"){
+const F=val("F"),mu=val("mu");
+if(mu===0)throw new Error("Coefficient must be greater than zero.");
+answer=F/mu;
+steps=`N = F/μ<br>N = ${F}/${mu}<br>N = ${answer} N`;
+show(answer,"N",steps);
+}
+else{
+const m=val("m");
+const g=9.81;
+answer=m*g;
+steps=`N = mg<br>N = ${m} × ${g}<br>N = ${answer} N`;
+show(answer,"N",steps);
+}
+}catch(e){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<span style="color:#b42318;font-weight:bold">${e.message}</span>`;
+}
+}
+renderFields();
+</script>
+</body>
+</html>

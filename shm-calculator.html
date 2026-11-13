@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHM Time Period &amp; Frequency Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Find the time period and frequency of simple harmonic motion, including spring-mass systems and the simple pendulum.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/shm-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17233b}
+header{background:#102a56;color:white;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+nav a{color:white;text-decoration:none;margin-right:15px}
+.logo{font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 4px 18px #102a5610}
+h1,h2{color:#163d78}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd6e5;border-radius:9px;font-size:16px}
+button{background:#1769e0;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;cursor:pointer;margin-top:18px}
+button:hover{background:#1055b8}
+.result{background:#eafff1;border:1px solid #b6edcb;padding:18px;border-radius:12px;margin-top:20px}
+.result h2{color:#08783b;margin:0 0 10px}
+.tick{color:#0b9d50;font-size:24px}
+.formula{background:#edf4ff;padding:15px;border-radius:10px;text-align:center;font-size:20px;font-weight:bold;color:#174b91}
+.small{color:#617089;font-size:14px}
+svg{max-width:100%;display:block;margin:auto}
+footer{text-align:center;padding:25px;color:#66748b}
+.hidden{display:none}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<nav>
+<div class="logo">🔬 Suno Saathi Tools</div>
+<div>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<section class="card" style="text-align:center">
+<h1>Simple Harmonic Motion Calculator</h1>
+<p>Calculate oscillation time period, frequency and angular frequency.</p>
+
+<svg width="280" height="150" viewBox="0 0 280 150">
+<line x1="140" y1="10" x2="140" y2="135" stroke="#94a3b8" stroke-dasharray="5 5"/>
+<path d="M140 15 Q190 35 140 55 Q90 75 140 95 Q190 115 140 135"
+fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="140" cy="15" r="8" fill="#16a34a"/>
+<circle cx="140" cy="135" r="8" fill="#ef4444"/>
+<text x="205" y="70" fill="#163d78" font-size="13">Oscillation</text>
+</svg>
+</section>
+
+<section class="card">
+<h2>Calculator</h2>
+
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="changeMode()">
+<option value="frequency">Frequency from Time Period</option>
+<option value="period">Time Period from Frequency</option>
+<option value="omega">Angular Frequency</option>
+<option value="spring">Spring-Mass Time Period</option>
+<option value="pendulum">Simple Pendulum Time Period</option>
+</select>
+
+<div id="basicFields">
+<div id="periodBox">
+<label for="period">Time Period (s)</label>
+<input id="period" type="number" min="0" step="any" placeholder="Enter time period">
+</div>
+
+<div id="frequencyBox">
+<label for="frequency">Frequency (Hz)</label>
+<input id="frequency" type="number" min="0" step="any" placeholder="Enter frequency">
+</div>
+</div>
+
+<div id="springFields" class="hidden">
+<label for="mass">Mass (kg)</label>
+<input id="mass" type="number" min="0" step="any" placeholder="Enter mass">
+
+<label for="constant">Spring Constant (N/m)</label>
+<input id="constant" type="number" min="0" step="any" placeholder="Enter spring constant">
+</div>
+
+<div id="pendulumFields" class="hidden">
+<label for="length">Pendulum Length (m)</label>
+<input id="length" type="number" min="0" step="any" placeholder="Enter length">
+
+<label for="gravity">Gravity (m/s²)</label>
+<input id="gravity" type="number" min="0" step="any" value="9.8">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetAll()" style="background:#64748b">Reset</button>
+
+<div id="result" class="result hidden"></div>
+</section>
+
+<section class="card">
+<h2>Formula</h2>
+<div id="formula" class="formula">f = 1/T</div>
+<p class="small">T = time period, f = frequency, ω = angular frequency.</p>
+</section>
+
+<section class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select a calculation type.</li>
+<li>Enter the required physical quantities.</li>
+<li>Use SI units.</li>
+<li>Click Calculate for the result and steps.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Examples</h2>
+<p>Time period = 2 seconds</p>
+<div class="formula">f = 1/2 = 0.5 Hz</div>
+<p>Spring mass = 1 kg, spring constant = 100 N/m</p>
+<div class="formula">T = 2π√(1/100) ≈ 0.628 s</div>
+</section>
+
+<section class="card">
+<h2>FAQs</h2>
+<p><b>1. What is SHM?</b><br>Periodic motion where restoring force is proportional to displacement and directed toward equilibrium.</p>
+<p><b>2. What is angular frequency?</b><br>Angular rate of oscillation, measured in rad/s.</p>
+<p><b>3. What is the spring time period?</b><br>T = 2π√(m/k).</p>
+<p><b>4. What is the pendulum time period?</b><br>For small oscillations, T = 2π√(L/g).</p>
+</section>
+
+<section class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="shm-advanced-calculator.html">SHM Displacement &amp; Velocity</a></li>
+<li><a href="shm-energy-calculator.html">SHM Energy</a></li>
+<li><a href="simple-pendulum-calculator.html">Simple Pendulum</a></li>
+<li><a href="hookes-law-calculator.html">Hooke's Law</a></li>
+<li><a href="wave-frequency-calculator.html">Wave &amp; Frequency</a></li>
+<li><a href="../chapters/oscillations-and-waves.html">Chapter guide: Oscillations and Waves</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</section>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Science Better<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function changeMode(){
+const mode=$("mode").value;
+$("basicFields").classList.toggle("hidden",mode==="spring"||mode==="pendulum");
+$("springFields").classList.toggle("hidden",mode!=="spring");
+$("pendulumFields").classList.toggle("hidden",mode!=="pendulum");
+
+$("periodBox").classList.toggle("hidden",mode!=="frequency"&&mode!=="omega");
+$("frequencyBox").classList.toggle("hidden",mode!=="period"&&mode!=="omega");
+
+const formulas={
+frequency:"f = 1 / T",
+period:"T = 1 / f",
+omega:"ω = 2πf = 2π/T",
+spring:"T = 2π√(m/k)",
+pendulum:"T = 2π√(L/g)"
+};
+$("formula").textContent=formulas[mode];
+$("result").classList.add("hidden");
+}
+
+function calculate(){
+const mode=$("mode").value;
+let answer,unit,title,steps;
+
+if(mode==="frequency"){
+const T=+$("period").value;
+if($("period").value===""||T<=0)return alert("Enter time period greater than zero.");
+answer=1/T;unit="Hz";title="Frequency";
+steps=`f = 1/T<br>f = 1/${T}<br>f = ${answer} Hz`;
+}
+else if(mode==="period"){
+const f=+$("frequency").value;
+if($("frequency").value===""||f<=0)return alert("Enter frequency greater than zero.");
+answer=1/f;unit="s";title="Time Period";
+steps=`T = 1/f<br>T = 1/${f}<br>T = ${answer} s`;
+}
+else if(mode==="omega"){
+let f,T;
+if($("frequency").value!==""){
+f=+$("frequency").value;
+if(f<=0)return alert("Frequency must be greater than zero.");
+answer=2*Math.PI*f;
+steps=`ω = 2πf<br>ω = 2π × ${f}<br>ω = ${answer} rad/s`;
+}
+else if($("period").value!==""){
+T=+$("period").value;
+if(T<=0)return alert("Time period must be greater than zero.");
+answer=2*Math.PI/T;
+steps=`ω = 2π/T<br>ω = 2π/${T}<br>ω = ${answer} rad/s`;
+}
+else return alert("Enter either frequency or time period.");
+unit="rad/s";title="Angular Frequency";
+}
+else if(mode==="spring"){
+const m=+$("mass").value,k=+$("constant").value;
+if($("mass").value===""||$("constant").value===""||m<=0||k<=0)
+return alert("Enter mass and spring constant greater than zero.");
+answer=2*Math.PI*Math.sqrt(m/k);
+unit="s";title="Spring Time Period";
+steps=`T = 2π√(m/k)<br>T = 2π√(${m}/${k})<br>T = ${answer} s`;
+}
+else{
+const L=+$("length").value,g=+$("gravity").value;
+if($("length").value===""||$("gravity").value===""||L<=0||g<=0)
+return alert("Enter positive length and gravity.");
+answer=2*Math.PI*Math.sqrt(L/g);
+unit="s";title="Pendulum Time Period";
+steps=`T = 2π√(L/g)<br>T = 2π√(${L}/${g})<br>T = ${answer} s`;
+}
+
+if(!Number.isFinite(answer))return alert("Calculation error.");
+
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> ${title}</h2>
+<h3>${answer.toLocaleString(undefined,{maximumFractionDigits:8})} ${unit}</h3>
+<hr><b>Step-by-step solution</b><br>${steps}`;
+$("result").classList.remove("hidden");
+}
+
+function resetAll(){
+document.querySelectorAll("input").forEach(x=>x.value="");
+$("gravity").value=9.8;
+$("result").classList.add("hidden");
+}
+changeMode();
+</script>
+</body>
+</html>

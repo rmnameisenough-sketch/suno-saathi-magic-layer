@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilution Calculator (M₁V₁ = M₂V₂) | Suno Saathi Tools</title>
+<meta name="description" content="Calculate stock volume, final concentration, final volume or stock concentration for a dilution, with step-by-step working.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/chemistry/dilution-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f7fc;
+ color:#17243a;
+}
+header{
+ background:linear-gradient(135deg,#123c91,#1769d2);
+ color:white;
+ padding:22px 16px;
+}
+.nav{
+ max-width:1000px;
+ margin:auto;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+.logo{font-size:22px;font-weight:bold}
+.nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{
+ max-width:1000px;
+ margin:auto;
+ padding:25px 16px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:20px;
+}
+.hero h1{font-size:30px;margin:0 0 10px}
+.hero p{line-height:1.6;margin:0;color:#e4efff}
+.hero svg{width:120px;max-width:35%}
+.container{max-width:900px;margin:20px auto;padding:0 14px}
+.card{
+ background:white;
+ border-radius:16px;
+ padding:22px;
+ margin-bottom:18px;
+ box-shadow:0 5px 20px #17365b0c;
+ border:1px solid #e5edf7;
+}
+h2{font-size:21px;margin-top:0;color:#163d85}
+label{display:block;font-weight:bold;font-size:14px;margin:15px 0 7px}
+input,select{
+ width:100%;
+ padding:13px;
+ border:1px solid #cbd7e7;
+ border-radius:9px;
+ font-size:16px;
+ background:#fff;
+ color:#17243a;
+}
+input:focus,select:focus{outline:2px solid #a8cbff;border-color:#2875df}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+button{
+ width:100%;
+ border:0;
+ border-radius:10px;
+ padding:15px;
+ margin-top:20px;
+ background:#1769d2;
+ color:white;
+ font-size:17px;
+ font-weight:bold;
+ cursor:pointer;
+}
+button:hover{background:#1055b0}
+.result{
+ display:none;
+ background:#eaf9ef;
+ border:1px solid #b8e8c7;
+ border-radius:12px;
+ padding:18px;
+ margin-top:20px;
+}
+.result h3{color:#14743b;margin:0 0 10px}
+.result-value{font-size:27px;font-weight:bold;color:#087b3c}
+.tick{
+ display:inline-flex;
+ width:25px;height:25px;
+ align-items:center;justify-content:center;
+ border-radius:50%;
+ background:#19a65a;color:white;
+ margin-right:7px;
+}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{
+ border:1px solid #dce5f0;
+ padding:10px;
+ text-align:left;
+ font-size:14px;
+}
+th{background:#edf4ff}
+.formula{
+ background:#eef5ff;
+ padding:14px;
+ border-radius:10px;
+ text-align:center;
+ font-size:22px;
+ font-weight:bold;
+ color:#174a9c;
+}
+.note{
+ background:#fff8e8;
+ border-left:4px solid #f2b441;
+ padding:13px;
+ border-radius:6px;
+ line-height:1.6;
+}
+p,li{line-height:1.7}
+footer{text-align:center;padding:25px;color:#63738a;font-size:13px}
+@media(max-width:600px){
+ .hero h1{font-size:25px}
+ .hero{padding-top:20px}
+ .grid{grid-template-columns:1fr}
+ .card{padding:17px}
+ .nav a{margin-left:8px}
+ th,td{padding:8px;font-size:13px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+ <div class="nav">
+  <div class="logo">🧪 Suno Saathi Tools</div>
+  <div>
+   <a href="../index.html">Home</a>
+   <a href="#tools">Tools</a>
+  </div>
+ </div>
+
+ <div class="hero">
+  <div>
+   <h1>Dilution Calculator</h1>
+   <p>Calculate stock volume, final concentration and solution volume using M₁V₁ = M₂V₂.</p>
+  </div>
+
+  <svg viewBox="0 0 120 140" fill="none">
+   <path d="M45 10H75M52 10V48L20 105Q13 125 35 130H85Q107 125 100 105L68 48V10"
+    stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+   <path d="M31 88H89L99 110Q105 125 85 126H35Q15 125 25 110Z"
+    fill="#75d6ff" opacity=".9"/>
+   <circle cx="49" cy="102" r="5" fill="white"/>
+   <circle cx="70" cy="113" r="4" fill="white"/>
+   <circle cx="61" cy="93" r="3" fill="white"/>
+  </svg>
+ </div>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Calculate Dilution</h2>
+
+<label>What do you want to calculate?</label>
+<select id="unknown">
+ <option value="V1">Required Stock Volume (V₁)</option>
+ <option value="M2">Final Concentration (M₂)</option>
+ <option value="V2">Final Solution Volume (V₂)</option>
+ <option value="M1">Stock Concentration (M₁)</option>
+</select>
+
+<div class="grid">
+ <div>
+  <label>Stock Concentration M₁ (mol/L)</label>
+  <input id="M1" type="number" step="any" placeholder="e.g. 2">
+ </div>
+
+ <div>
+  <label>Stock Volume V₁ (mL)</label>
+  <input id="V1" type="number" step="any" placeholder="e.g. 100">
+ </div>
+
+ <div>
+  <label>Final Concentration M₂ (mol/L)</label>
+  <input id="M2" type="number" step="any" placeholder="e.g. 0.5">
+ </div>
+
+ <div>
+  <label>Final Volume V₂ (mL)</label>
+  <input id="V2" type="number" step="any" placeholder="e.g. 400">
+ </div>
+</div>
+
+<button onclick="calculate()">Calculate Dilution</button>
+
+<div class="result" id="result">
+ <h3><span class="tick">✓</span>Calculation Result</h3>
+ <div class="result-value" id="answer"></div>
+ <p id="meaning"></p>
+ <div id="steps"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formula Used</h2>
+<div class="formula">M₁V₁ = M₂V₂</div>
+<p>In dilution, the amount of solute remains constant. Adding solvent decreases concentration but increases total solution volume.</p>
+<div class="note">
+<strong>Important:</strong> Concentration should use the same unit on both sides. This calculator uses mol/L (M), and volume in mL.
+</div>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>Prepare 400 mL of 0.5 M solution from a 2 M stock solution.</p>
+<table>
+<tr><th>Quantity</th><th>Value</th></tr>
+<tr><td>M₁</td><td>2 M</td></tr>
+<tr><td>M₂</td><td>0.5 M</td></tr>
+<tr><td>V₂</td><td>400 mL</td></tr>
+<tr><td>V₁</td><td>100 mL</td></tr>
+</table>
+<p><strong>Answer:</strong> Take 100 mL stock solution and add solvent until the final total volume reaches 400 mL.</p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select the quantity you want to calculate.</li>
+<li>Enter the other three known values.</li>
+<li>Click Calculate Dilution.</li>
+<li>See the result and calculation steps.</li>
+</ol>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+
+<p><strong>1. What is dilution?</strong><br>
+Dilution is reducing solution concentration by adding solvent.</p>
+
+<p><strong>2. What is M₁V₁ = M₂V₂?</strong><br>
+It is the dilution equation. The quantity of solute remains constant before and after dilution.</p>
+
+<p><strong>3. Is stock volume the final volume?</strong><br>
+No. Stock volume is the amount taken from the concentrated solution. Final volume includes stock plus added solvent.</p>
+
+<p><strong>4. Can I dilute a weaker solution into a stronger one?</strong><br>
+Ordinary dilution cannot increase concentration. To obtain a more concentrated solution, a different preparation method is needed.</p>
+</div>
+
+<div class="card" id="tools">
+<h2>More Chemistry Tools</h2>
+<ul>
+<li><a href="molarity-calculator.html">Molarity Calculator</a></li>
+<li><a href="molar-mass-calculator.html">Molar Mass Calculator</a></li>
+<li><a href="mole-calculator.html">Mole Calculator</a></li>
+<li><a href="ph-calculator.html">pH &amp; pOH Calculator</a></li>
+<li><a href="../chapters/solutions-and-concentration.html">Chapter guide: Solutions, Molarity and Dilution</a></li>
+<li><a href="index.html">All Chemistry Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>
+© 2026 Suno Saathi Tools · Chemistry Calculators
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+function calculate(){
+
+ const unknown=document.getElementById("unknown").value;
+ const ids=["M1","V1","M2","V2"];
+ const values={};
+
+ for(const id of ids){
+  if(id===unknown) continue;
+
+  const raw=document.getElementById(id).value;
+  if(raw.trim()==="" || !Number.isFinite(Number(raw))){
+   alert("Please enter all three known values.");
+   return;
+  }
+
+  values[id]=Number(raw);
+
+  if(values[id]<=0){
+   alert("All values must be greater than zero.");
+   return;
+  }
+ }
+
+ let result;
+ let formula;
+ let meaning;
+ let steps;
+
+ const M1=values.M1;
+ const V1=values.V1;
+ const M2=values.M2;
+ const V2=values.V2;
+
+ if(unknown==="V1"){
+  result=(M2*V2)/M1;
+  formula="V₁ = (M₂ × V₂) / M₁";
+  meaning="Required stock solution volume";
+  steps=`V₁ = (${M2} × ${V2}) / ${M1}<br>
+         V₁ = ${result.toFixed(4)} mL`;
+ }
+
+ if(unknown==="M2"){
+  result=(M1*V1)/V2;
+  formula="M₂ = (M₁ × V₁) / V₂";
+  meaning="Final concentration";
+  steps=`M₂ = (${M1} × ${V1}) / ${V2}<br>
+         M₂ = ${result.toFixed(6)} M`;
+ }
+
+ if(unknown==="V2"){
+  result=(M1*V1)/M2;
+  formula="V₂ = (M₁ × V₁) / M₂";
+  meaning="Final solution volume";
+  steps=`V₂ = (${M1} × ${V1}) / ${M2}<br>
+         V₂ = ${result.toFixed(4)} mL`;
+ }
+
+ if(unknown==="M1"){
+  result=(M2*V2)/V1;
+  formula="M₁ = (M₂ × V₂) / V₁";
+  meaning="Stock concentration";
+  steps=`M₁ = (${M2} × ${V2}) / ${V1}<br>
+         M₁ = ${result.toFixed(6)} M`;
+ }
+
+ if(!Number.isFinite(result) || result<=0){
+  alert("Invalid calculation. Please check your values.");
+  return;
+ }
+
+ let unit=unknown.startsWith("M")?"M":"mL";
+
+ document.getElementById("answer").innerHTML=
+  result.toLocaleString("en-IN",{maximumFractionDigits:6})+" "+unit;
+
+ document.getElementById("meaning").innerHTML=meaning;
+ document.getElementById("steps").innerHTML=
+  `<p><strong>Formula:</strong> ${formula}</p>
+   <p><strong>Step-by-step:</strong></p>
+   <div class="note">${steps}</div>`;
+
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+</script>
+
+</body>
+</html>

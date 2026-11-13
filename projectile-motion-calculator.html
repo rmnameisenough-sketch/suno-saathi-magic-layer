@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projectile Motion Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Calculate range, maximum height, time of flight and velocity components from launch speed and angle, with the formulas explained.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/projectile-motion-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17233b}
+header{background:#102a56;color:white;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+nav a{color:white;text-decoration:none;margin-right:15px}
+.logo{font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 4px 18px #102a5610}
+h1,h2{color:#163d78}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd6e5;border-radius:9px;font-size:16px}
+button{background:#1769e0;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;cursor:pointer;margin-top:18px}
+button:hover{background:#1055b8}
+.result{background:#eafff1;border:1px solid #b6edcb;padding:18px;border-radius:12px;margin-top:20px}
+.result h2{color:#08783b;margin:0 0 10px}
+.tick{color:#0b9d50;font-size:24px}
+.formula{background:#edf4ff;padding:15px;border-radius:10px;text-align:center;font-size:20px;font-weight:bold;color:#174b91}
+.small{color:#617089;font-size:14px}
+svg{max-width:100%;display:block;margin:auto}
+footer{text-align:center;padding:25px;color:#66748b}
+.hidden{display:none}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<nav>
+<div class="logo">🔬 Suno Saathi Tools</div>
+<div>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<section class="card" style="text-align:center">
+<h1>Projectile Motion Calculator</h1>
+<p>Calculate projectile range, height and flight time.</p>
+
+<svg width="300" height="150" viewBox="0 0 300 150">
+<line x1="15" y1="130" x2="285" y2="130" stroke="#64748b" stroke-width="2"/>
+<path d="M20 130 Q150 -90 280 130" fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="20" cy="130" r="6" fill="#16a34a"/>
+<circle cx="280" cy="130" r="6" fill="#ef4444"/>
+<text x="150" y="30" text-anchor="middle" fill="#163d78" font-size="13">Trajectory</text>
+</svg>
+</section>
+
+<section class="card">
+<h2>Calculator</h2>
+
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="changeMode()">
+<option value="range">Horizontal Range</option>
+<option value="height">Maximum Height</option>
+<option value="time">Time of Flight</option>
+<option value="components">Velocity Components</option>
+<option value="velocity">Initial Velocity from Range</option>
+</select>
+
+<div id="mainFields">
+<label for="velocity">Initial Velocity (m/s)</label>
+<input id="velocity" type="number" min="0" step="any" placeholder="Enter initial velocity">
+
+<label for="angle">Launch Angle (degrees)</label>
+<input id="angle" type="number" step="any" placeholder="Enter angle">
+
+<label for="gravity">Gravity (m/s²)</label>
+<input id="gravity" type="number" min="0" step="any" value="9.8">
+</div>
+
+<div id="rangeField" class="hidden">
+<label for="range">Horizontal Range (m)</label>
+<input id="range" type="number" min="0" step="any" placeholder="Enter range">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetAll()" style="background:#64748b">Reset</button>
+
+<div id="result" class="result hidden"></div>
+</section>
+
+<section class="card">
+<h2>Formula</h2>
+<div id="formula" class="formula">R = u² sin(2θ) / g</div>
+<p class="small">Assumes projectile lands at the same height from which it was launched and air resistance is neglected.</p>
+</section>
+
+<section class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Choose the required projectile quantity.</li>
+<li>Enter velocity, angle and gravity.</li>
+<li>Use degrees for launch angle.</li>
+<li>Click Calculate to see the result and steps.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Example</h2>
+<p>Initial velocity = 20 m/s, angle = 45°, gravity = 9.8 m/s²</p>
+<div class="formula">R = 400 × sin(90°) / 9.8 ≈ 40.82 m</div>
+</section>
+
+<section class="card">
+<h2>FAQs</h2>
+<p><b>1. What is projectile motion?</b><br>Motion of an object launched into the air under gravity.</p>
+<p><b>2. What is the maximum range angle?</b><br>45° for equal launch and landing heights, without air resistance.</p>
+<p><b>3. What is time of flight?</b><br>Total time the projectile remains in the air.</p>
+<p><b>4. Does air resistance matter?</b><br>This calculator ignores air resistance.</p>
+</section>
+
+<section class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="kinematics-equation-solver.html">Kinematics Equation Solver</a></li>
+<li><a href="acceleration-calculator.html">Acceleration Calculator</a></li>
+<li><a href="speed-distance-time.html">Speed, Distance &amp; Time</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="../chapters/motion-and-forces.html">Chapter guide: Motion and Forces</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</section>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Science Better<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function changeMode(){
+const mode=$("mode").value;
+$("rangeField").classList.toggle("hidden",mode!=="velocity");
+
+const formulas={
+range:"R = u² sin(2θ) / g",
+height:"H = u² sin²θ / (2g)",
+time:"T = 2u sinθ / g",
+components:"uₓ = u cosθ, uᵧ = u sinθ",
+velocity:"u = √(Rg / sin(2θ))"
+};
+$("formula").textContent=formulas[mode];
+$("result").classList.add("hidden");
+}
+
+function calculate(){
+const mode=$("mode").value;
+const u=+$("velocity").value;
+const angle=+$("angle").value;
+const g=+$("gravity").value;
+const theta=angle*Math.PI/180;
+let answer,unit,title,steps;
+
+if($("velocity").value===""||$("angle").value===""||$("gravity").value===""||u<0||g<=0)
+return alert("Enter valid velocity, angle and positive gravity.");
+
+if(mode==="range"){
+answer=u*u*Math.sin(2*theta)/g;
+unit="m";title="Horizontal Range";
+steps=`R = u² sin(2θ) / g<br>R = ${u}² × sin(${2*angle}°) / ${g}<br>R = ${answer} m`;
+}
+else if(mode==="height"){
+answer=u*u*Math.sin(theta)**2/(2*g);
+unit="m";title="Maximum Height";
+steps=`H = u² sin²θ / (2g)<br>H = ${u}² × sin²(${angle}°) / (2 × ${g})<br>H = ${answer} m`;
+}
+else if(mode==="time"){
+answer=2*u*Math.sin(theta)/g;
+unit="s";title="Time of Flight";
+steps=`T = 2u sinθ / g<br>T = 2 × ${u} × sin(${angle}°) / ${g}<br>T = ${answer} s`;
+}
+else if(mode==="components"){
+const ux=u*Math.cos(theta),uy=u*Math.sin(theta);
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> Velocity Components</h2>
+<h3>Horizontal: ${ux.toFixed(8)} m/s</h3>
+<h3>Vertical: ${uy.toFixed(8)} m/s</h3>
+<hr><b>Step-by-step</b><br>
+uₓ = u cosθ = ${u} × cos(${angle}°)<br>
+uᵧ = u sinθ = ${u} × sin(${angle}°)`;
+$("result").classList.remove("hidden");
+return;
+}
+else{
+const R=+$("range").value;
+if($("range").value===""||R<0)return alert("Enter a valid range.");
+if(Math.sin(2*theta)<=0)return alert("Choose an angle between 0° and 90°.");
+answer=Math.sqrt(R*g/Math.sin(2*theta));
+unit="m/s";title="Initial Velocity";
+steps=`u = √(Rg / sin(2θ))<br>u = √(${R} × ${g} / sin(${2*angle}°))<br>u = ${answer} m/s`;
+}
+
+if(!Number.isFinite(answer))return alert("Calculation error.");
+
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> ${title}</h2>
+<h3>${answer.toLocaleString(undefined,{maximumFractionDigits:8})} ${unit}</h3>
+<hr><b>Step-by-step solution</b><br>${steps}`;
+$("result").classList.remove("hidden");
+}
+
+function resetAll(){
+document.querySelectorAll("input").forEach(x=>x.value="");
+$("gravity").value=9.8;
+$("result").classList.add("hidden");
+}
+changeMode();
+</script>
+</body>
+</html>

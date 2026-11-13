@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens &amp; Mirror Formula Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Calculate focal length, image distance, object distance and magnification with the lens and mirror formulas. Examples included.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/optics-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17233b}
+header{background:#102a56;color:white;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+nav a{color:white;text-decoration:none;margin-right:15px}
+.logo{font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 4px 18px #102a5610}
+h1,h2{color:#163d78}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd6e5;border-radius:9px;font-size:16px}
+button{background:#1769e0;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;cursor:pointer;margin-top:18px}
+button:hover{background:#1055b8}
+.result{background:#eafff1;border:1px solid #b6edcb;padding:18px;border-radius:12px;margin-top:20px}
+.result h2{color:#08783b;margin:0 0 10px}
+.tick{color:#0b9d50;font-size:24px}
+.formula{background:#edf4ff;padding:15px;border-radius:10px;text-align:center;font-size:20px;font-weight:bold;color:#174b91}
+.small{color:#617089;font-size:14px}
+svg{max-width:100%;display:block;margin:auto}
+footer{text-align:center;padding:25px;color:#66748b}
+.hidden{display:none}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<nav>
+<div class="logo">🔬 Suno Saathi Tools</div>
+<div>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<section class="card" style="text-align:center">
+<h1>Optics Calculator</h1>
+<p>Calculate image distance, focal length and magnification.</p>
+
+<svg width="300" height="150" viewBox="0 0 300 150">
+<line x1="15" y1="75" x2="285" y2="75" stroke="#64748b" stroke-width="2"/>
+<line x1="150" y1="20" x2="150" y2="130" stroke="#2563eb" stroke-width="4"/>
+<path d="M150 20 Q125 75 150 130 Q175 75 150 20" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+<line x1="70" y1="75" x2="70" y2="30" stroke="#16a34a" stroke-width="3"/>
+<path d="M63 38 L70 30 L77 38" stroke="#16a34a" stroke-width="3" fill="none"/>
+<line x1="230" y1="75" x2="230" y2="110" stroke="#ef4444" stroke-width="3"/>
+<path d="M223 102 L230 110 L237 102" stroke="#ef4444" stroke-width="3" fill="none"/>
+<text x="150" y="145" text-anchor="middle" fill="#163d78" font-size="13">Lens & Image</text>
+</svg>
+</section>
+
+<section class="card">
+<h2>Calculator</h2>
+
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="changeMode()">
+<option value="lens">Lens Formula</option>
+<option value="mirror">Mirror Formula</option>
+<option value="magnification">Magnification</option>
+</select>
+
+<div id="distanceFields">
+<div id="objectBox">
+<label for="object">Object Distance (u in cm)</label>
+<input id="object" type="number" step="any" placeholder="Enter object distance">
+</div>
+
+<div id="imageBox">
+<label for="image">Image Distance (v in cm)</label>
+<input id="image" type="number" step="any" placeholder="Enter image distance">
+</div>
+
+<div id="focalBox">
+<label for="focal">Focal Length (f in cm)</label>
+<input id="focal" type="number" step="any" placeholder="Enter focal length">
+</div>
+</div>
+
+<div id="magFields" class="hidden">
+<label for="heightObject">Object Height (cm)</label>
+<input id="heightObject" type="number" step="any" placeholder="Enter object height">
+
+<label for="heightImage">Image Height (cm)</label>
+<input id="heightImage" type="number" step="any" placeholder="Enter image height">
+
+<label for="magU">Object Distance (u in cm) (optional)</label>
+<input id="magU" type="number" step="any" placeholder="Optional">
+
+<label for="magV">Image Distance (v in cm) (optional)</label>
+<input id="magV" type="number" step="any" placeholder="Optional">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetAll()" style="background:#64748b">Reset</button>
+
+<div id="result" class="result hidden"></div>
+</section>
+
+<section class="card">
+<h2>Formula</h2>
+<div id="formula" class="formula">Lens: 1/f = 1/v − 1/u<br>Mirror: 1/f = 1/v + 1/u</div>
+<p class="small">This calculator uses the Cartesian sign convention, so signs matter. Measure distances from the lens or mirror, with the direction of incoming light as positive. For a real object, enter the object distance <b>u as a negative number</b>.</p>
+<p class="small"><b>Example:</b> a convex lens has f = +10 cm and a real object is 30 cm in front of it. Enter u = −30 and f = 10 to get v = +15 cm (a real image on the other side). For a concave mirror, f is negative: u = −30 and f = −15 gives v = −30 cm (a real image in front of the mirror).</p>
+</section>
+
+<section class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select lens, mirror or magnification calculation.</li>
+<li>Enter the known values.</li>
+<li>Use consistent units (cm in this calculator).</li>
+<li>Click Calculate to get the answer and steps.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Examples</h2>
+<p>Lens: u = -30 cm, f = 10 cm</p>
+<div class="formula">1/v = 1/10 + 1/(-30)<br>v = 15 cm</div>
+<p>Magnification: Object height = 4 cm, Image height = -2 cm</p>
+<div class="formula">m = -2/4 = -0.5</div>
+</section>
+
+<section class="card">
+<h2>FAQs</h2>
+<p><b>1. What is focal length?</b><br>Distance between optical center/pole and principal focus.</p>
+<p><b>2. What is magnification?</b><br>Ratio of image height to object height.</p>
+<p><b>3. What does negative magnification mean?</b><br>Image is inverted under the chosen convention.</p>
+<p><b>4. Which sign convention is used?</b><br>Cartesian sign convention.</p>
+</section>
+
+<section class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="wave-frequency-calculator.html">Wave &amp; Frequency</a></li>
+<li><a href="shm-calculator.html">SHM Time Period &amp; Frequency</a></li>
+<li><a href="speed-distance-time.html">Speed, Distance &amp; Time</a></li>
+<li><a href="../chapters/electricity-and-optics.html">Chapter guide: Electricity and Optics</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</section>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Science Better<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function changeMode(){
+const mode=$("mode").value;
+$("distanceFields").classList.toggle("hidden",mode==="magnification");
+$("magFields").classList.toggle("hidden",mode!=="magnification");
+
+$("objectBox").classList.toggle("hidden",mode==="mirror"||mode==="lens"?false:true);
+$("imageBox").classList.toggle("hidden",mode==="magnification");
+$("focalBox").classList.toggle("hidden",mode==="magnification");
+
+const formulas={
+lens:"1/f = 1/v - 1/u",
+mirror:"1/f = 1/v + 1/u",
+magnification:"m = hᵢ / hₒ = -v/u"
+};
+$("formula").textContent=formulas[mode];
+$("result").classList.add("hidden");
+}
+
+function calculate(){
+const mode=$("mode").value;
+let answer,steps,title;
+
+if(mode==="lens"||mode==="mirror"){
+const u=+$("object").value;
+const v=+$("image").value;
+const f=+$("focal").value;
+const hasU=$("object").value!=="";
+const hasV=$("image").value!=="";
+const hasF=$("focal").value!=="";
+
+if([hasU,hasV,hasF].filter(Boolean).length!==2)
+return alert("Enter exactly two known values to calculate the third.");
+
+if(mode==="lens"){
+if(!hasF){
+if(v===u)return alert("Invalid values.");
+answer=1/(1/v-1/u);
+title="Focal Length";
+steps=`1/f = 1/v - 1/u<br>f = ${answer} cm`;
+}
+else if(!hasV){
+answer=1/(1/f+1/u);
+title="Image Distance";
+steps=`1/v = 1/f + 1/u<br>v = ${answer} cm`;
+}
+else{
+answer=1/(1/v-1/f);
+title="Object Distance";
+steps=`1/u = 1/v - 1/f<br>u = ${answer} cm`;
+}
+}
+else{
+if(!hasF){
+answer=1/(1/v+1/u);
+title="Focal Length";
+steps=`1/f = 1/v + 1/u<br>f = ${answer} cm`;
+}
+else if(!hasV){
+answer=1/(1/f-1/u);
+title="Image Distance";
+steps=`1/v = 1/f - 1/u<br>v = ${answer} cm`;
+}
+else{
+answer=1/(1/f-1/v);
+title="Object Distance";
+steps=`1/u = 1/f - 1/v<br>u = ${answer} cm`;
+}
+}
+}
+else{
+const ho=+$("heightObject").value,hi=+$("heightImage").value;
+if($("heightObject").value===""||$("heightImage").value===""||ho===0)
+return alert("Enter valid object and image heights.");
+answer=hi/ho;
+title="Magnification";
+steps=`m = hᵢ / hₒ<br>m = ${hi} / ${ho}<br>m = ${answer}`;
+if($("magU").value!==""&&$("magV").value!==""){
+const u=+$("magU").value,v=+$("magV").value;
+steps+=`<br>From distances: mirror m = −v/u = ${-v/u}; lens m = v/u = ${v/u}`;
+}
+}
+
+if(!Number.isFinite(answer))return alert("Calculation error. Check your values.");
+
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> ${title}</h2>
+<h3>${answer.toLocaleString(undefined,{maximumFractionDigits:8})}${mode==="magnification"?"":" cm"}</h3>
+<hr><b>Step-by-step solution</b><br>${steps}`;
+$("result").classList.remove("hidden");
+}
+
+function resetAll(){
+document.querySelectorAll("input").forEach(x=>x.value="");
+$("result").classList.add("hidden");
+}
+changeMode();
+</script>
+</body>
+</html>

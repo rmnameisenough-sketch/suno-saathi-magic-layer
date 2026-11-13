@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contact Suno Saathi Tools | Suno Saathi Tools</title>
+<meta name="description" content="Report a calculator error, suggest a new tool or send feedback to Suno Saathi Tools.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/contact">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7ff;color:#17315e;line-height:1.7}
+header{background:#102957;color:white;padding:25px;text-align:center}
+header h1{margin:0}
+nav{background:#175ac4;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 12px}
+.container{max-width:800px;margin:auto;padding:25px 18px}
+.card{background:white;border:1px solid #dce6f5;border-radius:15px;padding:25px;margin-bottom:20px}
+h2{color:#175ac4;margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #ccd8eb;border-radius:9px;font-size:15px}
+textarea{min-height:130px;resize:vertical}
+button{background:#175ac4;color:white;border:0;padding:14px 25px;border-radius:9px;font-size:16px;font-weight:bold;margin-top:15px;cursor:pointer}
+button:hover{background:#103f91}
+footer{background:#102957;color:white;text-align:center;padding:25px}
+footer a{color:#dbe8ff;text-decoration:none;margin:8px}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<h1>Contact Suno Saathi Tools</h1>
+<p>We value your feedback and suggestions.</p>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="physics/index.html">Physics</a>
+<a href="chemistry/index.html">Chemistry</a>
+<a href="about.html">About</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h2>Get in Touch</h2>
+<p>Contact us for:</p>
+<ul>
+<li>Calculator errors or corrections</li>
+<li>Suggestions for new tools</li>
+<li>Website feedback</li>
+<li>Business and collaboration inquiries</li>
+</ul>
+
+<p><b>Email:</b> sunosathi03@gmail.com</p>
+<small></small>
+</div>
+
+<div class="card">
+<h2>Send Feedback</h2>
+
+<form id="contactForm">
+<label for="name">Your Name</label>
+<input id="name" required placeholder="Enter your name">
+
+<label for="email">Your Email</label>
+<input id="email" type="email" required placeholder="Enter your email">
+
+<label for="type">Inquiry Type</label>
+<select id="type">
+<option>General Feedback</option>
+<option>Calculator Correction</option>
+<option>New Tool Suggestion</option>
+<option>Business Inquiry</option>
+</select>
+
+<label for="message">Message</label>
+<textarea id="message" required placeholder="Write your message..."></textarea>
+
+<button type="submit">Send Email</button>
+</form>
+
+<p id="status"></p>
+</div>
+
+</div>
+
+<footer>
+<p>Suno Saathi Tools • Learn • Calculate • Understand</p>
+<p>© 2026 Suno Saathi Tools</p>
+<a href="privacy-policy.html">Privacy Policy</a> |
+<a href="terms.html">Terms & Disclaimer</a>
+</footer>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit",function(e){
+ e.preventDefault();
+
+ const name=document.getElementById("name").value;
+ const email=document.getElementById("email").value;
+ const type=document.getElementById("type").value;
+ const message=document.getElementById("message").value;
+
+ const subject=encodeURIComponent(type+" - Suno Saathi Tools");
+ const body=encodeURIComponent(
+ "Name: "+name+"\n"+
+ "Email: "+email+"\n"+
+ "Type: "+type+"\n\n"+
+ message
+ );
+
+ document.getElementById("status").textContent="Opening your email application...";
+ window.location.href="mailto:sunosathi03@gmail.com?subject="+subject+"&body="+body;
+});
+</script>
+
+</body>
+</html>

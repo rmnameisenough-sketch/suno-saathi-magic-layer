@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Density Calculator (ρ = m/V) | Suno Saathi Tools</title>
+<meta name="description" content="Calculate density, mass or volume with unit conversion. Includes the formula, a worked example and answers to common density questions.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/density-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b;line-height:1.6}
+header{background:#123b82;color:white;padding:18px 15px}
+.nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:21px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{background:linear-gradient(135deg,#164ca5,#2879df);color:white;text-align:center;padding:30px 15px}
+.hero h1{margin:0 0 8px;font-size:28px}
+.hero p{margin:0;color:#e3efff}
+.container{max-width:900px;margin:25px auto;padding:0 14px}
+.card{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #17243b0b}
+.card h2{margin-top:0;color:#17458e;font-size:21px}
+label{display:block;font-weight:600;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd7e8;border-radius:8px;font-size:16px;background:white;color:#17243b}
+button{width:100%;margin-top:18px;padding:14px;background:#1764ca;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{background:#104da5}
+.result{display:none;background:#e9f9ef;border:1px solid #a9e5bd;border-radius:12px;padding:18px;margin-top:20px}
+.result h3{color:#13803e;margin:0 0 10px}
+.tick{color:#12833d;font-size:25px}
+.big{font-size:27px;font-weight:bold;color:#08783a;overflow-wrap:anywhere}
+.small{font-size:13px;color:#60718b}
+.step{background:#f3f7ff;padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;font-weight:bold;text-align:center;color:#17458e}
+.illustration{text-align:center;margin:10px auto}
+.illustration svg{max-width:220px;width:100%;height:auto}
+ul{padding-left:22px}
+details{padding:12px 0;border-bottom:1px solid #e5eaf2}
+summary{font-weight:bold;cursor:pointer;color:#17458e}
+footer{text-align:center;padding:25px;background:#102c5b;color:#dce8ff;margin-top:30px}
+footer a{color:white}
+@media(max-width:600px){
+.hero h1{font-size:24px}
+.card{padding:17px}
+nav a{margin-left:8px;font-size:13px}
+.logo{font-size:18px}
+.big{font-size:23px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">⚗ Suno Saathi Tools</div>
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<h1>Density Calculator</h1>
+<p>Calculate density, mass and volume with unit conversion.</p>
+</section>
+
+<main class="container">
+
+<div class="card">
+<div class="illustration">
+<svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+<rect x="30" y="25" width="75" height="80" rx="12" fill="#dceaff" stroke="#2879df" stroke-width="3"/>
+<rect x="35" y="60" width="65" height="40" rx="5" fill="#65a8ff"/>
+<rect x="135" y="25" width="75" height="80" rx="12" fill="#e5f8ec" stroke="#18a66a" stroke-width="3"/>
+<rect x="140" y="60" width="65" height="40" rx="5" fill="#5bd39a"/>
+<text x="67" y="48" text-anchor="middle" font-size="15" fill="#17458e" font-weight="bold">Mass</text>
+<text x="172" y="48" text-anchor="middle" font-size="15" fill="#12803d" font-weight="bold">Volume</text>
+</svg>
+</div>
+
+<h2>Calculator</h2>
+
+<label for="mode">What do you want to calculate?</label>
+<select id="mode" onchange="changeMode()">
+<option value="density">Density (ρ)</option>
+<option value="mass">Mass (m)</option>
+<option value="volume">Volume (V)</option>
+</select>
+
+<div id="fields"></div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetCalc()" style="background:#64748b">Reset</button>
+
+<div class="result" id="result">
+<h3><span class="tick">✓</span> Calculation Result</h3>
+<div class="big" id="answer"></div>
+<div id="steps" class="step"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formula Used</h2>
+<div class="formula">Density: ρ = m ÷ V</div><br>
+<div class="formula">Mass: m = ρ × V</div><br>
+<div class="formula">Volume: V = m ÷ ρ</div>
+<p class="small">Density SI unit: kg/m³ | Mass: kg | Volume: m³</p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li><b>Density:</b> Mass contained per unit volume.</li>
+<li><b>Mass:</b> Amount of matter in an object.</li>
+<li><b>Volume:</b> Space occupied by an object.</li>
+</ul>
+<p>Density is commonly expressed in kg/m³ or g/cm³.</p>
+<p>1 g/cm³ = 1000 kg/m³.</p>
+</div>
+
+<div class="card">
+<h2>Examples</h2>
+<p><b>Density:</b> Mass = 2 kg, Volume = 0.001 m³. Density = 2000 kg/m³.</p>
+<p><b>Mass:</b> Density = 1000 kg/m³, Volume = 0.002 m³. Mass = 2 kg.</p>
+<p><b>Volume:</b> Mass = 5 kg, Density = 2500 kg/m³. Volume = 0.002 m³.</p>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+<details>
+<summary>What is density?</summary>
+<p>Density is the mass of a substance divided by its volume.</p>
+</details>
+<details>
+<summary>What is the SI unit of density?</summary>
+<p>The SI unit is kilogram per cubic metre (kg/m³).</p>
+</details>
+<details>
+<summary>Can density be measured in g/cm³?</summary>
+<p>Yes. g/cm³ is a commonly used density unit. 1 g/cm³ equals 1000 kg/m³.</p>
+</details>
+<details>
+<summary>Does density depend on volume?</summary>
+<p>For a uniform substance under the same conditions, density remains the same even when the quantity changes.</p>
+</details>
+</div>
+
+<div class="card">
+<h2>More Physics Calculators</h2>
+<ul>
+<li><a href="pressure-calculator.html">Pressure Calculator</a></li>
+<li><a href="fluid-mechanics-calculator.html">Fluid Mechanics</a></li>
+<li><a href="gravitational-calculator.html">Weight &amp; Gravitational Force</a></li>
+<li><a href="../chemistry/mole-calculator.html">Mole Calculator (Chemistry)</a></li>
+<li><a href="../chapters/properties-of-matter-and-heat.html">Chapter guide: Properties of Matter, Fluids and Heat</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</main>
+
+<footer>
+<b>Suno Saathi Tools</b>
+<p>Free Student Scientific Calculators</p>
+<p>© 2026 Suno Saathi Tools</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+const result=document.getElementById("result");
+
+function field(id,label,placeholder){
+return `<label for="${id}">${label}</label>
+<input type="number" id="${id}" min="0" step="any" placeholder="${placeholder}">`;
+}
+function changeMode(){
+result.style.display="none";
+let m=mode.value,h="";
+if(m==="density"){
+h=field("mass","Mass (kg)","2");
+h+=field("volume","Volume (m³)","0.001");
+}
+if(m==="mass"){
+h=field("density","Density (kg/m³)","1000");
+h+=field("volume","Volume (m³)","0.002");
+}
+if(m==="volume"){
+h=field("mass","Mass (kg)","5");
+h+=field("density","Density (kg/m³)","2500");
+}
+fields.innerHTML=h;
+}
+function val(id){return Number(document.getElementById(id).value);}
+function valid(ids){
+for(let id of ids){
+let e=document.getElementById(id);
+if(!e||e.value===""){
+alert("Please enter all required values.");return false;
+}
+if(!Number.isFinite(Number(e.value))||Number(e.value)<0){
+alert("Please enter valid non-negative numbers.");return false;
+}
+}
+return true;
+}
+function fmt(n){
+if(n===0)return "0";
+const a=Math.abs(n);
+if(a<0.0001||a>=1e15)return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+return Number(n.toPrecision(a<1?5:8)).toLocaleString("en-US",{maximumFractionDigits:a<1?8:3});
+}
+function calculate(){
+let m=mode.value,ans,unit,steps,ids;
+if(m==="density"){
+ids=["mass","volume"];
+if(!valid(ids))return;
+let mass=val("mass"),v=val("volume");
+if(v===0){alert("Volume must be greater than zero.");return;}
+ans=mass/v;unit="kg/m³";
+steps=`ρ = m ÷ V<br>ρ = ${fmt(mass)} ÷ ${fmt(v)}<br>ρ = ${fmt(ans)} kg/m³`;
+}
+else if(m==="mass"){
+ids=["density","volume"];
+if(!valid(ids))return;
+let d=val("density"),v=val("volume");
+ans=d*v;unit="kg";
+steps=`m = ρ × V<br>m = ${fmt(d)} × ${fmt(v)}<br>m = ${fmt(ans)} kg`;
+}
+else{
+ids=["mass","density"];
+if(!valid(ids))return;
+let mass=val("mass"),d=val("density");
+if(d===0){alert("Density must be greater than zero.");return;}
+ans=mass/d;unit="m³";
+steps=`V = m ÷ ρ<br>V = ${fmt(mass)} ÷ ${fmt(d)}<br>V = ${fmt(ans)} m³`;
+}
+document.getElementById("answer").textContent=fmt(ans)+" "+unit;
+document.getElementById("steps").innerHTML=steps;
+result.style.display="block";
+result.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function resetCalc(){mode.value="density";changeMode();}
+changeMode();
+</script>
+</body>
+</html>

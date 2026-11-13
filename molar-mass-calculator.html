@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Molar Mass Calculator with Steps | Suno Saathi Tools</title>
+<meta name="description" content="Enter a chemical formula, including brackets such as Ca(OH)2, to get its molar mass and a step-by-step breakdown by element.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/chemistry/molar-mass-calculator">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:Arial,Helvetica,sans-serif;
+ background:#f4f7fc;
+ color:#17233c;
+ line-height:1.6;
+ overflow-x:hidden
+}
+header{
+ background:#102a56;color:white;
+ padding:14px 18px;
+}
+nav{
+ max-width:1100px;margin:auto;
+ display:flex;justify-content:space-between;
+ align-items:center;gap:12px;flex-wrap:wrap
+}
+.logo{font-size:20px;font-weight:bold}
+.logo span{color:#60d6a5}
+nav a{color:white;text-decoration:none;font-size:14px}
+.navlinks{display:flex;gap:18px;flex-wrap:wrap}
+
+.hero{
+ background:linear-gradient(135deg,#123c7b,#2875d5);
+ color:white;padding:35px 16px 45px;
+}
+.hero-inner{
+ max-width:1050px;margin:auto;
+ display:flex;align-items:center;
+ justify-content:space-between;gap:25px
+}
+.hero h1{font-size:34px;line-height:1.2;margin-bottom:12px}
+.hero p{color:#e0ecff;max-width:570px}
+.hero-art{width:180px;max-width:35%;flex-shrink:0}
+
+.container{max-width:1000px;margin:28px auto;padding:0 16px}
+.card{
+ background:white;border-radius:16px;
+ padding:24px;margin-bottom:22px;
+ box-shadow:0 5px 22px rgba(20,50,90,.07);
+ min-width:0
+}
+.card h2{font-size:22px;margin-bottom:14px;color:#16345e}
+.card h3{font-size:17px;margin:15px 0 8px}
+.muted{color:#64748b;font-size:14px}
+label{display:block;font-weight:600;margin:12px 0 6px}
+input{
+ width:100%;padding:14px;
+ border:1px solid #ccd7e6;border-radius:9px;
+ font-size:17px;outline:none
+}
+input:focus{border-color:#2673d5;box-shadow:0 0 0 3px #dcecff}
+button{
+ border:0;border-radius:9px;padding:13px 22px;
+ font-size:16px;font-weight:bold;cursor:pointer
+}
+.primary{
+ background:#1769ce;color:white;
+ width:100%;margin-top:14px
+}
+.primary:hover{background:#1055ac}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.examples button{
+ background:#eaf2ff;color:#185bb1;
+ font-size:14px;padding:8px 13px
+}
+.result{
+ background:#e8fff2;border:1px solid #a5e9c3;
+ border-radius:13px;padding:20px;margin-top:18px;
+ display:flex;gap:13px;align-items:flex-start
+}
+.tick{
+ background:#20a565;color:white;border-radius:50%;
+ width:30px;height:30px;flex-shrink:0;
+ display:flex;align-items:center;justify-content:center;
+ font-weight:bold
+}
+.result h3{margin:0;color:#126a42}
+.mass{
+ font-size:32px;font-weight:bold;color:#087b4b;
+ overflow-wrap:anywhere
+}
+.result p{color:#28734e;font-size:14px}
+.error{
+ display:none;margin-top:12px;
+ color:#b42318;background:#fff0ed;
+ padding:12px;border-radius:8px
+}
+.table-wrap{width:100%;overflow-x:auto}
+table{
+ width:100%;border-collapse:collapse;
+ margin-top:10px;font-size:14px
+}
+th,td{
+ padding:11px 9px;text-align:left;
+ border-bottom:1px solid #e5eaf2
+}
+th{background:#eef4ff;color:#214a83}
+td{overflow-wrap:anywhere}
+.total{font-weight:bold;background:#f1fff7}
+.steps{
+ background:#f2f7ff;padding:15px;
+ border-radius:10px;margin-top:14px;
+ overflow-wrap:anywhere
+}
+.steps p{margin:5px 0}
+ul{padding-left:22px}
+li{margin:6px 0}
+footer{
+ text-align:center;padding:25px 15px;
+ color:#64748b;font-size:13px
+}
+footer a{color:#2366bd;text-decoration:none}
+
+@media(max-width:650px){
+ header{padding:13px 15px}
+ nav{align-items:flex-start}
+ .logo{font-size:18px}
+ .navlinks{gap:12px}
+ .navlinks a{font-size:12px}
+ .hero{padding:25px 16px 35px}
+ .hero-inner{flex-direction:column;align-items:flex-start;gap:12px}
+ .hero h1{font-size:27px}
+ .hero-art{width:125px;max-width:100%;align-self:center}
+ .container{margin:18px auto;padding:0 12px}
+ .card{padding:17px;margin-bottom:16px;border-radius:13px}
+ .card h2{font-size:20px}
+ .mass{font-size:27px}
+ th,td{padding:9px 6px;font-size:12px}
+ .result{padding:15px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">⚗ Suno Saathi <span>Tools</span></div>
+<div class="navlinks">
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+<a href="../index.html">Chemistry</a>
+<a href="../index.html">About</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-inner">
+<div>
+<h1>Molar Mass Calculator</h1>
+<p>Calculate the molar mass of chemical compounds instantly with accurate atomic masses and step-by-step calculations.</p>
+</div>
+
+<svg class="hero-art" viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#a8dcff" stroke-width="4" fill="none">
+<path d="M35 35L70 55L105 35L140 55"/>
+<path d="M70 55L70 100L105 120L140 100"/>
+</g>
+<g fill="#67c8ff" stroke="white" stroke-width="3">
+<circle cx="35" cy="35" r="12"/>
+<circle cx="70" cy="55" r="12"/>
+<circle cx="105" cy="35" r="12"/>
+<circle cx="140" cy="55" r="12"/>
+<circle cx="70" cy="100" r="12"/>
+<circle cx="105" cy="120" r="12"/>
+<circle cx="140" cy="100" r="12"/>
+</g>
+<path d="M20 130H70V145L55 165Q50 175 65 175H135Q150 175 145 165L130 145V130H180"
+fill="none" stroke="#d7f4ff" stroke-width="5" stroke-linejoin="round"/>
+<path d="M58 160Q100 145 142 160L148 170H52Z" fill="#5be0b1" opacity=".8"/>
+</svg>
+</div>
+</section>
+
+<main class="container">
+
+<section class="card">
+<h2>🧪 Calculate Molar Mass</h2>
+<p class="muted">Enter a chemical formula below.</p>
+
+<label for="formula">Chemical Formula</label>
+<input id="formula" type="text" value="H2O" placeholder="Example: H2O">
+
+<button class="primary" onclick="calculate()">Calculate Molar Mass</button>
+
+<div class="examples">
+<button onclick="setFormula('H2O')">H₂O</button>
+<button onclick="setFormula('CO2')">CO₂</button>
+<button onclick="setFormula('NaCl')">NaCl</button>
+<button onclick="setFormula('Ca(OH)2')">Ca(OH)₂</button>
+<button onclick="setFormula('H2SO4')">H₂SO₄</button>
+<button onclick="setFormula('Al2(SO4)3')">Al₂(SO₄)₃</button>
+</div>
+
+<div class="error" id="error"></div>
+
+<div class="result" id="result" style="display:none">
+<div class="tick">✓</div>
+<div>
+<h3>Calculation Successful</h3>
+<div class="mass" id="mass">0 g/mol</div>
+<p id="resultFormula"></p>
+</div>
+</section>
+
+<section class="card" id="breakdown" style="display:none">
+<h2>📊 Step-by-Step Calculation</h2>
+<p class="muted">Atomic mass contribution of each element.</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Atoms</th>
+<th>Atomic Mass</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+<tfoot>
+<tr class="total">
+<td colspan="3">Total Molar Mass</td>
+<td id="tableTotal"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+
+<div class="steps">
+<h3>Calculation Formula</h3>
+<p id="formulaSteps"></p>
+<p id="finalStep"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>📘 How It Works</h2>
+<p>Molar mass is the mass of one mole of a substance. It is calculated by adding the atomic masses of all atoms present in a chemical formula.</p>
+<h3>Formula</h3>
+<div class="steps">
+<strong>Molar Mass = Σ (Atomic Mass × Number of Atoms)</strong>
+</div>
+<h3>Example: H₂O</h3>
+<ul>
+<li>Hydrogen atomic mass = 1.008</li>
+<li>Oxygen atomic mass = 15.999</li>
+<li>Water contains 2 hydrogen atoms and 1 oxygen atom.</li>
+<li>Molar mass = 2 × 1.008 + 15.999 = 18.015 g/mol</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>❓ Frequently Asked Questions</h2>
+<h3>What is molar mass?</h3>
+<p class="muted">Molar mass is the mass of one mole of a substance, expressed in grams per mole (g/mol).</p>
+
+<h3>How is molar mass calculated?</h3>
+<p class="muted">Multiply each element's atomic mass by its number of atoms and add all contributions.</p>
+
+<h3>Can I calculate compounds with brackets?</h3>
+<p class="muted">Yes. Formulas such as Ca(OH)₂ and Al₂(SO₄)₃ are supported.</p>
+
+<h3>Why does capitalization matter?</h3>
+<p class="muted">Chemical symbols are case-sensitive. CO₂ means carbon dioxide, while Co means cobalt.</p>
+</section>
+
+<section class="card">
+<h2>Related Chemistry Tools</h2>
+<ul>
+<li><a href="mole-calculator.html">Mole Calculator</a></li>
+<li><a href="molarity-calculator.html">Molarity Calculator</a></li>
+<li><a href="dilution-calculator.html">Dilution Calculator</a></li>
+<li><a href="ph-calculator.html">pH &amp; pOH Calculator</a></li>
+<li><a href="../chapters/mole-concept-and-molar-mass.html">Chapter guide: Mole Concept and Molar Mass</a></li>
+<li><a href="index.html">All Chemistry Calculators</a></li>
+</ul>
+</section>
+
+</main>
+
+<footer>
+<p>© Suno Saathi Tools | Chemistry Calculators</p>
+<p><a href="../index.html">Home</a> · <a href="../index.html#tools">All Tools</a></p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const atomicMass={
+H:1.008,He:4.002602,Li:6.94,Be:9.012183,
+B:10.81,C:12.011,N:14.007,O:15.999,
+F:18.998403,Ne:20.1797,Na:22.989769,
+Mg:24.305,Al:26.981538,Si:28.085,P:30.973762,
+S:32.06,Cl:35.45,Ar:39.948,K:39.0983,
+Ca:40.078,Sc:44.955908,Ti:47.867,
+V:50.9415,Cr:51.9961,Mn:54.938044,
+Fe:55.845,Co:58.933194,Ni:58.6934,
+Cu:63.546,Zn:65.38,Ga:69.723,
+Ge:72.630,As:74.921595,Se:78.971,
+Br:79.904,Kr:83.798,Rb:85.4678,
+Sr:87.62,Y:88.90584,Zr:91.224,
+Nb:92.90637,Mo:95.95,Tc:98,
+Ru:101.07,Rh:102.9055,Pd:106.42,
+Ag:107.8682,Cd:112.414,In:114.818,
+Sn:118.710,Sb:121.760,Te:127.60,
+I:126.90447,Xe:131.293,Cs:132.905452,
+Ba:137.327,La:138.90547,Ce:140.116,
+Pr:140.90766,Nd:144.242,Sm:150.36,
+Eu:151.964,Gd:157.25,Tb:158.92535,
+Dy:162.500,Ho:164.93033,Er:167.259,
+Tm:168.93422,Yb:173.045,Lu:174.9668,
+Hf:178.49,Ta:180.94788,W:183.84,
+Re:186.207,Os:190.23,Ir:192.217,
+Pt:195.084,Au:196.96657,Hg:200.592,
+Tl:204.38,Pb:207.2,Bi:208.9804,
+Po:209,At:210,Rn:222,Fr:223,Ra:226,
+Ac:227,Th:232.0377,Pa:231.03588,
+U:238.02891
+};
+
+function parseFormula(formula){
+ let i=0;
+ const elements={};
+
+ function group(){
+  const counts={};
+
+  while(i<formula.length){
+   const ch=formula[i];
+
+   if(ch==="("){
+    i++;
+    const inside=group();
+    if(formula[i]!==")")throw Error("Missing closing bracket.");
+    i++;
+    const multiplier=number();
+    for(const el in inside)
+     counts[el]=(counts[el]||0)+inside[el]*multiplier;
+   }
+   else if(ch===")"){
+    break;
+   }
+   else if(/[A-Z]/.test(ch)){
+    let el=ch;i++;
+    if(i<formula.length&&/[a-z]/.test(formula[i])){
+     el+=formula[i];i++;
+    }
+    if(!(el in atomicMass))throw Error("Unknown element: "+el);
+    const n=number();
+    counts[el]=(counts[el]||0)+n;
+   }
+   else{
+    throw Error("Invalid character: "+ch);
+   }
+  }
+  return counts;
+ }
+
+ function number(){
+  let start=i;
+  while(i<formula.length&&/[0-9]/.test(formula[i]))i++;
+  return start===i?1:Number(formula.slice(start,i));
+ }
+
+ const result=group();
+ if(i!==formula.length)throw Error("Invalid formula or unmatched bracket.");
+ return result;
+}
+
+function calculate(){
+ const formula=document.getElementById("formula").value.trim();
+ const error=document.getElementById("error");
+ const result=document.getElementById("result");
+ const breakdown=document.getElementById("breakdown");
+
+ error.style.display="none";
+ result.style.display="none";
+ breakdown.style.display="none";
+
+ try{
+  if(!formula)throw Error("Please enter a chemical formula.");
+  if(!/^[A-Za-z0-9()]+$/.test(formula))
+   throw Error("Use chemical symbols, numbers and brackets only.");
+
+  const counts=parseFormula(formula);
+  if(Object.keys(counts).length===0)
+   throw Error("Invalid chemical formula.");
+
+  let total=0;
+  let rows="";
+  let steps=[];
+
+  for(const el in counts){
+   const atoms=counts[el];
+   const mass=atomicMass[el];
+   const contribution=atoms*mass;
+   total+=contribution;
+
+   rows+=`<tr>
+    <td>${el}</td>
+    <td>${atoms}</td>
+    <td>${mass.toFixed(3)}</td>
+    <td>${contribution.toFixed(3)}</td>
+   </tr>`;
+
+   steps.push(`${atoms} × ${mass.toFixed(3)}`);
+  }
+
+  document.getElementById("mass").textContent=
+   total.toFixed(3)+" g/mol";
+
+  document.getElementById("resultFormula").textContent=
+   "Formula: "+formula;
+
+  document.getElementById("tableBody").innerHTML=rows;
+  document.getElementById("tableTotal").textContent=
+   total.toFixed(3);
+
+  document.getElementById("formulaSteps").textContent=
+   steps.join(" + ");
+
+  document.getElementById("finalStep").textContent=
+   "= "+total.toFixed(3)+" g/mol";
+
+  result.style.display="flex";
+  breakdown.style.display="block";
+
+ }catch(e){
+  error.textContent=e.message;
+  error.style.display="block";
+ }
+}
+
+function setFormula(f){
+ document.getElementById("formula").value=f;
+ calculate();
+}
+
+document.getElementById("formula").addEventListener("keydown",e=>{
+ if(e.key==="Enter")calculate();
+});
+
+calculate();
+</script>
+
+</body>
+</html>

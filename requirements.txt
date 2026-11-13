@@ -1,0 +1,5 @@
+# Production install (the AI providers and tests use only the Python standard library).
+# Versions are minimums I have NOT verified against; pin exact versions after your first successful deploy.
+fastapi>=0.110
+uvicorn>=0.29
+PyJWT>=2.8

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angular Acceleration Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Calculate angular acceleration, final angular velocity, angular displacement and torque using the rotational motion equations.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/angular-acceleration-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:#101d40;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{color:#cbd8f5;margin:10px 0 0}
+nav{background:#1769d2;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 14px #00000008}
+h2{font-size:20px;margin-top:0;color:#14264d}
+h3{color:#1769d2}
+.hero{text-align:center}
+.hero svg{max-width:100%;height:160px}
+select,input{width:100%;padding:12px;border:1px solid #ccd5e4;border-radius:8px;font-size:16px;margin:7px 0 13px;background:white}
+label{font-weight:bold;font-size:14px}
+button{width:100%;padding:14px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#1056ad}
+.result{background:#e5f8ed;border:1px solid #a5dfbd;border-radius:10px;padding:17px;margin-top:15px;display:none;overflow-wrap:anywhere}
+.result strong{color:#087b42;font-size:22px}
+.formula{background:#edf3ff;padding:13px;border-radius:8px;font-size:18px;text-align:center;font-weight:bold;color:#174eaa;margin:12px 0}
+.small{font-size:13px;color:#667085}
+footer{text-align:center;padding:25px;color:#65718a}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#14264d}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="brand">Suno Saathi Physics Tools</div>
+<p>Angular Acceleration Calculator</p>
+</header>
+
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card hero">
+<h1 class="page-title">Rotational Motion Calculator</h1>
+<svg viewBox="0 0 400 160" role="img" aria-label="Rotating wheel showing angular motion">
+<circle cx="190" cy="80" r="55" fill="#edf3ff" stroke="#1769d2" stroke-width="5"/>
+<circle cx="190" cy="80" r="9" fill="#1769d2"/>
+<line x1="190" y1="80" x2="190" y2="25" stroke="#1769d2" stroke-width="4"/>
+<line x1="190" y1="80" x2="245" y2="80" stroke="#1769d2" stroke-width="4"/>
+<path d="M130 45 A70 70 0 0 1 250 45" fill="none" stroke="#16a36a" stroke-width="4" stroke-linecap="round"/>
+<path d="M238 35 L250 45 L237 50" fill="none" stroke="#16a36a" stroke-width="4" stroke-linejoin="round"/>
+<text x="265" y="45" fill="#16a36a" font-size="16">ω</text>
+<text x="200" y="145" fill="#1769d2" font-size="16" text-anchor="middle">Rotating Wheel</text>
+</svg>
+<p>Calculate angular motion using rotational equations.</p>
+</div>
+
+<div class="card">
+<h2>1. Select Calculation</h2>
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="renderFields()">
+<option value="alpha">Angular Acceleration (α)</option>
+<option value="omega">Final Angular Velocity (ω)</option>
+<option value="theta">Angular Displacement (θ)</option>
+<option value="omega2">Angular Velocity without Time</option>
+<option value="torque">Torque (τ)</option>
+</select>
+
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+<div class="result" id="result"></div>
+<p class="small">Angular velocity: rad/s | Angular acceleration: rad/s² | Angular displacement: rad | Torque: N·m</p>
+</div>
+
+<div class="card">
+<h2>2. Rotational Motion Formulas</h2>
+<div class="formula">α = (ω − ω₀) / t</div>
+<p>Angular acceleration from angular velocities and time.</p>
+<div class="formula">ω = ω₀ + αt</div>
+<p>Final angular velocity.</p>
+<div class="formula">θ = ω₀t + ½αt²</div>
+<p>Angular displacement for constant angular acceleration.</p>
+<div class="formula">ω² = ω₀² + 2αθ</div>
+<p>Angular velocity-displacement relation.</p>
+<div class="formula">τ = Iα</div>
+<p>Torque for rotation about a fixed axis with constant moment of inertia.</p>
+</div>
+
+<div class="card">
+<h2>3. Example</h2>
+<p>A wheel changes angular velocity from 2 rad/s to 10 rad/s in 4 seconds.</p>
+<p>α = (ω − ω₀)/t</p>
+<p>α = (10 − 2)/4</p>
+<p><b>Angular acceleration = 2 rad/s²</b></p>
+</div>
+
+<div class="card">
+<h2>4. How It Works</h2>
+<ul>
+<li>Select the quantity to calculate.</li>
+<li>Enter the known values.</li>
+<li>Use SI units consistently.</li>
+<li>Click Calculate.</li>
+<li>View the answer and calculation steps.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>5. FAQs</h2>
+<h3>What is angular acceleration?</h3>
+<p>Angular acceleration is the rate of change of angular velocity with time.</p>
+<h3>What is angular velocity?</h3>
+<p>Angular velocity describes how quickly angular displacement changes.</p>
+<h3>What is angular displacement?</h3>
+<p>Angular displacement is the angle through which an object rotates.</p>
+<h3>What is torque?</h3>
+<p>Torque is the rotational effect of a force about an axis.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="rotational-kinematics-calculator.html">Rotational Kinematics</a></li>
+<li><a href="rotational-motion-calculator.html">Torque &amp; Angular Momentum</a></li>
+<li><a href="moment-of-inertia-calculator.html">Moment of Inertia</a></li>
+<li><a href="circular-motion-calculator.html">Circular Motion</a></li>
+<li><a href="../chapters/circular-and-rotational-motion.html">Chapter guide: Circular and Rotational Motion</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Physics Smartly<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fieldSets={
+alpha:[
+["w0","Initial angular velocity ω₀ (rad/s)"],
+["w","Final angular velocity ω (rad/s)"],
+["t","Time t (s)"]
+],
+omega:[
+["w0","Initial angular velocity ω₀ (rad/s)"],
+["alpha","Angular acceleration α (rad/s²)"],
+["t","Time t (s)"]
+],
+theta:[
+["w0","Initial angular velocity ω₀ (rad/s)"],
+["alpha","Angular acceleration α (rad/s²)"],
+["t","Time t (s)"]
+],
+omega2:[
+["w0","Initial angular velocity ω₀ (rad/s)"],
+["alpha","Angular acceleration α (rad/s²)"],
+["theta","Angular displacement θ (rad)"]
+],
+torque:[
+["I","Moment of inertia I (kg·m²)"],
+["alpha","Angular acceleration α (rad/s²)"]
+]
+};
+
+function renderFields(){
+const mode=document.getElementById("mode").value;
+document.getElementById("fields").innerHTML=fieldSets[mode].map(f=>
+`<label for="${f[0]}">${f[1]}</label>
+<input type="number" id="${f[0]}" step="any" placeholder="Enter value" required>`
+).join("");
+document.getElementById("result").style.display="none";
+}
+
+function val(id){
+const el=document.getElementById(id);
+if(!el||el.value.trim()==="")throw new Error("Please fill all input fields.");
+const n=Number(el.value);
+if(!Number.isFinite(n))throw new Error("Enter valid numbers.");
+return n;
+}
+
+function show(answer,unit,steps){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<strong>Answer: ${(answer!==0&&Math.abs(answer)<0.0001)?answer.toExponential(4):answer.toFixed(4)} ${unit}</strong><hr>${steps}`;
+}
+
+function calculate(){
+try{
+const mode=document.getElementById("mode").value;
+let answer,steps;
+
+if(mode==="alpha"){
+const w0=val("w0"),w=val("w"),t=val("t");
+if(t<=0)throw new Error("Time must be greater than zero.");
+answer=(w-w0)/t;
+steps=`α = (ω − ω₀)/t<br>
+α = (${w} − ${w0})/${t}<br>
+α = ${answer} rad/s²`;
+show(answer,"rad/s²",steps);
+}
+else if(mode==="omega"){
+const w0=val("w0"),alpha=val("alpha"),t=val("t");
+if(t<0)throw new Error("Time cannot be negative.");
+answer=w0+alpha*t;
+steps=`ω = ω₀ + αt<br>
+ω = ${w0} + (${alpha} × ${t})<br>
+ω = ${answer} rad/s`;
+show(answer,"rad/s",steps);
+}
+else if(mode==="theta"){
+const w0=val("w0"),alpha=val("alpha"),t=val("t");
+if(t<0)throw new Error("Time cannot be negative.");
+answer=w0*t+0.5*alpha*t*t;
+steps=`θ = ω₀t + ½αt²<br>
+θ = ${w0} × ${t} + ½ × ${alpha} × ${t}²<br>
+θ = ${answer} rad`;
+show(answer,"rad",steps);
+}
+else if(mode==="omega2"){
+const w0=val("w0"),alpha=val("alpha"),theta=val("theta");
+const sq=w0*w0+2*alpha*theta;
+if(sq<0)throw new Error("No real angular velocity for these values.");
+answer=Math.sqrt(sq);
+steps=`ω² = ω₀² + 2αθ<br>
+ω² = ${w0}² + 2 × ${alpha} × ${theta}<br>
+ω² = ${sq}<br>
+ω = √${sq}`;
+show(answer,"rad/s",steps);
+}
+else{
+const I=val("I"),alpha=val("alpha");
+if(I<0)throw new Error("Moment of inertia cannot be negative.");
+answer=I*alpha;
+steps=`τ = Iα<br>
+τ = ${I} × ${alpha}<br>
+τ = ${answer} N·m`;
+show(answer,"N·m",steps);
+}
+}catch(e){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<span style="color:#b42318;font-weight:bold">${e.message}</span>`;
+}
+}
+renderFields();
+</script>
+</body>
+</html>

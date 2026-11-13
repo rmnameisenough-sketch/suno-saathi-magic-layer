@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculate fluid pressure, buoyant force, flow rate, flow velocity, the continuity equation and Bernoulli pressure difference.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/fluid-mechanics-calculator">
+<title>Fluid Mechanics Calculator | Suno Saathi Tools</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033;line-height:1.6}
+header{background:#102a56;color:white;padding:22px 15px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:26px}
+header p{color:#dbeafe;margin:5px 0}
+nav{background:#173b75;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 12px;font-weight:bold}
+.container{max-width:900px;margin:25px auto;padding:0 15px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 4px 16px #0000000d;margin-bottom:20px}
+h2{color:#173b75;margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #ccd5e3;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:13px;border:0;border-radius:8px;background:#1764d8;color:white;font-size:17px;font-weight:bold;cursor:pointer;margin-top:18px}
+button:hover{background:#124ca5}
+.result{display:none;background:#ecfdf3;border:1px solid #a7e8c0;padding:18px;border-radius:10px;margin-top:20px}
+.result h2{color:#087443;margin-top:0;font-size:1.17em;margin-bottom:1em}
+.answer{font-size:25px;font-weight:bold;color:#087443;overflow-wrap:anywhere}
+.formula{background:#edf4ff;padding:12px;border-radius:8px;margin:12px 0;color:#123c79;font-weight:bold;overflow-wrap:anywhere}
+.small{color:#64748b;font-size:14px}
+footer{text-align:center;padding:25px;color:#64748b}
+li{margin:8px 0}
+svg{max-width:100%;height:auto;display:block;margin:auto}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;color:#173b75;margin-top:0}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<div class="brand">☑ Suno Saathi Tools</div>
+<p>Student Scientific Calculator</p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h1 class="page-title">Fluid Mechanics Calculator</h1>
+<p>Calculate fluid pressure, buoyant force, density, flow rate and velocity using common fluid mechanics formulas.</p>
+
+<svg viewBox="0 0 320 190" aria-label="Fluid pressure illustration">
+<rect x="80" y="25" width="160" height="135" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<rect x="83" y="70" width="154" height="87" fill="#60a5fa" opacity=".7"/>
+<line x1="80" y1="70" x2="240" y2="70" stroke="#2563eb" stroke-width="2"/>
+<rect x="135" y="100" width="50" height="40" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+<line x1="160" y1="45" x2="160" y2="95" stroke="#16a34a" stroke-width="3"/>
+<polygon points="160,95 153,83 167,83" fill="#16a34a"/>
+<text x="170" y="50" font-size="12" fill="#15803d">h</text>
+<text x="190" y="125" font-size="12" fill="#92400e">Object</text>
+</svg>
+
+<label for="mode">Select calculation</label>
+<select id="mode">
+<option value="pressure">Fluid Pressure (P = ρgh)</option>
+<option value="buoyancy">Buoyant Force (Fb = ρgV)</option>
+<option value="density">Density (ρ = m/V)</option>
+<option value="flow">Volume Flow Rate (Q = Av)</option>
+<option value="velocity">Flow Velocity (v = Q/A)</option>
+<option value="continuity">Continuity Equation (A₁v₁ = A₂v₂)</option>
+<option value="bernoulli">Bernoulli Pressure Difference (ΔP = ½ρ(v₂² − v₁²))</option>
+</select>
+
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">
+<h2>✓ Calculation Result</h2>
+<div class="answer" id="answer"></div>
+<div class="formula" id="formula"></div>
+<p id="steps"></p>
+</div>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li>Hydrostatic pressure: P = ρgh</li>
+<li>Buoyant force: Fb = ρgV</li>
+<li>Density: ρ = m/V</li>
+<li>Volume flow rate: Q = Av</li>
+<li>Flow velocity: v = Q/A</li>
+<li>Continuity equation: A₁v₁ = A₂v₂</li>
+<li>Bernoulli pressure difference: ΔP = ½ρ(v₂² − v₁²)</li>
+</ul>
+<p>ρ is fluid density, g is gravitational acceleration, h is depth, A is cross-sectional area and V is displaced fluid volume.</p>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>Water has density 1000 kg/m³. Find pressure at depth 2 m, using g = 9.8 m/s².</p>
+<div class="formula">P = ρgh = 1000 × 9.8 × 2 = 19600 Pa</div>
+<p>The gauge pressure is 19,600 Pa.</p>
+</div>
+
+<div class="card">
+<h2>FAQs</h2>
+<p><b>1. What is fluid pressure?</b><br>Force exerted by a fluid per unit area.</p>
+<p><b>2. What is buoyancy?</b><br>The upward force exerted by a fluid on an immersed object.</p>
+<p><b>3. What is the SI unit of flow rate?</b><br>m³/s.</p>
+<p><b>4. What is the continuity equation?</b><br>For steady incompressible flow, the volume flow rate remains constant.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="pressure-calculator.html">Pressure Calculator</a></li>
+<li><a href="density-calculator.html">Density Calculator</a></li>
+<li><a href="thermodynamics-calculator.html">Thermodynamics</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="../chapters/properties-of-matter-and-heat.html">Chapter guide: Properties of Matter, Fluids and Heat</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+<footer>
+<p>© 2026 Suno Saathi Tools</p>
+<p>Free educational calculators for students.</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+
+function input(id,label,unit){
+return `<label for="${id}">${label} (${unit})</label>
+<input type="number" id="${id}" step="any" min="0" placeholder="Enter ${label}" required>`;
+}
+
+function renderFields(){
+let m=mode.value,html="";
+
+if(m==="pressure"){
+html=input("rho","Fluid Density","kg/m³")+input("g","Gravity","m/s²")+input("h","Depth","m");
+}
+if(m==="buoyancy"){
+html=input("rho","Fluid Density","kg/m³")+input("g","Gravity","m/s²")+input("V","Displaced Volume","m³");
+}
+if(m==="density"){
+html=input("mass","Mass","kg")+input("V","Volume","m³");
+}
+if(m==="flow"){
+html=input("A","Cross-sectional Area","m²")+input("v","Flow Velocity","m/s");
+}
+if(m==="velocity"){
+html=input("Q","Volume Flow Rate","m³/s")+input("A","Cross-sectional Area","m²");
+}
+if(m==="continuity"){
+html=input("A1","Area 1","m²")+input("v1","Velocity 1","m/s")+input("A2","Area 2","m²");
+}
+if(m==="bernoulli"){
+html=input("rho","Fluid Density","kg/m³")+input("v1","Velocity 1","m/s")+input("v2","Velocity 2","m/s");
+}
+fields.innerHTML=html;
+document.getElementById("result").style.display="none";
+}
+
+mode.addEventListener("change",renderFields);
+renderFields();
+
+function calculate(){
+const m=mode.value;
+const get=id=>Number(document.getElementById(id).value);
+const valid=id=>{
+let el=document.getElementById(id);
+return el&&el.value.trim()!==""&&Number.isFinite(Number(el.value))&&Number(el.value)>=0;
+};
+
+let value,unit,formula,steps;
+
+if(m==="pressure"){
+if(!valid("rho")||!valid("g")||!valid("h"))return alert("Enter valid values.");
+let rho=get("rho"),g=get("g"),h=get("h");
+value=rho*g*h;unit="Pa";formula="P = ρgh";
+steps=`P = ${rho} × ${g} × ${h} = ${value}`;
+}
+else if(m==="buoyancy"){
+if(!valid("rho")||!valid("g")||!valid("V"))return alert("Enter valid values.");
+let rho=get("rho"),g=get("g"),V=get("V");
+value=rho*g*V;unit="N";formula="Fb = ρgV";
+steps=`Fb = ${rho} × ${g} × ${V} = ${value}`;
+}
+else if(m==="density"){
+if(!valid("mass")||!valid("V")||get("V")<=0)return alert("Volume must be positive.");
+let mass=get("mass"),V=get("V");
+value=mass/V;unit="kg/m³";formula="ρ = m/V";
+steps=`ρ = ${mass}/${V} = ${value}`;
+}
+else if(m==="flow"){
+if(!valid("A")||!valid("v"))return alert("Enter valid values.");
+let A=get("A"),v=get("v");
+value=A*v;unit="m³/s";formula="Q = Av";
+steps=`Q = ${A} × ${v} = ${value}`;
+}
+else if(m==="velocity"){
+if(!valid("Q")||!valid("A")||get("A")<=0)return alert("Area must be positive.");
+let Q=get("Q"),A=get("A");
+value=Q/A;unit="m/s";formula="v = Q/A";
+steps=`v = ${Q}/${A} = ${value}`;
+}
+else if(m==="continuity"){
+if(!valid("A1")||!valid("v1")||!valid("A2")||get("A2")<=0)return alert("Area 2 must be positive.");
+let A1=get("A1"),v1=get("v1"),A2=get("A2");
+value=A1*v1/A2;unit="m/s";formula="v₂ = A₁v₁/A₂";
+steps=`v₂ = ${A1} × ${v1}/${A2} = ${value}`;
+}
+else if(m==="bernoulli"){
+if(!valid("rho")||!valid("v1")||!valid("v2"))return alert("Enter valid values.");
+let rho=get("rho"),v1=get("v1"),v2=get("v2");
+value=0.5*rho*(v2*v2-v1*v1);
+unit="Pa";formula="ΔP = ½ρ(v₂² − v₁²)";
+steps=`ΔP = 0.5 × ${rho} × (${v2}² − ${v1}²) = ${value}`;
+}
+
+document.getElementById("answer").textContent=
+value.toPrecision(6).replace(/\.?0+$/,"")+" "+unit;
+document.getElementById("formula").textContent=formula;
+document.getElementById("steps").textContent="Step: "+steps;
+document.getElementById("result").style.display="block";
+}
+</script>
+
+</body>
+</html>

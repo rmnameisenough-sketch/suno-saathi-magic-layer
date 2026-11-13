@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Momentum &amp; Impulse Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Find momentum, impulse, average force and final velocity from mass, velocity, force and contact time, with steps and an example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/momentum-impulse-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b;line-height:1.6}
+header{background:#123b82;color:white;padding:18px 15px}
+.nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:21px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{background:linear-gradient(135deg,#164ca5,#2879df);color:white;text-align:center;padding:30px 15px}
+.hero h1{margin:0 0 8px;font-size:28px}
+.hero p{margin:0;color:#e3efff}
+.container{max-width:900px;margin:25px auto;padding:0 14px}
+.card{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #17243b0b}
+.card h2{margin-top:0;color:#17458e;font-size:21px}
+label{display:block;font-weight:600;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd7e8;border-radius:8px;font-size:16px;background:white;color:#17243b}
+button{width:100%;margin-top:18px;padding:14px;background:#1764ca;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{background:#104da5}
+.result{display:none;background:#e9f9ef;border:1px solid #a9e5bd;border-radius:12px;padding:18px;margin-top:20px}
+.result h3{color:#13803e;margin:0 0 10px}
+.tick{color:#12833d;font-size:25px}
+.big{font-size:27px;font-weight:bold;color:#08783a;overflow-wrap:anywhere}
+.small{font-size:13px;color:#60718b}
+.step{background:#f3f7ff;padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;font-weight:bold;text-align:center;color:#17458e}
+.illustration{text-align:center;margin:10px auto}
+.illustration svg{max-width:220px;width:100%;height:auto}
+ul{padding-left:22px}
+details{padding:12px 0;border-bottom:1px solid #e5eaf2}
+summary{font-weight:bold;cursor:pointer;color:#17458e}
+footer{text-align:center;padding:25px;background:#102c5b;color:#dce8ff;margin-top:30px}
+footer a{color:white}
+@media(max-width:600px){
+.hero h1{font-size:24px}
+.card{padding:17px}
+nav a{margin-left:8px;font-size:13px}
+.logo{font-size:18px}
+.big{font-size:23px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">⚗ Suno Saathi Tools</div>
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<h1>Momentum & Impulse Calculator</h1>
+<p>Calculate momentum, impulse, force and velocity change.</p>
+</section>
+
+<main class="container">
+
+<div class="card">
+<div class="illustration">
+<svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="105" width="220" height="7" rx="3" fill="#c8d8ee"/>
+<circle cx="70" cy="82" r="25" fill="#2879df"/>
+<circle cx="70" cy="82" r="8" fill="#dceaff"/>
+<path d="M110 82h65m-15-12 15 12-15 12" fill="none" stroke="#18a66a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="70" y="35" text-anchor="middle" font-size="16" fill="#17458e" font-weight="bold">m</text>
+<text x="145" y="58" text-anchor="middle" font-size="16" fill="#12803d" font-weight="bold">v</text>
+</svg>
+</div>
+
+<h2>Calculator</h2>
+
+<label for="mode">What do you want to calculate?</label>
+<select id="mode" onchange="changeMode()">
+<option value="momentum">Momentum (p)</option>
+<option value="impulse">Impulse from Force & Time</option>
+<option value="delta">Impulse from Momentum Change</option>
+<option value="force">Force from Momentum Change</option>
+<option value="final">Final Velocity from Impulse</option>
+</select>
+
+<div id="fields"></div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetCalc()" style="background:#64748b">Reset</button>
+
+<div class="result" id="result">
+<h3><span class="tick">✓</span> Calculation Result</h3>
+<div class="big" id="answer"></div>
+<div id="steps" class="step"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formulas Used</h2>
+<div class="formula">Momentum: p = mv</div><br>
+<div class="formula">Impulse: J = FΔt</div><br>
+<div class="formula">Impulse: J = Δp = p₂ − p₁</div><br>
+<div class="formula">Force: F = Δp ÷ Δt</div><br>
+<div class="formula">Final velocity: v₂ = v₁ + J/m</div>
+<p class="small">Momentum unit: kg·m/s | Impulse unit: N·s</p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li><b>Momentum:</b> Mass multiplied by velocity.</li>
+<li><b>Impulse:</b> Force acting over a time interval.</li>
+<li><b>Momentum change:</b> Final momentum minus initial momentum.</li>
+<li><b>Force:</b> Momentum change divided by time interval.</li>
+</ul>
+<p>Velocity is directional. Enter negative velocity when motion is in the opposite direction.</p>
+</div>
+
+<div class="card">
+<h2>Examples</h2>
+<p><b>Momentum:</b> A 5 kg object moves at 4 m/s. p = 5 × 4 = 20 kg·m/s.</p>
+<p><b>Impulse:</b> A 10 N force acts for 2 seconds. J = 10 × 2 = 20 N·s.</p>
+<p><b>Force:</b> Momentum changes by 30 kg·m/s in 3 seconds. F = 30 ÷ 3 = 10 N.</p>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+<details>
+<summary>What is the SI unit of momentum?</summary>
+<p>kg·m/s (kilogram metre per second).</p>
+</details>
+<details>
+<summary>What is impulse?</summary>
+<p>Impulse is the product of force and the time interval during which it acts. It equals the change in momentum.</p>
+</details>
+<details>
+<summary>Can momentum be negative?</summary>
+<p>Yes. Momentum has direction. Negative momentum indicates motion in the chosen negative direction.</p>
+</details>
+<details>
+<summary>What is the SI unit of impulse?</summary>
+<p>Newton-second (N·s), equivalent to kg·m/s.</p>
+</details>
+</div>
+
+<div class="card">
+<h2>More Physics Calculators</h2>
+<ul>
+<li><a href="conservation-of-momentum-calculator.html">Conservation of Momentum</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="centre-of-mass-calculator.html">Centre of Mass</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="../chapters/motion-and-forces.html">Chapter guide: Motion and Forces</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</main>
+
+<footer>
+<b>Suno Saathi Tools</b>
+<p>Free Student Scientific Calculators</p>
+<p>© 2026 Suno Saathi Tools</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+const result=document.getElementById("result");
+
+function field(id,label,placeholder){
+return `<label for="${id}">${label}</label>
+<input type="number" id="${id}" step="any" placeholder="${placeholder}">`;
+}
+function changeMode(){
+result.style.display="none";
+let m=mode.value,h="";
+if(m==="momentum"){
+h=field("mass","Mass m (kg)","5")+field("velocity","Velocity v (m/s)","4");
+}
+if(m==="impulse"){
+h=field("force","Force F (N)","10")+field("time","Time interval Δt (s)","2");
+}
+if(m==="delta"){
+h=field("initial","Initial momentum p₁ (kg·m/s)","10")+field("finalp","Final momentum p₂ (kg·m/s)","30");
+}
+if(m==="force"){
+h=field("initial","Initial momentum p₁ (kg·m/s)","10")+field("finalp","Final momentum p₂ (kg·m/s)","30")+field("time","Time interval Δt (s)","2");
+}
+if(m==="final"){
+h=field("mass","Mass m (kg)","5")+field("initialv","Initial velocity v₁ (m/s)","2")+field("impulse","Impulse J (N·s)","10");
+}
+fields.innerHTML=h;
+}
+function val(id){return Number(document.getElementById(id).value);}
+function valid(ids){
+for(let id of ids){
+let e=document.getElementById(id);
+if(!e||e.value===""){
+alert("Please enter all required values.");return false;
+}
+if(!Number.isFinite(Number(e.value))){
+alert("Please enter valid numbers.");return false;
+}
+}
+return true;
+}
+function fmt(n){
+if(n===0)return "0";
+const a=Math.abs(n);
+if(a<0.0001||a>=1e15)return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+return Number(n.toPrecision(a<1?5:8)).toLocaleString("en-US",{maximumFractionDigits:a<1?8:3});
+}
+function calculate(){
+let m=mode.value,a,u,ans,unit,steps,ids;
+if(m==="momentum"){
+ids=["mass","velocity"];
+if(!valid(ids))return;
+let mass=val("mass"),v=val("velocity");
+if(mass<=0){alert("Mass must be greater than zero.");return;}
+ans=mass*v;unit="kg·m/s";
+steps=`p = mv<br>p = ${fmt(mass)} × ${fmt(v)}<br>p = ${fmt(ans)} kg·m/s`;
+}
+else if(m==="impulse"){
+ids=["force","time"];
+if(!valid(ids))return;
+let F=val("force"),t=val("time");
+if(t<0){alert("Time interval cannot be negative.");return;}
+ans=F*t;unit="N·s";
+steps=`J = FΔt<br>J = ${fmt(F)} × ${fmt(t)}<br>J = ${fmt(ans)} N·s`;
+}
+else if(m==="delta"){
+ids=["initial","finalp"];
+if(!valid(ids))return;
+let p1=val("initial"),p2=val("finalp");
+ans=p2-p1;unit="N·s";
+steps=`J = Δp = p₂ − p₁<br>J = ${fmt(p2)} − ${fmt(p1)}<br>J = ${fmt(ans)} N·s`;
+}
+else if(m==="force"){
+ids=["initial","finalp","time"];
+if(!valid(ids))return;
+let p1=val("initial"),p2=val("finalp"),t=val("time");
+if(t<=0){alert("Time interval must be greater than zero.");return;}
+ans=(p2-p1)/t;unit="N";
+steps=`F = Δp ÷ Δt<br>F = (${fmt(p2)} − ${fmt(p1)}) ÷ ${fmt(t)}<br>F = ${fmt(ans)} N`;
+}
+else{
+ids=["mass","initialv","impulse"];
+if(!valid(ids))return;
+let mass=val("mass"),v1=val("initialv"),J=val("impulse");
+if(mass<=0){alert("Mass must be greater than zero.");return;}
+ans=v1+J/mass;unit="m/s";
+steps=`v₂ = v₁ + J/m<br>v₂ = ${fmt(v1)} + ${fmt(J)} ÷ ${fmt(mass)}<br>v₂ = ${fmt(ans)} m/s`;
+}
+document.getElementById("answer").textContent=fmt(ans)+" "+unit;
+document.getElementById("steps").innerHTML=steps;
+result.style.display="block";
+result.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function resetCalc(){mode.value="momentum";changeMode();}
+changeMode();
+</script>
+</body>
+</html>

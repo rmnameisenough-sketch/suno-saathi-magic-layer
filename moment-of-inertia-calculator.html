@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moment of Inertia Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Calculate moment of inertia, rotational kinetic energy, angular momentum and torque, with formulas and an example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/moment-of-inertia-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#182338}
+header{background:#102b55;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{margin:9px 0 0;color:#c9dcff}
+nav{background:#1769d2;padding:12px;text-align:center;color:white;font-weight:bold}
+.container{max-width:850px;margin:22px auto;padding:0 14px}
+.card{background:white;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 4px 14px #162c5010}
+h2{font-size:20px;margin-top:0;color:#123565}
+label{display:block;font-weight:bold;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd6e5;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:13px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;margin-top:18px;cursor:pointer}
+button:hover{background:#1055ad}
+.result{background:#e7f8ed;border:1px solid #b6e8c9;padding:17px;border-radius:10px;margin-top:17px;color:#145b35}
+.result h3{margin:0 0 10px}
+.result p{margin:8px 0}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;text-align:center;color:#174d9b;font-weight:bold;margin:10px 0}
+.diagram{text-align:center;padding:10px}
+.diagram svg{max-width:100%;height:auto}
+ul{line-height:1.8;padding-left:22px}
+footer{text-align:center;background:#102b55;color:white;padding:22px;margin-top:25px}
+.small{font-size:13px;color:#64748b}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#123565}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="brand">Suno Saathi Tools</div>
+<p>Moment of Inertia Calculator</p>
+</header>
+
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card">
+<h1 class="page-title">Moment of Inertia Calculator</h1>
+<p>Calculate moment of inertia and rotational quantities for a point mass.</p>
+
+<label for="mode">Select calculation</label>
+<select id="mode" onchange="changeMode()">
+<option value="inertia">Moment of Inertia (I)</option>
+<option value="energy">Rotational Kinetic Energy (K)</option>
+<option value="angular">Angular Momentum (L)</option>
+<option value="torque">Torque (τ)</option>
+</select>
+
+<div id="inputs">
+<label for="mass">Mass (m) in kg</label>
+<input id="mass" type="number" min="0" step="any" placeholder="e.g. 2">
+
+<label for="radius">Distance from axis (r) in metres</label>
+<input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="result" class="result" style="display:none" aria-live="polite"></div>
+</div>
+
+<div class="card">
+<h2>Illustration</h2>
+<div class="diagram">
+<svg viewBox="0 0 320 190" role="img" aria-label="Point mass at distance r from rotational axis">
+<line x1="45" y1="95" x2="275" y2="95" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5"/>
+<circle cx="160" cy="95" r="8" fill="#334155"/>
+<line x1="160" y1="95" x2="245" y2="95" stroke="#1769d2" stroke-width="3"/>
+<circle cx="245" cy="95" r="22" fill="#22a06b" stroke="#14633f" stroke-width="2"/>
+<text x="190" y="80" font-size="16" fill="#1769d2" font-weight="bold">r</text>
+<text x="160" y="130" text-anchor="middle" font-size="13" fill="#334155">Axis</text>
+<text x="245" y="145" text-anchor="middle" font-size="13" fill="#334155">Mass m</text>
+</svg>
+</div>
+<p class="small">Point mass rotating at a distance r from the axis.</p>
+</div>
+
+<div class="card">
+<h2>Physics Formulas</h2>
+<div class="formula">I = mr²</div>
+<div class="formula">K = ½ Iω²</div>
+<div class="formula">L = Iω</div>
+<div class="formula">τ = Iα</div>
+<ul>
+<li>I = Moment of inertia (kg·m²)</li>
+<li>m = Mass (kg)</li>
+<li>r = Distance from rotational axis (m)</li>
+<li>ω = Angular velocity (rad/s)</li>
+<li>α = Angular acceleration (rad/s²)</li>
+<li>K = Rotational kinetic energy (J)</li>
+<li>L = Angular momentum (kg·m²/s)</li>
+<li>τ = Torque (N·m)</li>
+</ul>
+<p class="small">This calculator uses the point-mass model I = mr². Extended objects require their appropriate moment-of-inertia formula.</p>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>Mass = 2 kg and distance from axis = 0.5 m.</p>
+<p>I = 2 × (0.5)²</p>
+<p><b>I = 0.5 kg·m²</b></p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li>Select the quantity to calculate.</li>
+<li>Enter mass and distance from axis.</li>
+<li>For energy, angular momentum or torque, enter the rotational quantity requested.</li>
+<li>Click Calculate to view the answer.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>FAQs</h2>
+<p><b>Q. What is moment of inertia?</b><br>It measures an object's resistance to angular acceleration about an axis.</p>
+<p><b>Q. Does mass distribution matter?</b><br>Yes. Moment of inertia depends on how mass is distributed relative to the axis.</p>
+<p><b>Q. What is its SI unit?</b><br>kg·m².</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="rotational-motion-calculator.html">Torque &amp; Angular Momentum</a></li>
+<li><a href="rolling-motion-calculator.html">Rolling Motion</a></li>
+<li><a href="angular-acceleration-calculator.html">Angular Acceleration</a></li>
+<li><a href="centre-of-mass-calculator.html">Centre of Mass</a></li>
+<li><a href="../chapters/circular-and-rotational-motion.html">Chapter guide: Circular and Rotational Motion</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>
+<p><b>Suno Saathi Tools</b></p>
+<p>Free educational calculators for students.</p>
+<p class="small">Learn • Calculate • Understand</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+function changeMode(){
+ const mode=document.getElementById("mode").value;
+ const box=document.getElementById("inputs");
+ let html="";
+
+ if(mode==="inertia"){
+ html='<label for="mass">Mass (m) in kg</label><input id="mass" type="number" min="0" step="any" placeholder="e.g. 2"><label for="radius">Distance from axis (r) in metres</label><input id="radius" type="number" min="0" step="any" placeholder="e.g. 0.5">';
+ }else if(mode==="energy"){
+ html='<label for="inertia">Moment of Inertia (I) in kg·m²</label><input id="inertia" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="omega">Angular velocity (ω) in rad/s</label><input id="omega" type="number" step="any" placeholder="e.g. 4">';
+ }else if(mode==="angular"){
+ html='<label for="inertia">Moment of Inertia (I) in kg·m²</label><input id="inertia" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="omega">Angular velocity (ω) in rad/s</label><input id="omega" type="number" step="any" placeholder="e.g. 4">';
+ }else{
+ html='<label for="inertia">Moment of Inertia (I) in kg·m²</label><input id="inertia" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="alpha">Angular acceleration (α) in rad/s²</label><input id="alpha" type="number" step="any" placeholder="e.g. 3">';
+ }
+ box.innerHTML=html;
+ document.getElementById("result").style.display="none";
+}
+
+function calculate(){
+ const mode=document.getElementById("mode").value;
+ const get=id=>Number(document.getElementById(id)?.value);
+ const result=document.getElementById("result");
+ let answer,title,unit,steps="";
+
+ if(mode==="inertia"){
+ const m=get("mass"),r=get("radius");
+ if(!(m>0&&r>=0)||!Number.isFinite(m+r))return error("Enter a positive mass and a valid non-negative distance.");
+ answer=m*r*r;title="Moment of Inertia";unit="kg·m²";
+ steps="I = mr² = "+m+" × "+r+"²";
+ }else if(mode==="energy"){
+ const I=get("inertia"),w=get("omega");
+ if(!(I>=0&&Number.isFinite(I)&&Number.isFinite(w)))return error("Enter valid moment of inertia and angular velocity.");
+ answer=0.5*I*w*w;title="Rotational Kinetic Energy";unit="J";
+ steps="K = ½Iω²";
+ }else if(mode==="angular"){
+ const I=get("inertia"),w=get("omega");
+ if(!(I>=0&&Number.isFinite(I)&&Number.isFinite(w)))return error("Enter valid moment of inertia and angular velocity.");
+ answer=I*w;title="Angular Momentum";unit="kg·m²/s";
+ steps="L = Iω";
+ }else{
+ const I=get("inertia"),a=get("alpha");
+ if(!(I>=0&&Number.isFinite(I)&&Number.isFinite(a)))return error("Enter valid moment of inertia and angular acceleration.");
+ answer=I*a;title="Torque";unit="N·m";
+ steps="τ = Iα";
+ }
+
+ if(!Number.isFinite(answer))return error("Calculation is outside the supported numeric range.");
+
+ result.style.display="block";
+ result.innerHTML="<h3>Calculation Result</h3><p><b>"+title+": "+answer.toLocaleString("en-IN",{maximumFractionDigits:6})+" "+unit+"</b></p><p>"+steps+"</p>";
+}
+
+function error(message){
+ const result=document.getElementById("result");
+ result.style.display="block";
+ result.innerHTML="<h3>Check Inputs</h3><p>"+message+"</p>";
+}
+</script>
+
+</body>
+</html>

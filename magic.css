@@ -1,0 +1,49 @@
+/* Magic Layer page. Small, mobile-first, uses the site's blue. Dark mode comes from ../assets/tools.css. */
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f7ff;color:#12264f;line-height:1.55;font-size:16px}
+.mg-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#0d2a5c,#1458c7);color:#fff}
+.mg-back{color:#fff;text-decoration:none;font-size:22px;padding:4px 10px;border-radius:8px}
+.mg-title{flex:1;font-size:19px;font-weight:bold}
+.mg-badge{font-size:11px;font-weight:normal;background:#ffd24a;color:#3b2c00;border-radius:10px;padding:2px 8px;vertical-align:middle;margin-left:4px}
+.mg-lang{display:flex;gap:4px}
+.mg-lang button{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:8px;padding:8px 12px;font-size:15px;cursor:pointer;min-height:40px}
+.mg-lang button[aria-pressed="true"]{background:#fff;color:#0d2a5c;font-weight:bold}
+.mg-main{max-width:720px;margin:0 auto;padding:14px 14px 90px}
+.mg-sub{margin:4px 0 10px;color:#3d5278}
+.mg-status{font-size:14px;color:#3d5278;background:#e5eeff;border-radius:10px;padding:8px 12px;margin-bottom:12px}
+.mg-status:empty{display:none}
+.mg-tabs{display:flex;gap:6px;margin-bottom:10px}
+.mg-tabs button{flex:1;padding:12px;border:1px solid #b7caef;background:#fff;border-radius:12px;font-size:16px;cursor:pointer;color:#12264f;min-height:46px}
+.mg-tabs button[aria-selected="true"]{background:#1458c7;color:#fff;border-color:#1458c7;font-weight:bold}
+.mg-panel{background:#fff;border:1px solid #d5e2f7;border-radius:14px;padding:14px;margin-bottom:14px}
+.mg-panel[hidden]{display:none}
+textarea,input[type=text]{width:100%;padding:12px;font-size:16px;border:1px solid #b7caef;border-radius:10px;font-family:inherit;color:#12264f;background:#fff}
+textarea{resize:vertical}
+.mg-btn{display:inline-block;padding:12px 18px;font-size:16px;border-radius:12px;border:1px solid #1458c7;background:#fff;color:#1458c7;cursor:pointer;min-height:46px;margin:8px 8px 0 0;font-family:inherit;text-decoration:none}
+.mg-btn:disabled{opacity:.55;cursor:default}
+.mg-primary{background:#1458c7;color:#fff}
+a.mg-btn{display:inline-block}
+.mg-examples{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.mg-chip{border:1px solid #b7caef;background:#f3f7ff;color:#12264f;border-radius:22px;padding:10px 14px;min-height:44px;font-size:14px;cursor:pointer;font-family:inherit;text-align:left}
+.mg-check{display:block;margin-top:10px;font-size:15px}
+.mg-card{background:#fff;border:1px solid #d5e2f7;border-radius:14px;padding:14px;margin-bottom:12px}
+.mg-card h2{font-size:17px;margin:0 0 8px;color:#0d2a5c}
+.mg-card h3{font-size:15px;margin:10px 0 4px}
+.mg-vals{width:100%;border-collapse:collapse;font-size:15px;margin:6px 0}
+.mg-vals td{padding:6px 4px;border-bottom:1px solid #e3ecfb;vertical-align:top}
+.mg-vals td:last-child{text-align:right;font-weight:bold}
+.mg-result{background:#e9f8ef;border:1px solid #9bd6b0;border-radius:10px;padding:10px;white-space:pre-wrap;font-family:inherit;margin:6px 0;color:#0b4a23}
+.mg-text{white-space:pre-wrap;margin:6px 0}
+.mg-note{font-size:13px;color:#4b6086;margin:6px 0}
+.mg-warn{font-size:14px;background:#fff6dd;border:1px solid #f0d58a;border-radius:10px;padding:8px 10px;margin:8px 0;color:#5b4300}
+.mg-list{margin:6px 0;padding-left:20px}
+.mg-list li{margin:4px 0}
+.mg-list a{color:#1458c7}
+.mg-formula{font-family:Consolas,Menlo,monospace;font-size:14px;background:#f3f7ff;border-radius:8px;padding:6px 8px;margin:4px 0;word-break:break-word}
+.mg-foot{font-size:12px;color:#5b6f94;text-align:center;margin-top:18px}
+.mg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mg-spin{display:inline-block;width:14px;height:14px;border:2px solid #b7caef;border-top-color:#1458c7;border-radius:50%;animation:mgspin .8s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes mgspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.mg-spin{animation:none}}
+@media print{.mg-header,.mg-tabs,.mg-panel,.mg-btn{display:none!important}}

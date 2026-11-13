@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooke's Law Calculator (F = kx) | Suno Saathi Tools</title>
+<meta name="description" content="Calculate spring force, spring constant, extension and elastic potential energy using Hooke's law, with a worked example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/hookes-law-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:#101d40;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{color:#cbd8f5;margin:10px 0 0}
+nav{background:#1769d2;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 14px #00000008}
+h2{font-size:20px;margin-top:0;color:#14264d}
+h3{color:#1769d2}
+.hero{text-align:center}
+.hero svg{max-width:100%;height:160px}
+select,input{width:100%;padding:12px;border:1px solid #ccd5e4;border-radius:8px;font-size:16px;margin:7px 0 13px;background:white}
+label{font-weight:bold;font-size:14px}
+button{width:100%;padding:14px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#1056ad}
+.result{background:#e5f8ed;border:1px solid #a5dfbd;border-radius:10px;padding:17px;margin-top:15px;display:none;overflow-wrap:anywhere}
+.result strong{color:#087b42;font-size:22px}
+.formula{background:#edf3ff;padding:13px;border-radius:8px;font-size:18px;text-align:center;font-weight:bold;color:#174eaa;margin:12px 0}
+.small{font-size:13px;color:#667085}
+footer{text-align:center;padding:25px;color:#65718a}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#14264d}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="brand">Suno Saathi Physics Tools</div>
+<p>Hooke's Law Calculator</p>
+</header>
+
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card hero">
+<h1 class="page-title">Spring Force Calculator</h1>
+<svg viewBox="0 0 400 160" role="img" aria-label="Spring stretched by a force">
+<line x1="40" y1="30" x2="40" y2="130" stroke="#26334e" stroke-width="6"/>
+<path d="M40 80 L70 80 L85 55 L105 105 L125 55 L145 105 L165 55 L185 105 L205 80 L245 80" fill="none" stroke="#1769d2" stroke-width="4"/>
+<rect x="245" y="55" width="75" height="50" rx="6" fill="#16a36a"/>
+<text x="282" y="85" font-size="17" fill="white" text-anchor="middle">Mass</text>
+<path d="M325 80 H370 M355 65 L370 80 L355 95" fill="none" stroke="#e45757" stroke-width="4"/>
+<text x="355" y="55" fill="#e45757" font-size="15" text-anchor="middle">F</text>
+</svg>
+<p>Calculate force, extension or spring constant using Hooke's law.</p>
+</div>
+
+<div class="card">
+<h2>1. Select Calculation</h2>
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="renderFields()">
+<option value="force">Spring Force (F = kx)</option>
+<option value="k">Spring Constant (k = F/x)</option>
+<option value="x">Extension (x = F/k)</option>
+<option value="energy">Spring Potential Energy (U = ½kx²)</option>
+</select>
+
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+<div class="result" id="result"></div>
+<p class="small">SI units: force N, spring constant N/m, extension m, energy J.</p>
+</div>
+
+<div class="card">
+<h2>2. Hooke's Law Formulas</h2>
+<div class="formula">F = kx</div>
+<p>Magnitude of restoring force for a spring.</p>
+<div class="formula">k = F/x</div>
+<p>Spring constant.</p>
+<div class="formula">x = F/k</div>
+<p>Extension or compression magnitude.</p>
+<div class="formula">U = ½kx²</div>
+<p>Elastic potential energy stored in the spring.</p>
+</div>
+
+<div class="card">
+<h2>3. Example</h2>
+<p>A spring has spring constant 200 N/m and extension 0.05 m.</p>
+<p>F = kx</p>
+<p>F = 200 × 0.05</p>
+<p><b>Spring force magnitude = 10 N</b></p>
+</div>
+
+<div class="card">
+<h2>4. How It Works</h2>
+<ul>
+<li>Select the required calculation.</li>
+<li>Enter the known values.</li>
+<li>Click Calculate.</li>
+<li>View the result and formula steps.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>5. FAQs</h2>
+<h3>What is Hooke's law?</h3>
+<p>Within the elastic limit, the restoring force of a spring is proportional to its displacement from equilibrium.</p>
+<h3>What is spring constant?</h3>
+<p>It measures the stiffness of a spring. A larger k means a stiffer spring.</p>
+<h3>What is the unit of k?</h3>
+<p>Newton per metre (N/m).</p>
+<h3>Is Hooke's law always valid?</h3>
+<p>No. It is valid only within the spring's elastic limit.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="shm-energy-calculator.html">SHM Energy</a></li>
+<li><a href="shm-calculator.html">SHM Time Period &amp; Frequency</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="../chapters/oscillations-and-waves.html">Chapter guide: Oscillations and Waves</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Physics Smartly<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields={
+force:[
+["k","Spring constant k (N/m)"],
+["x","Extension x (m)"]
+],
+k:[
+["F","Force magnitude F (N)"],
+["x","Extension x (m)"]
+],
+x:[
+["F","Force magnitude F (N)"],
+["k","Spring constant k (N/m)"]
+],
+energy:[
+["k","Spring constant k (N/m)"],
+["x","Extension x (m)"]
+]
+};
+
+function renderFields(){
+const mode=document.getElementById("mode").value;
+document.getElementById("fields").innerHTML=fields[mode].map(f=>
+`<label for="${f[0]}">${f[1]}</label>
+<input type="number" id="${f[0]}" step="any" min="0" placeholder="Enter value">`
+).join("");
+document.getElementById("result").style.display="none";
+}
+
+function val(id){
+const el=document.getElementById(id);
+if(!el||el.value.trim()==="")throw new Error("Please fill all fields.");
+const n=Number(el.value);
+if(!Number.isFinite(n)||n<0)throw new Error("Enter valid non-negative values.");
+return n;
+}
+
+function show(answer,unit,steps){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<strong>Answer: ${(answer!==0&&Math.abs(answer)<0.0001)?answer.toExponential(4):answer.toFixed(4)} ${unit}</strong><hr>${steps}`;
+}
+
+function calculate(){
+try{
+const mode=document.getElementById("mode").value;
+let answer,steps;
+
+if(mode==="force"){
+const k=val("k"),x=val("x");
+answer=k*x;
+steps=`F = kx<br>F = ${k} × ${x}<br>F = ${answer} N`;
+show(answer,"N",steps);
+}
+else if(mode==="k"){
+const F=val("F"),x=val("x");
+if(x===0)throw new Error("Extension must be greater than zero.");
+answer=F/x;
+steps=`k = F/x<br>k = ${F}/${x}<br>k = ${answer} N/m`;
+show(answer,"N/m",steps);
+}
+else if(mode==="x"){
+const F=val("F"),k=val("k");
+if(k===0)throw new Error("Spring constant must be greater than zero.");
+answer=F/k;
+steps=`x = F/k<br>x = ${F}/${k}<br>x = ${answer} m`;
+show(answer,"m",steps);
+}
+else{
+const k=val("k"),x=val("x");
+answer=0.5*k*x*x;
+steps=`U = ½kx²<br>U = ½ × ${k} × ${x}²<br>U = ${answer} J`;
+show(answer,"J",steps);
+}
+}catch(e){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<span style="color:#b42318;font-weight:bold">${e.message}</span>`;
+}
+}
+renderFields();
+</script>
+
+</body>
+</html>

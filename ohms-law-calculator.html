@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ohm's Law Calculator (V = IR) | Suno Saathi Tools</title>
+<meta name="description" content="Find voltage, current, resistance or electrical power from any two known values, with formulas, steps and a worked example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/ohms-law-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b;line-height:1.6}
+header{background:#123b82;color:white;padding:18px 15px}
+.nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:21px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{background:linear-gradient(135deg,#164ca5,#2879df);color:white;text-align:center;padding:30px 15px}
+.hero h1{margin:0 0 8px;font-size:28px}
+.hero p{margin:0;color:#e3efff}
+.container{max-width:900px;margin:25px auto;padding:0 14px}
+.card{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #17243b0b}
+.card h2{margin-top:0;color:#17458e;font-size:21px}
+label{display:block;font-weight:600;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd7e8;border-radius:8px;font-size:16px;background:white;color:#17243b}
+button{width:100%;margin-top:18px;padding:14px;background:#1764ca;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{background:#104da5}
+.result{display:none;background:#e9f9ef;border:1px solid #a9e5bd;border-radius:12px;padding:18px;margin-top:20px}
+.result h3{color:#13803e;margin:0 0 10px}
+.tick{color:#12833d;font-size:25px}
+.big{font-size:27px;font-weight:bold;color:#08783a;overflow-wrap:anywhere}
+.small{font-size:13px;color:#60718b}
+.step{background:#f3f7ff;padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;font-weight:bold;text-align:center;color:#17458e}
+.illustration{text-align:center;margin:10px auto}
+.illustration svg{max-width:220px;width:100%;height:auto}
+ul{padding-left:22px}
+details{padding:12px 0;border-bottom:1px solid #e5eaf2}
+summary{font-weight:bold;cursor:pointer;color:#17458e}
+footer{text-align:center;padding:25px;background:#102c5b;color:#dce8ff;margin-top:30px}
+footer a{color:white}
+@media(max-width:600px){
+.hero h1{font-size:24px}
+.card{padding:17px}
+nav a{margin-left:8px;font-size:13px}
+.logo{font-size:18px}
+.big{font-size:23px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">⚗ Suno Saathi Tools</div>
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<h1>Ohm's Law Calculator</h1>
+<p>Calculate voltage, current, resistance and electrical power.</p>
+</section>
+
+<main class="container">
+
+<div class="card">
+<div class="illustration">
+<svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+<rect x="30" y="45" width="180" height="55" rx="12" fill="#edf4ff" stroke="#2879df" stroke-width="3"/>
+<path d="M30 72H70L85 55L105 90L125 55L145 90L160 72H210" fill="none" stroke="#18a66a" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="30" cy="72" r="7" fill="#2879df"/>
+<circle cx="210" cy="72" r="7" fill="#2879df"/>
+<text x="120" y="30" text-anchor="middle" font-size="16" fill="#17458e" font-weight="bold">V = IR</text>
+</svg>
+</div>
+
+<h2>Calculator</h2>
+
+<label for="mode">What do you want to calculate?</label>
+<select id="mode" onchange="changeMode()">
+<option value="voltage">Voltage (V)</option>
+<option value="current">Current (I)</option>
+<option value="resistance">Resistance (R)</option>
+<option value="powerVI">Power from Voltage & Current</option>
+<option value="powerIR">Power from Current & Resistance</option>
+<option value="powerVR">Power from Voltage & Resistance</option>
+</select>
+
+<div id="fields"></div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetCalc()" style="background:#64748b">Reset</button>
+
+<div class="result" id="result">
+<h3><span class="tick">✓</span> Calculation Result</h3>
+<div class="big" id="answer"></div>
+<div id="steps" class="step"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formulas Used</h2>
+<div class="formula">Voltage: V = IR</div><br>
+<div class="formula">Current: I = V ÷ R</div><br>
+<div class="formula">Resistance: R = V ÷ I</div><br>
+<div class="formula">Power: P = VI</div><br>
+<div class="formula">Power: P = I²R</div><br>
+<div class="formula">Power: P = V² ÷ R</div>
+<p class="small">Voltage: Volt (V) | Current: Ampere (A) | Resistance: Ohm (Ω) | Power: Watt (W)</p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li><b>Voltage:</b> Electrical potential difference across a component.</li>
+<li><b>Current:</b> Rate of flow of electric charge.</li>
+<li><b>Resistance:</b> Opposition to the flow of electric current.</li>
+<li><b>Power:</b> Rate at which electrical energy is transferred.</li>
+</ul>
+<p>Ohm's law applies to ohmic components when physical conditions such as temperature remain constant.</p>
+</div>
+
+<div class="card">
+<h2>Examples</h2>
+<p><b>Voltage:</b> Current = 2 A, Resistance = 5 Ω. V = 2 × 5 = 10 V.</p>
+<p><b>Current:</b> Voltage = 12 V, Resistance = 4 Ω. I = 12 ÷ 4 = 3 A.</p>
+<p><b>Resistance:</b> Voltage = 12 V, Current = 2 A. R = 12 ÷ 2 = 6 Ω.</p>
+<p><b>Power:</b> Voltage = 12 V, Current = 2 A. P = 12 × 2 = 24 W.</p>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+<details>
+<summary>What is Ohm's law?</summary>
+<p>Ohm's law states that voltage equals current multiplied by resistance under constant physical conditions.</p>
+</details>
+<details>
+<summary>What is the unit of resistance?</summary>
+<p>Resistance is measured in Ohms (Ω).</p>
+</details>
+<details>
+<summary>What is electrical power?</summary>
+<p>Electrical power is the rate at which electrical energy is transferred, measured in watts.</p>
+</details>
+<details>
+<summary>Can resistance be zero?</summary>
+<p>This calculator requires resistance greater than zero when dividing by resistance. Ideal zero-resistance conditions are not handled by these formulas.</p>
+</details>
+</div>
+
+<div class="card">
+<h2>More Physics Calculators</h2>
+<ul>
+<li><a href="electrical-energy.html">Electrical Energy</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="heat-temperature-calculator.html">Heat &amp; Temperature</a></li>
+<li><a href="../chapters/electricity-and-optics.html">Chapter guide: Electricity and Optics</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</main>
+
+<footer>
+<b>Suno Saathi Tools</b>
+<p>Free Student Scientific Calculators</p>
+<p>© 2026 Suno Saathi Tools</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+const result=document.getElementById("result");
+
+function field(id,label,placeholder){
+return `<label for="${id}">${label}</label>
+<input type="number" id="${id}" min="0" step="any" placeholder="${placeholder}">`;
+}
+function changeMode(){
+result.style.display="none";
+let m=mode.value,h="";
+if(m==="voltage"){
+h=field("current","Current I (A)","2")+field("resistance","Resistance R (Ω)","5");
+}
+if(m==="current"){
+h=field("voltage","Voltage V (V)","12")+field("resistance","Resistance R (Ω)","4");
+}
+if(m==="resistance"){
+h=field("voltage","Voltage V (V)","12")+field("current","Current I (A)","2");
+}
+if(m==="powerVI"){
+h=field("voltage","Voltage V (V)","12")+field("current","Current I (A)","2");
+}
+if(m==="powerIR"){
+h=field("current","Current I (A)","2")+field("resistance","Resistance R (Ω)","5");
+}
+if(m==="powerVR"){
+h=field("voltage","Voltage V (V)","12")+field("resistance","Resistance R (Ω)","6");
+}
+fields.innerHTML=h;
+}
+function val(id){return Number(document.getElementById(id).value);}
+function valid(ids){
+for(let id of ids){
+let e=document.getElementById(id);
+if(!e||e.value===""){
+alert("Please enter all required values.");return false;
+}
+if(!Number.isFinite(Number(e.value))||Number(e.value)<0){
+alert("Please enter valid non-negative numbers.");return false;
+}
+}
+return true;
+}
+function fmt(n){
+if(n===0)return "0";
+const a=Math.abs(n);
+if(a<0.0001||a>=1e15)return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+return Number(n.toPrecision(a<1?5:8)).toLocaleString("en-US",{maximumFractionDigits:a<1?8:3});
+}
+function calculate(){
+let m=mode.value,ans,unit,steps,ids;
+if(m==="voltage"){
+ids=["current","resistance"];
+if(!valid(ids))return;
+let I=val("current"),R=val("resistance");
+ans=I*R;unit="V";
+steps=`V = IR<br>V = ${fmt(I)} × ${fmt(R)}<br>V = ${fmt(ans)} V`;
+}
+else if(m==="current"){
+ids=["voltage","resistance"];
+if(!valid(ids))return;
+let V=val("voltage"),R=val("resistance");
+if(R===0){alert("Resistance must be greater than zero.");return;}
+ans=V/R;unit="A";
+steps=`I = V ÷ R<br>I = ${fmt(V)} ÷ ${fmt(R)}<br>I = ${fmt(ans)} A`;
+}
+else if(m==="resistance"){
+ids=["voltage","current"];
+if(!valid(ids))return;
+let V=val("voltage"),I=val("current");
+if(I===0){alert("Current must be greater than zero.");return;}
+ans=V/I;unit="Ω";
+steps=`R = V ÷ I<br>R = ${fmt(V)} ÷ ${fmt(I)}<br>R = ${fmt(ans)} Ω`;
+}
+else if(m==="powerVI"){
+ids=["voltage","current"];
+if(!valid(ids))return;
+let V=val("voltage"),I=val("current");
+ans=V*I;unit="W";
+steps=`P = VI<br>P = ${fmt(V)} × ${fmt(I)}<br>P = ${fmt(ans)} W`;
+}
+else if(m==="powerIR"){
+ids=["current","resistance"];
+if(!valid(ids))return;
+let I=val("current"),R=val("resistance");
+ans=I*I*R;unit="W";
+steps=`P = I²R<br>P = ${fmt(I)}² × ${fmt(R)}<br>P = ${fmt(ans)} W`;
+}
+else{
+ids=["voltage","resistance"];
+if(!valid(ids))return;
+let V=val("voltage"),R=val("resistance");
+if(R===0){alert("Resistance must be greater than zero.");return;}
+ans=V*V/R;unit="W";
+steps=`P = V² ÷ R<br>P = ${fmt(V)}² ÷ ${fmt(R)}<br>P = ${fmt(ans)} W`;
+}
+document.getElementById("answer").textContent=fmt(ans)+" "+unit;
+document.getElementById("steps").innerHTML=steps;
+result.style.display="block";
+result.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function resetCalc(){mode.value="voltage";changeMode();}
+changeMode();
+</script>
+</body>
+</html>

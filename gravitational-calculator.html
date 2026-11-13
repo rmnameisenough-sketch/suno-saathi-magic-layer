@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Weight &amp; Gravitational Force Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Calculate weight, mass from weight, gravitational acceleration and the gravitational force between two masses, with worked examples.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/gravitational-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b;line-height:1.6}
+header{background:#123b82;color:white;padding:18px 15px}
+.nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:21px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{background:linear-gradient(135deg,#164ca5,#2879df);color:white;text-align:center;padding:30px 15px}
+.hero h1{margin:0 0 8px;font-size:28px}
+.hero p{margin:0;color:#e3efff}
+.container{max-width:900px;margin:25px auto;padding:0 14px}
+.card{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #17243b0b}
+.card h2{margin-top:0;color:#17458e;font-size:21px}
+label{display:block;font-weight:600;margin:13px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #ccd7e8;border-radius:8px;font-size:16px;background:white;color:#17243b}
+button{width:100%;margin-top:18px;padding:14px;background:#1764ca;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{background:#104da5}
+.result{display:none;background:#e9f9ef;border:1px solid #a9e5bd;border-radius:12px;padding:18px;margin-top:20px}
+.result h3{color:#13803e;margin:0 0 10px}
+.tick{color:#12833d;font-size:25px}
+.big{font-size:27px;font-weight:bold;color:#08783a;overflow-wrap:anywhere}
+.small{font-size:13px;color:#60718b}
+.step{background:#f3f7ff;padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.formula{background:#edf4ff;padding:14px;border-radius:9px;font-size:18px;font-weight:bold;text-align:center;color:#17458e}
+.illustration{text-align:center;margin:10px auto}
+.illustration svg{max-width:220px;width:100%;height:auto}
+ul{padding-left:22px}
+details{padding:12px 0;border-bottom:1px solid #e5eaf2}
+summary{font-weight:bold;cursor:pointer;color:#17458e}
+footer{text-align:center;padding:25px;background:#102c5b;color:#dce8ff;margin-top:30px}
+footer a{color:white}
+@media(max-width:600px){
+.hero h1{font-size:24px}
+.card{padding:17px}
+nav a{margin-left:8px;font-size:13px}
+.logo{font-size:18px}
+.big{font-size:23px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">⚗ Suno Saathi Tools</div>
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">Tools</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<h1>Gravitation Calculator</h1>
+<p>Calculate weight, gravitational force and gravity.</p>
+</section>
+
+<main class="container">
+
+<div class="card">
+<div class="illustration">
+<svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+<circle cx="120" cy="65" r="45" fill="#dceaff" stroke="#2879df" stroke-width="3"/>
+<path d="M90 60Q120 25 150 60Q120 100 90 60Z" fill="#65a8ff"/>
+<circle cx="120" cy="65" r="10" fill="#17458e"/>
+<path d="M120 12v35m-10-10 10 10 10-10" fill="none" stroke="#18a66a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="120" y="125" text-anchor="middle" font-size="13" fill="#17458e" font-weight="bold">Gravity</text>
+</svg>
+</div>
+
+<h2>Calculator</h2>
+
+<label for="mode">What do you want to calculate?</label>
+<select id="mode" onchange="changeMode()">
+<option value="weight">Weight (W)</option>
+<option value="mass">Mass from Weight</option>
+<option value="gravity">Gravity (g)</option>
+<option value="gravforce">Gravitational Force (F)</option>
+</select>
+
+<div id="fields"></div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetCalc()" style="background:#64748b">Reset</button>
+
+<div class="result" id="result">
+<h3><span class="tick">✓</span> Calculation Result</h3>
+<div class="big" id="answer"></div>
+<div id="steps" class="step"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formulas Used</h2>
+<div class="formula">Weight: W = mg</div><br>
+<div class="formula">Mass: m = W ÷ g</div><br>
+<div class="formula">Gravity: g = W ÷ m</div><br>
+<div class="formula">Gravitational Force: F = Gm₁m₂ ÷ r²</div>
+<p class="small">G = 6.67430 × 10⁻¹¹ N·m²/kg²</p>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li><b>Weight:</b> Gravitational force acting on an object.</li>
+<li><b>Mass:</b> Amount of matter in an object.</li>
+<li><b>Gravity:</b> Gravitational acceleration at a location.</li>
+<li><b>Gravitational Force:</b> Attraction between two masses.</li>
+</ul>
+<p>Earth's approximate gravitational acceleration is 9.8 m/s².</p>
+</div>
+
+<div class="card">
+<h2>Examples</h2>
+<p><b>Weight:</b> Mass = 10 kg, g = 9.8 m/s². W = 98 N.</p>
+<p><b>Mass:</b> Weight = 98 N, g = 9.8 m/s². m = 10 kg.</p>
+<p><b>Gravity:</b> Weight = 196 N, mass = 20 kg. g = 9.8 m/s².</p>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+<details>
+<summary>What is the difference between mass and weight?</summary>
+<p>Mass measures matter and is measured in kilograms. Weight is gravitational force and is measured in newtons.</p>
+</details>
+<details>
+<summary>Does weight change on the Moon?</summary>
+<p>Yes. Weight changes with gravitational acceleration, but mass remains the same.</p>
+</details>
+<details>
+<summary>What is the value of gravity on Earth?</summary>
+<p>Approximately 9.8 m/s² near Earth's surface.</p>
+</details>
+<details>
+<summary>What is universal gravitational constant?</summary>
+<p>G is approximately 6.67430 × 10⁻¹¹ N·m²/kg².</p>
+</details>
+</div>
+
+<div class="card">
+<h2>More Physics Calculators</h2>
+<ul>
+<li><a href="gravitation-orbital-calculator.html">Orbital &amp; Escape Velocity</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="simple-pendulum-calculator.html">Simple Pendulum</a></li>
+<li><a href="../chapters/work-energy-and-gravitation.html">Chapter guide: Work, Energy and Gravitation</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</main>
+
+<footer>
+<b>Suno Saathi Tools</b>
+<p>Free Student Scientific Calculators</p>
+<p>© 2026 Suno Saathi Tools</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+const result=document.getElementById("result");
+const G=6.67430e-11;
+
+function field(id,label,placeholder){
+return `<label for="${id}">${label}</label>
+<input type="number" id="${id}" step="any" placeholder="${placeholder}">`;
+}
+function changeMode(){
+result.style.display="none";
+let m=mode.value,h="";
+if(m==="weight"){
+h=field("mass","Mass m (kg)","10")+field("gravity","Gravity g (m/s²)","9.8");
+}
+if(m==="mass"){
+h=field("weight","Weight W (N)","98")+field("gravity","Gravity g (m/s²)","9.8");
+}
+if(m==="gravity"){
+h=field("weight","Weight W (N)","196")+field("mass","Mass m (kg)","20");
+}
+if(m==="gravforce"){
+h=field("m1","Mass 1 (kg)","1000")+field("m2","Mass 2 (kg)","2000")+field("distance","Distance between masses r (m)","10");
+}
+fields.innerHTML=h;
+}
+function val(id){return Number(document.getElementById(id).value);}
+function valid(ids){
+for(let id of ids){
+let e=document.getElementById(id);
+if(!e||e.value===""){
+alert("Please enter all required values.");return false;
+}
+if(!Number.isFinite(Number(e.value))||Number(e.value)<0){
+alert("Please enter valid non-negative numbers.");return false;
+}
+}
+return true;
+}
+function fmt(n){
+if(n===0)return "0";
+const a=Math.abs(n);
+if(a<0.0001||a>=1e15)return n.toExponential(4).replace("e+"," × 10^").replace("e-"," × 10^-");
+return Number(n.toPrecision(a<1?5:8)).toLocaleString("en-US",{maximumFractionDigits:a<1?8:3});
+}
+function calculate(){
+let m=mode.value,ans,unit,steps,ids;
+if(m==="weight"){
+ids=["mass","gravity"];
+if(!valid(ids))return;
+let mass=val("mass"),g=val("gravity");
+ans=mass*g;unit="N";
+steps=`W = mg<br>W = ${fmt(mass)} × ${fmt(g)}<br>W = ${fmt(ans)} N`;
+}
+else if(m==="mass"){
+ids=["weight","gravity"];
+if(!valid(ids))return;
+let W=val("weight"),g=val("gravity");
+if(g===0){alert("Gravity must be greater than zero.");return;}
+ans=W/g;unit="kg";
+steps=`m = W ÷ g<br>m = ${fmt(W)} ÷ ${fmt(g)}<br>m = ${fmt(ans)} kg`;
+}
+else if(m==="gravity"){
+ids=["weight","mass"];
+if(!valid(ids))return;
+let W=val("weight"),mass=val("mass");
+if(mass===0){alert("Mass must be greater than zero.");return;}
+ans=W/mass;unit="m/s²";
+steps=`g = W ÷ m<br>g = ${fmt(W)} ÷ ${fmt(mass)}<br>g = ${fmt(ans)} m/s²`;
+}
+else{
+ids=["m1","m2","distance"];
+if(!valid(ids))return;
+let m1=val("m1"),m2=val("m2"),r=val("distance");
+if(r===0){alert("Distance must be greater than zero.");return;}
+ans=G*m1*m2/(r*r);unit="N";
+steps=`F = Gm₁m₂ ÷ r²<br>F = ${G} × ${fmt(m1)} × ${fmt(m2)} ÷ ${fmt(r)}²<br>F = ${fmt(ans)} N`;
+}
+document.getElementById("answer").textContent=fmt(ans)+" "+unit;
+document.getElementById("steps").innerHTML=steps;
+result.style.display="block";
+result.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function resetCalc(){mode.value="weight";changeMode();}
+changeMode();
+</script>
+</body>
+</html>

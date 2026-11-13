@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinematics Equation Solver (SUVAT) | Suno Saathi Tools</title>
+<meta name="description" content="Solve motion problems with the equations of motion: final velocity, displacement and the velocity relation, with steps.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/kinematics-equation-solver">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:#101d40;color:white;padding:24px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{color:#cbd8f5;margin:10px 0 0}
+nav{background:#1769d2;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 14px #00000008}
+h2{font-size:20px;margin-top:0;color:#14264d}
+h3{color:#1769d2}
+.hero{text-align:center}
+.hero svg{max-width:100%;height:150px}
+select,input{width:100%;padding:12px;border:1px solid #ccd5e4;border-radius:8px;font-size:16px;margin:7px 0 13px;background:white}
+label{font-weight:bold;font-size:14px}
+button{width:100%;padding:14px;background:#1769d2;color:white;border:0;border-radius:9px;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#1056ad}
+.result{background:#e5f8ed;border:1px solid #a5dfbd;border-radius:10px;padding:17px;margin-top:15px;display:none}
+.result strong{color:#087b42;font-size:22px}
+.formula{background:#edf3ff;padding:13px;border-radius:8px;font-size:18px;text-align:center;font-weight:bold;color:#174eaa}
+.small{font-size:13px;color:#667085}
+footer{text-align:center;padding:25px;color:#65718a}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:20px;margin-top:0;color:#14264d}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+<header>
+<div class="brand">Suno Saathi Physics Tools</div>
+<p>Kinematics Equation Solver</p>
+</header>
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+<div class="card hero">
+<h1 class="page-title">Motion Equation Calculator</h1>
+<svg viewBox="0 0 400 150" role="img" aria-label="Object moving with acceleration">
+<line x1="25" y1="110" x2="375" y2="110" stroke="#9aacc8" stroke-width="3"/>
+<rect x="65" y="65" width="65" height="35" rx="8" fill="#1769d2"/>
+<circle cx="82" cy="105" r="9" fill="#26334e"/>
+<circle cx="115" cy="105" r="9" fill="#26334e"/>
+<path d="M150 80 H280 M265 65 L280 80 L265 95" fill="none" stroke="#16a36a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="200" y="55" font-size="17" fill="#1769d2" text-anchor="middle">Acceleration →</text>
+</svg>
+<p>Calculate unknown motion quantities using constant acceleration equations.</p>
+</div>
+
+<div class="card">
+<h2>1. Select Equation</h2>
+<label for="mode">Equation</label>
+<select id="mode" onchange="renderFields()">
+<option value="v">Final velocity: v = u + at</option>
+<option value="s">Displacement: s = ut + ½at²</option>
+<option value="v2">Velocity relation: v² = u² + 2as</option>
+<option value="avg">Average velocity: s = (u + v)t / 2</option>
+</select>
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+<div class="result" id="result"></div>
+<p class="small">Units: velocity in m/s, acceleration in m/s², displacement in m, time in seconds.</p>
+</div>
+
+<div class="card">
+<h2>2. Equations of Motion</h2>
+<div class="formula">v = u + at</div>
+<p>Final velocity after time t.</p>
+<div class="formula">s = ut + ½at²</div>
+<p>Displacement after time t.</p>
+<div class="formula">v² = u² + 2as</div>
+<p>Velocity and displacement relation.</p>
+<div class="formula">s = (u + v)t / 2</div>
+<p>Displacement using average velocity.</p>
+</div>
+
+<div class="card">
+<h2>3. Example</h2>
+<p>A vehicle starts at 5 m/s and accelerates at 2 m/s² for 4 seconds.</p>
+<p><b>v = u + at</b></p>
+<p>v = 5 + (2 × 4)</p>
+<p><b>Final velocity = 13 m/s</b></p>
+</div>
+
+<div class="card">
+<h2>4. How It Works</h2>
+<ul>
+<li>Select the equation you want to use.</li>
+<li>Enter the known values.</li>
+<li>Enter zero if initial velocity or acceleration is zero.</li>
+<li>Click Calculate.</li>
+<li>Get the answer with formula and calculation steps.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>5. FAQs</h2>
+<h3>What is kinematics?</h3>
+<p>Kinematics describes motion without studying the forces causing it.</p>
+<h3>What is u?</h3>
+<p>u represents initial velocity.</p>
+<h3>What is v?</h3>
+<p>v represents final velocity.</p>
+<h3>When are these equations valid?</h3>
+<p>These equations are valid for constant acceleration in one dimension.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="speed-distance-time.html">Speed, Distance &amp; Time</a></li>
+<li><a href="acceleration-calculator.html">Acceleration Calculator</a></li>
+<li><a href="projectile-motion-calculator.html">Projectile Motion</a></li>
+<li><a href="rotational-kinematics-calculator.html">Rotational Kinematics</a></li>
+<li><a href="../chapters/motion-and-forces.html">Chapter guide: Motion and Forces</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Physics Smartly<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fieldSets={
+v:[
+["u","Initial velocity u (m/s)"],
+["a","Acceleration a (m/s²)"],
+["t","Time t (s)"]
+],
+s:[
+["u","Initial velocity u (m/s)"],
+["a","Acceleration a (m/s²)"],
+["t","Time t (s)"]
+],
+v2:[
+["u","Initial velocity u (m/s)"],
+["a","Acceleration a (m/s²)"],
+["s","Displacement s (m)"]
+],
+avg:[
+["u","Initial velocity u (m/s)"],
+["v","Final velocity v (m/s)"],
+["t","Time t (s)"]
+]
+};
+
+function renderFields(){
+const mode=document.getElementById("mode").value;
+document.getElementById("fields").innerHTML=fieldSets[mode].map(f=>
+`<label for="${f[0]}">${f[1]}</label>
+<input type="number" id="${f[0]}" step="any" placeholder="Enter ${f[0]}" required>`
+).join("");
+document.getElementById("result").style.display="none";
+}
+
+function getVal(id){
+const el=document.getElementById(id);
+if(!el || el.value.trim()==="") throw new Error("Please fill all input fields.");
+const n=Number(el.value);
+if(!Number.isFinite(n)) throw new Error("Enter valid numbers.");
+return n;
+}
+
+function show(answer,unit,steps){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<strong>Answer: ${(answer!==0&&Math.abs(answer)<0.0001)?answer.toExponential(4):answer.toFixed(4)} ${unit}</strong>
+<hr>${steps}`;
+}
+
+function calculate(){
+try{
+const mode=document.getElementById("mode").value;
+let u,a,t,v,s,answer,unit,steps;
+
+if(mode==="v"){
+u=getVal("u");a=getVal("a");t=getVal("t");
+if(t<0)throw new Error("Time cannot be negative.");
+answer=u+a*t;unit="m/s";
+steps=`v = u + at<br>v = ${u} + (${a} × ${t})<br>v = ${answer}`;
+}
+else if(mode==="s"){
+u=getVal("u");a=getVal("a");t=getVal("t");
+if(t<0)throw new Error("Time cannot be negative.");
+answer=u*t+0.5*a*t*t;unit="m";
+steps=`s = ut + ½at²<br>s = ${u} × ${t} + ½ × ${a} × ${t}²<br>s = ${answer}`;
+}
+else if(mode==="v2"){
+u=getVal("u");a=getVal("a");s=getVal("s");
+const vSquared=u*u+2*a*s;
+if(vSquared<0)throw new Error("No real velocity for these values.");
+answer=Math.sqrt(vSquared);unit="m/s";
+steps=`v² = u² + 2as<br>v² = ${u}² + 2 × ${a} × ${s}<br>v² = ${vSquared}<br>v = √${vSquared}`;
+}
+else{
+u=getVal("u");v=getVal("v");t=getVal("t");
+if(t<0)throw new Error("Time cannot be negative.");
+answer=((u+v)*t)/2;unit="m";
+steps=`s = (u + v)t / 2<br>s = (${u} + ${v}) × ${t} / 2<br>s = ${answer}`;
+}
+show(answer,unit,steps);
+}catch(e){
+const box=document.getElementById("result");
+box.style.display="block";
+box.innerHTML=`<span style="color:#b42318;font-weight:bold">${e.message}</span>`;
+}
+}
+renderFields();
+</script>
+</body>
+</html>

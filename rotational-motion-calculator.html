@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculate torque, angular acceleration, moment of inertia, angular momentum and rotational kinetic energy with formulas and steps.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/rotational-motion-calculator">
+<title>Torque &amp; Angular Momentum Calculator | Suno Saathi Tools</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033;line-height:1.6}
+header{background:#102a56;color:white;padding:22px 15px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:26px}
+header p{color:#dbeafe;margin:5px 0}
+nav{background:#173b75;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 12px;font-weight:bold}
+.container{max-width:900px;margin:25px auto;padding:0 15px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 4px 16px #0000000d;margin-bottom:20px}
+h2{color:#173b75;margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #ccd5e3;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:13px;border:0;border-radius:8px;background:#1764d8;color:white;font-size:17px;font-weight:bold;cursor:pointer;margin-top:18px}
+button:hover{background:#124ca5}
+.result{display:none;background:#ecfdf3;border:1px solid #a7e8c0;padding:18px;border-radius:10px;margin-top:20px}
+.result h2{color:#087443;margin-top:0;font-size:1.17em;margin-bottom:1em}
+.answer{font-size:25px;font-weight:bold;color:#087443}
+.formula{background:#edf4ff;padding:12px;border-radius:8px;margin:12px 0;color:#123c79;font-weight:bold}
+.small{color:#64748b;font-size:14px}
+footer{text-align:center;padding:25px;color:#64748b}
+li{margin:8px 0}
+svg{max-width:100%;height:auto;display:block;margin:auto}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;color:#173b75;margin-top:0}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<div class="brand">☑ Suno Saathi Tools</div>
+<p>Student Scientific Calculator</p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+<h1 class="page-title">Rotational Motion & Torque Calculator</h1>
+<p>Calculate torque, angular acceleration, moment of inertia, angular momentum and rotational kinetic energy.</p>
+
+<svg viewBox="0 0 320 180" aria-label="Torque illustration">
+<circle cx="150" cy="90" r="9" fill="#173b75"/>
+<line x1="150" y1="90" x2="260" y2="90" stroke="#2563eb" stroke-width="7" stroke-linecap="round"/>
+<circle cx="260" cy="90" r="12" fill="#2563eb"/>
+<line x1="260" y1="90" x2="260" y2="25" stroke="#16a34a" stroke-width="4"/>
+<polygon points="260,25 252,39 268,39" fill="#16a34a"/>
+<path d="M120 45 A45 45 0 1 1 115 125" fill="none" stroke="#f59e0b" stroke-width="3"/>
+<polygon points="115,125 112,110 126,117" fill="#f59e0b"/>
+<text x="205" y="82" fill="#2563eb" font-size="13">r</text>
+<text x="270" y="30" fill="#16a34a" font-size="13">F</text>
+<text x="90" y="95" fill="#b45309" font-size="13">τ</text>
+</svg>
+
+<label for="mode">Select calculation</label>
+<select id="mode">
+<option value="torque">Torque (τ = rF sinθ)</option>
+<option value="alpha">Angular Acceleration (α = τ/I)</option>
+<option value="inertia">Moment of Inertia (I = τ/α)</option>
+<option value="angular">Angular Momentum (L = Iω)</option>
+<option value="energy">Rotational Kinetic Energy (KE = ½Iω²)</option>
+<option value="omega">Angular Velocity (ω = θ/t)</option>
+<option value="angularacc">Angular Acceleration (α = Δω/t)</option>
+</select>
+
+<div id="fields"></div>
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">
+<h2>✓ Calculation Result</h2>
+<div class="answer" id="answer"></div>
+<div class="formula" id="formula"></div>
+<p id="steps"></p>
+</div>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ul>
+<li>Torque: τ = rF sinθ</li>
+<li>Angular acceleration: α = τ/I</li>
+<li>Moment of inertia: I = τ/α</li>
+<li>Angular momentum: L = Iω</li>
+<li>Rotational kinetic energy: KE = ½Iω²</li>
+<li>Angular velocity: ω = θ/t</li>
+<li>Angular acceleration: α = Δω/t</li>
+</ul>
+<p>Here, r is perpendicular distance from the axis, F is force, θ is angle between r and F, I is moment of inertia, and ω is angular velocity.</p>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>A force of 10 N acts perpendicular to a rod at a distance of 2 m from its pivot.</p>
+<div class="formula">τ = rF sin90° = 2 × 10 × 1 = 20 N·m</div>
+<p>The torque is 20 N·m.</p>
+</div>
+
+<div class="card">
+<h2>FAQs</h2>
+<p><b>1. What is torque?</b><br>Torque is the turning effect of force about an axis.</p>
+<p><b>2. What is the SI unit of torque?</b><br>Newton metre (N·m).</p>
+<p><b>3. What is moment of inertia?</b><br>It measures resistance to angular acceleration.</p>
+<p><b>4. What is angular momentum?</b><br>Angular momentum is rotational momentum, represented by L.</p>
+</div>
+
+<div class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="moment-of-inertia-calculator.html">Moment of Inertia</a></li>
+<li><a href="angular-acceleration-calculator.html">Angular Acceleration</a></li>
+<li><a href="rolling-motion-calculator.html">Rolling Motion</a></li>
+<li><a href="rotational-kinematics-calculator.html">Rotational Kinematics</a></li>
+<li><a href="../chapters/circular-and-rotational-motion.html">Chapter guide: Circular and Rotational Motion</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+<footer>
+<p>© 2026 Suno Saathi Tools</p>
+<p>Free educational calculators for students.</p>
+<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const fields=document.getElementById("fields");
+const mode=document.getElementById("mode");
+
+function input(id,label,unit){
+return `<label for="${id}">${label} (${unit})</label>
+<input type="number" id="${id}" step="any" min="0" placeholder="Enter ${label}" required>`;
+}
+
+function renderFields(){
+let m=mode.value,html="";
+
+if(m==="torque"){
+html=input("r","Distance from axis","m")+input("F","Force","N")+input("angle","Angle θ","degrees");
+}
+if(m==="alpha"){
+html=input("tau","Torque","N·m")+input("I","Moment of inertia","kg·m²");
+}
+if(m==="inertia"){
+html=input("tau","Torque","N·m")+input("alpha","Angular acceleration","rad/s²");
+}
+if(m==="angular"){
+html=input("I","Moment of inertia","kg·m²")+input("omega","Angular velocity","rad/s");
+}
+if(m==="energy"){
+html=input("I","Moment of inertia","kg·m²")+input("omega","Angular velocity","rad/s");
+}
+if(m==="omega"){
+html=input("theta","Angular displacement","rad")+input("time","Time","s");
+}
+if(m==="angularacc"){
+html=input("w1","Initial angular velocity","rad/s")+input("w2","Final angular velocity","rad/s")+input("time","Time","s");
+}
+fields.innerHTML=html;
+document.getElementById("result").style.display="none";
+}
+
+mode.addEventListener("change",renderFields);
+renderFields();
+
+function calculate(){
+const m=mode.value;
+const get=id=>Number(document.getElementById(id).value);
+const valid=id=>{
+let el=document.getElementById(id);
+return el&&el.value.trim()!==""&&Number.isFinite(Number(el.value))&&Number(el.value)>=0;
+};
+
+let value,unit,formula,steps;
+
+if(m==="torque"){
+if(!valid("r")||!valid("F")||!valid("angle"))return alert("Enter valid values.");
+let r=get("r"),F=get("F"),a=get("angle");
+value=r*F*Math.sin(a*Math.PI/180);
+unit="N·m";formula="τ = rF sinθ";
+steps=`τ = ${r} × ${F} × sin(${a}°) = ${value}`;
+}
+else if(m==="alpha"){
+if(!valid("tau")||!valid("I")||get("I")<=0)return alert("Moment of inertia must be positive.");
+let t=get("tau"),I=get("I");
+value=t/I;unit="rad/s²";formula="α = τ/I";
+steps=`α = ${t}/${I} = ${value}`;
+}
+else if(m==="inertia"){
+if(!valid("tau")||!valid("alpha")||get("alpha")<=0)return alert("Angular acceleration must be positive.");
+let t=get("tau"),a=get("alpha");
+value=t/a;unit="kg·m²";formula="I = τ/α";
+steps=`I = ${t}/${a} = ${value}`;
+}
+else if(m==="angular"){
+if(!valid("I")||!valid("omega"))return alert("Enter valid values.");
+let I=get("I"),w=get("omega");
+value=I*w;unit="kg·m²/s";formula="L = Iω";
+steps=`L = ${I} × ${w} = ${value}`;
+}
+else if(m==="energy"){
+if(!valid("I")||!valid("omega"))return alert("Enter valid values.");
+let I=get("I"),w=get("omega");
+value=0.5*I*w*w;unit="J";formula="KE = ½Iω²";
+steps=`KE = 0.5 × ${I} × ${w}² = ${value}`;
+}
+else if(m==="omega"){
+if(!valid("theta")||!valid("time")||get("time")<=0)return alert("Time must be positive.");
+let th=get("theta"),t=get("time");
+value=th/t;unit="rad/s";formula="ω = θ/t";
+steps=`ω = ${th}/${t} = ${value}`;
+}
+else if(m==="angularacc"){
+if(!valid("w1")||!valid("w2")||!valid("time")||get("time")<=0)return alert("Time must be positive.");
+let w1=get("w1"),w2=get("w2"),t=get("time");
+value=(w2-w1)/t;unit="rad/s²";formula="α = (ω₂ − ω₁)/t";
+steps=`α = (${w2} − ${w1})/${t} = ${value}`;
+}
+
+document.getElementById("answer").textContent=
+value.toPrecision(6).replace(/\.?0+$/,"")+" "+unit;
+document.getElementById("formula").textContent=formula;
+document.getElementById("steps").textContent="Step: "+steps;
+document.getElementById("result").style.display="block";
+}
+</script>
+
+</body>
+</html>

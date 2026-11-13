@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="wQ-GVieXnDtAlUQdpwnKyK7bqIHL73FDFoRT3o6yhBg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Physics &amp; Chemistry Calculators | Suno Saathi Tools</title>
+<meta name="description" content="Free physics and chemistry calculators with formulas, worked examples and step-by-step answers. Solve motion, force, pH, molarity and more.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/">
+<meta name="theme-color" content="#10336d">
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#f5f8ff;
+ color:#12264f;
+}
+a{text-decoration:none;color:inherit}
+button,input{font-family:inherit}
+
+header{
+ background:white;
+ padding:15px 5%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:20px;
+ flex-wrap:wrap;
+ box-shadow:0 2px 12px #0000000a;
+}
+.logo{
+ font-size:27px;
+ font-weight:800;
+ color:#12366e;
+}
+.logo span{color:#ff8b12}
+.tagline{font-size:13px;color:#60708c;margin-top:5px}
+nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav a{font-weight:600;font-size:14px}
+nav a:hover{color:#1765d1}
+
+.hero{
+ background:linear-gradient(120deg,#102957,#0756b8);
+ color:white;
+ padding:55px 6%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:30px;
+ flex-wrap:wrap;
+}
+.hero-text{max-width:650px}
+.hero h1{font-size:42px;line-height:1.15;margin:0 0 18px}
+.hero h1 span{color:#ffcc22}
+.hero p{font-size:18px;line-height:1.6;color:#e0ebff}
+.hero-visual{
+ font-size:90px;
+ text-align:center;
+ flex:1;
+ min-width:180px;
+}
+.btn{
+ display:inline-block;
+ background:#ffca16;
+ color:#12336b;
+ padding:14px 25px;
+ border-radius:30px;
+ font-weight:800;
+ margin-top:15px;
+}
+.btn:hover{background:#ffe16a}
+
+.search-area{
+ max-width:1000px;
+ margin:-22px auto 30px;
+ padding:0 18px;
+ position:relative;
+}
+.search-box{
+ display:flex;
+ background:white;
+ padding:8px;
+ border-radius:15px;
+ box-shadow:0 5px 20px #142c5015;
+ border:1px solid #d7e4fa;
+}
+.search-box input{
+ flex:1;
+ min-width:0;
+ border:0;
+ outline:none;
+ padding:13px;
+ font-size:16px;
+}
+.search-box button{
+ border:0;
+ background:#1458c7;
+ color:white;
+ padding:0 25px;
+ border-radius:10px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.section{
+ max-width:1250px;
+ margin:auto;
+ padding:20px;
+}
+.section-title{
+ text-align:center;
+ font-size:27px;
+ margin:15px 0 25px;
+}
+.categories{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:20px;
+}
+.category{
+ padding:25px;
+ border-radius:18px;
+ display:flex;
+ gap:20px;
+ align-items:center;
+ border:1px solid #b8d4ff;
+ background:linear-gradient(135deg,#e6f2ff,#d6e8ff);
+}
+.category.chem{
+ background:linear-gradient(135deg,#f1e9ff,#e2d4ff);
+ border-color:#c9b1ff;
+}
+.category-icon{font-size:50px}
+.category h3{font-size:23px;margin:0 0 10px}
+.category p{color:#526482;line-height:1.5;margin:0}
+.category-link{
+ display:inline-block;
+ background:#1458c7;
+ color:white;
+ padding:10px 15px;
+ border-radius:25px;
+ margin-top:15px;
+ font-size:14px;
+ font-weight:bold;
+}
+.chem .category-link{background:#6526bd}
+
+.tools{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+}
+.tool{
+ background:white;
+ border:1px solid #d5e2f7;
+ border-radius:14px;
+ padding:20px 10px;
+ text-align:center;
+ transition:.2s;
+}
+.tool:hover{
+ transform:translateY(-4px);
+ box-shadow:0 8px 20px #163d8015;
+ border-color:#79aaff;
+}
+.tool-icon{font-size:35px}
+.tool h3{font-size:15px;line-height:1.5;margin:12px 0 0}
+.no-results{
+ display:none;
+ text-align:center;
+ color:#b42318;
+ padding:25px;
+}
+.features{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+ background:#e1edff;
+ border-radius:15px;
+ padding:25px;
+ margin:30px 0;
+}
+.feature{text-align:center}
+.feature-icon{font-size:30px}
+.feature h3{font-size:16px;margin:10px 0 5px}
+.feature p{font-size:13px;color:#5c6d88;margin:0}
+
+footer{
+ background:#102957;
+ color:white;
+ padding:25px 5%;
+ text-align:center;
+}
+footer a{color:#dbe8ff;margin:8px}
+footer p{font-size:13px;color:#c4d4ef}
+
+@media(max-width:800px){
+ .hero h1{font-size:32px}
+ .categories{grid-template-columns:1fr}
+ .tools{grid-template-columns:repeat(2,1fr)}
+ .features{grid-template-columns:repeat(2,1fr)}
+ header{justify-content:center;text-align:center}
+ nav{justify-content:center}
+ .category{padding:18px}
+}
+@media(max-width:420px){
+ .hero{padding:40px 20px}
+ .hero h1{font-size:28px}
+ .category-icon{font-size:35px}
+ .category h3{font-size:19px}
+ .search-box button{padding:0 15px}
+}
+.directory{display:grid;grid-template-columns:2fr 1fr;gap:20px;background:white;border:1px solid #d5e2f7;border-radius:15px;padding:22px}
+.directory h3{font-size:18px;margin:0 0 10px}
+.directory h3 a{color:#12366e}
+.directory ul{list-style:none;margin:0;padding:0;columns:2;column-gap:20px}
+.directory li{margin:0 0 8px;font-size:14px;break-inside:avoid}
+.directory li a{color:#1458c7}
+.directory li a:hover{text-decoration:underline}
+@media(max-width:800px){.directory{grid-template-columns:1fr}.directory ul{columns:1}}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="assets/site-data.js" defer></script>
+<script src="assets/tools.js" defer></script>
+</head>
+
+<body>
+
+<header>
+<div>
+ <div class="logo">Suno Saathi <span>Tools</span></div>
+ <div class="tagline">Learn • Calculate • Understand</div>
+</div>
+
+<nav>
+<a href="index.html">🏠 Home</a>
+ <a href="#physics">⚛ Physics</a>
+ <a href="#chemistry">🧪 Chemistry</a>
+ <a href="chapters/index.html">📚 Chapters</a>
+ <a href="about.html">About</a>
+ <a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-text">
+ <h1>Your Ultimate Educational <span>Calculator Hub!</span></h1>
+ <p>Free and easy-to-use calculators for Physics, Chemistry and more. Study smart and understand better.</p>
+ <a href="#all-tools" class="btn">Explore All Tools →</a>
+</div>
+<div class="hero-visual">📚 ⚛️ 🧪</div>
+</section>
+
+<div class="search-area">
+<div class="search-box">
+ <input id="searchInput" type="search" placeholder="Search calculator... (e.g. Force, pH, Momentum)" autocomplete="off">
+ <button onclick="searchTools()">Search</button>
+</div>
+</div>
+
+<div id="sslRecentHome" hidden></div>
+
+<section class="section" id="categories">
+<h2 class="section-title">Explore Categories</h2>
+
+<div class="categories">
+
+<div class="category" id="physics">
+<div class="category-icon">⚛️</div>
+<div>
+<h3>Physics Calculators</h3>
+<p>Mechanics, Electricity, Optics and more.</p>
+<a href="physics/index.html" class="category-link">Explore Physics Tools →</a>
+</div>
+</div>
+
+<div class="category chem" id="chemistry">
+<div class="category-icon">🧪</div>
+<div>
+<h3>Chemistry Calculators</h3>
+<p>pH, Concentration, Molarity and more.</p>
+<a href="chemistry/index.html" class="category-link">Explore Chemistry Tools →</a>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="section" id="all-tools">
+<span id="tools"></span>
+<h2 class="section-title">⭐ Popular Calculators</h2>
+
+<div class="tools" id="toolGrid">
+
+
+<a class="tool" data-name="speed distance time calculator" href="physics/speed-distance-time.html">
+
+<div class="tool-icon">🚀</div>
+<h3>Speed, Distance & Time</h3>
+</a>
+
+<a class="tool" data-name="force calculator" href="physics/force-calculator.html">
+<div class="tool-icon">⚛️</div>
+<h3>Force Calculator</h3>
+</a>
+
+<a class="tool" data-name="ph calculator" href="chemistry/ph-calculator.html">
+<div class="tool-icon">🧪</div>
+<h3>pH Calculator</h3>
+</a>
+
+<a class="tool" data-name="molarity calculator" href="chemistry/molarity-calculator.html">
+<div class="tool-icon">🧫</div>
+<h3>Molarity Calculator</h3>
+</a>
+
+<a class="tool" data-name="ohms law calculator" href="physics/ohms-law-calculator.html">
+<div class="tool-icon">⚡</div>
+<h3>Ohm's Law Calculator</h3>
+</a>
+
+<a class="tool" data-name="simple pendulum calculator" href="physics/simple-pendulum-calculator.html">
+<div class="tool-icon">🔩</div>
+<h3>Simple Pendulum</h3>
+</a>
+
+<a class="tool" data-name="work energy power calculator" href="physics/work-energy-power.html">
+<div class="tool-icon">🔋</div>
+<h3>Work, Energy & Power</h3>
+</a>
+
+<a class="tool" data-name="lens mirror optics calculator" href="physics/optics-calculator.html">
+<div class="tool-icon">🔎</div>
+<h3>Lens & Mirror Calculator</h3>
+</a>
+
+<a class="tool" data-name="momentum impulse calculator" href="physics/momentum-impulse-calculator.html">
+<div class="tool-icon">🏀</div>
+<h3>Momentum & Impulse</h3>
+</a>
+
+<a class="tool" data-name="conservation of momentum calculator" href="physics/conservation-of-momentum-calculator.html">
+<div class="tool-icon">💥</div>
+<h3>Conservation of Momentum</h3>
+</a>
+
+<a class="tool" data-name="mole calculator" href="chemistry/mole-calculator.html">
+<div class="tool-icon">⚗️</div>
+<h3>Mole Calculator</h3>
+</a>
+
+<a class="tool" data-name="molar mass calculator" href="chemistry/molar-mass-calculator.html">
+<div class="tool-icon">🧬</div>
+<h3>Molar Mass Calculator</h3>
+</a>
+
+</div>
+
+<div class="no-results" id="noResults">No calculator found. Try another keyword.</div>
+</section>
+
+<section class="section" id="directory">
+<h2 class="section-title">All Calculators</h2>
+<div class="directory">
+<div>
+<h3><a href="physics/index.html">Physics Calculators</a></h3>
+<ul>
+<li><a href="physics/acceleration-calculator.html">Acceleration Calculator</a></li>
+<li><a href="physics/angular-acceleration-calculator.html">Angular Acceleration</a></li>
+<li><a href="physics/centre-of-mass-calculator.html">Centre of Mass</a></li>
+<li><a href="physics/centripetal-force-calculator.html">Centripetal Force</a></li>
+<li><a href="physics/circular-motion-calculator.html">Circular Motion</a></li>
+<li><a href="physics/conservation-of-momentum-calculator.html">Conservation of Momentum</a></li>
+<li><a href="physics/density-calculator.html">Density Calculator</a></li>
+<li><a href="physics/electrical-energy.html">Electrical Energy</a></li>
+<li><a href="physics/fluid-mechanics-calculator.html">Fluid Mechanics</a></li>
+<li><a href="physics/force-calculator.html">Force Calculator</a></li>
+<li><a href="physics/friction-calculator.html">Friction Calculator</a></li>
+<li><a href="physics/heat-temperature-calculator.html">Heat &amp; Temperature</a></li>
+<li><a href="physics/hookes-law-calculator.html">Hooke's Law</a></li>
+<li><a href="physics/kinematics-equation-solver.html">Kinematics Equation Solver</a></li>
+<li><a href="physics/optics-calculator.html">Lens &amp; Mirror (Optics)</a></li>
+<li><a href="physics/moment-of-inertia-calculator.html">Moment of Inertia</a></li>
+<li><a href="physics/momentum-impulse-calculator.html">Momentum &amp; Impulse</a></li>
+<li><a href="physics/ohms-law-calculator.html">Ohm's Law</a></li>
+<li><a href="physics/gravitation-orbital-calculator.html">Orbital &amp; Escape Velocity</a></li>
+<li><a href="physics/pressure-calculator.html">Pressure Calculator</a></li>
+<li><a href="physics/projectile-motion-calculator.html">Projectile Motion</a></li>
+<li><a href="physics/rolling-motion-calculator.html">Rolling Motion</a></li>
+<li><a href="physics/rotational-kinematics-calculator.html">Rotational Kinematics</a></li>
+<li><a href="physics/shm-advanced-calculator.html">SHM Displacement &amp; Velocity</a></li>
+<li><a href="physics/shm-energy-calculator.html">SHM Energy</a></li>
+<li><a href="physics/shm-calculator.html">SHM Time Period &amp; Frequency</a></li>
+<li><a href="physics/simple-pendulum-calculator.html">Simple Pendulum</a></li>
+<li><a href="physics/speed-distance-time.html">Speed, Distance &amp; Time</a></li>
+<li><a href="physics/thermodynamics-calculator.html">Thermodynamics</a></li>
+<li><a href="physics/rotational-motion-calculator.html">Torque &amp; Angular Momentum</a></li>
+<li><a href="physics/wave-frequency-calculator.html">Wave &amp; Frequency</a></li>
+<li><a href="physics/gravitational-calculator.html">Weight &amp; Gravitational Force</a></li>
+<li><a href="physics/work-energy-power.html">Work, Energy &amp; Power</a></li>
+</ul>
+</div>
+<div>
+<h3><a href="chemistry/index.html">Chemistry Calculators</a></h3>
+<ul>
+<li><a href="chemistry/molar-mass-calculator.html">Molar Mass Calculator</a></li>
+<li><a href="chemistry/mole-calculator.html">Mole Calculator</a></li>
+<li><a href="chemistry/molarity-calculator.html">Molarity Calculator</a></li>
+<li><a href="chemistry/dilution-calculator.html">Dilution Calculator</a></li>
+<li><a href="chemistry/ph-calculator.html">pH &amp; pOH Calculator</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="section" id="chapters">
+<h2 class="section-title">Chapter-wise Formulas &amp; Calculators</h2>
+<div class="directory">
+<div>
+<h3><a href="chapters/index.html">Physics chapter guides</a></h3>
+<ul>
+<li><a href="chapters/motion-and-forces.html">Motion and Forces</a></li>
+<li><a href="chapters/work-energy-and-gravitation.html">Work, Energy and Gravitation</a></li>
+<li><a href="chapters/circular-and-rotational-motion.html">Circular and Rotational Motion</a></li>
+<li><a href="chapters/oscillations-and-waves.html">Oscillations and Waves</a></li>
+<li><a href="chapters/properties-of-matter-and-heat.html">Properties of Matter, Fluids and Heat</a></li>
+<li><a href="chapters/electricity-and-optics.html">Electricity and Optics</a></li>
+</ul>
+</div>
+<div>
+<h3><a href="chapters/index.html">Chemistry chapter guides</a></h3>
+<ul>
+<li><a href="chapters/mole-concept-and-molar-mass.html">Mole Concept and Molar Mass</a></li>
+<li><a href="chapters/solutions-and-concentration.html">Solutions, Molarity and Dilution</a></li>
+<li><a href="chapters/acids-bases-and-ph.html">Acids, Bases and pH</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="features">
+<div class="feature">
+<div class="feature-icon">⚡</div>
+<h3>Fast Results</h3>
+<p>Calculate instantly</p>
+</div>
+<div class="feature">
+<div class="feature-icon">📱</div>
+<h3>Mobile Friendly</h3>
+<p>Works on all devices</p>
+</div>
+<div class="feature">
+<div class="feature-icon">🎯</div>
+<h3>Easy to Use</h3>
+<p>Simple calculator interface</p>
+</div>
+<div class="feature">
+<div class="feature-icon">🆓</div>
+<h3>Free Tools</h3>
+<p>No registration required</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div><b>Suno Saathi Tools</b> • Learn • Calculate • Understand</div>
+<p>© 2026 Suno Saathi Tools. All rights reserved.</p>
+<div>
+<a href="about.html">About</a> |
+<a href="contact.html">Contact</a> |
+<a href="privacy-policy.html">Privacy Policy</a> |
+<a href="terms.html">Terms & Disclaimer</a>
+</div>
+</footer>
+
+<script>
+/* Search is handled by assets/tools.js using the list in assets/site-data.js */
+function searchTools(){ if(window.sslSearch){ window.sslSearch.go(); } }
+</script>
+
+</body>
+</html>

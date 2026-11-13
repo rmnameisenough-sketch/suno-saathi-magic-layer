@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pressure Calculator (P = F/A) | Suno Saathi Tools</title>
+<meta name="description" content="Calculate pressure, force or area, and liquid pressure using P = ρgh. Includes formulas, a worked example and a short FAQ.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/pressure-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17233b}
+header{background:#102a56;color:white;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+nav a{color:white;text-decoration:none;margin-right:15px}
+.logo{font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 4px 18px #102a5610}
+h1,h2{color:#163d78}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd6e5;border-radius:9px;font-size:16px}
+button{background:#1769e0;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;cursor:pointer;margin-top:18px}
+button:hover{background:#1055b8}
+.result{background:#eafff1;border:1px solid #b6edcb;padding:18px;border-radius:12px;margin-top:20px}
+.result h2{color:#08783b;margin:0 0 10px}
+.tick{color:#0b9d50;font-size:24px}
+.formula{background:#edf4ff;padding:15px;border-radius:10px;text-align:center;font-size:20px;font-weight:bold;color:#174b91}
+.small{color:#617089;font-size:14px}
+svg{max-width:100%;display:block;margin:auto}
+footer{text-align:center;padding:25px;color:#66748b}
+.hidden{display:none}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<nav>
+<div class="logo">🔬 Suno Saathi Tools</div>
+<div>
+<a href="../index.html">Home</a>
+<a href="../index.html#tools">All Tools</a>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<section class="card" style="text-align:center">
+<h1>Pressure Calculator</h1>
+<p>Calculate Pressure, Force, Area and Liquid Pressure easily.</p>
+
+<svg width="250" height="150" viewBox="0 0 250 150">
+<rect x="70" y="30" width="110" height="45" rx="6" fill="#3b82f6"/>
+<rect x="40" y="75" width="170" height="15" rx="4" fill="#94a3b8"/>
+<path d="M125 10V28 M118 21L125 28L132 21" stroke="#16a34a" stroke-width="3" fill="none"/>
+<path d="M125 95V130 M118 123L125 130L132 123" stroke="#ef4444" stroke-width="3" fill="none"/>
+<text x="125" y="58" text-anchor="middle" fill="white" font-size="15">Force</text>
+<text x="125" y="145" text-anchor="middle" fill="#163d78" font-size="13">Pressure = Force / Area</text>
+</svg>
+</section>
+
+<section class="card">
+<h2>Calculate</h2>
+
+<label for="mode">Calculation Type</label>
+<select id="mode" onchange="changeMode()">
+<option value="pressure">Pressure (P = F/A)</option>
+<option value="force">Force (F = P × A)</option>
+<option value="area">Area (A = F/P)</option>
+<option value="liquid">Liquid Pressure (P = ρgh)</option>
+</select>
+
+<div id="basic">
+<div id="forceBox">
+<label for="force">Force (N)</label>
+<input id="force" type="number" min="0" step="any" placeholder="Enter force">
+</div>
+
+<div id="areaBox">
+<label for="area">Area (m²)</label>
+<input id="area" type="number" min="0" step="any" placeholder="Enter area">
+</div>
+
+<div id="pressureBox">
+<label for="pressure">Pressure (Pa)</label>
+<input id="pressure" type="number" min="0" step="any" placeholder="Enter pressure">
+</div>
+</div>
+
+<div id="liquidBox" class="hidden">
+<label for="density">Liquid Density (kg/m³)</label>
+<input id="density" type="number" min="0" step="any" value="1000">
+
+<label for="gravity">Gravity (m/s²)</label>
+<input id="gravity" type="number" min="0" step="any" value="9.8">
+
+<label for="depth">Depth (m)</label>
+<input id="depth" type="number" min="0" step="any" placeholder="Enter depth">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetAll()" style="background:#64748b">Reset</button>
+
+<div id="result" class="result hidden"></div>
+</section>
+
+<section class="card">
+<h2>Formula</h2>
+<div id="formula" class="formula">P = F / A</div>
+<p class="small">Pressure is force acting per unit area.</p>
+</section>
+
+<section class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select what you want to calculate.</li>
+<li>Enter the required SI values.</li>
+<li>Click Calculate.</li>
+<li>View the result and calculation steps.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Example</h2>
+<p>Force = 100 N and Area = 2 m²</p>
+<div class="formula">P = 100 / 2 = 50 Pa</div>
+</section>
+
+<section class="card">
+<h2>FAQs</h2>
+<p><b>1. What is pressure?</b><br>Pressure is force per unit area.</p>
+<p><b>2. What is the SI unit of pressure?</b><br>Pascal (Pa).</p>
+<p><b>3. What is 1 Pascal?</b><br>1 Pa = 1 N/m².</p>
+<p><b>4. What is liquid pressure?</b><br>Pressure due to liquid depth, density and gravity.</p>
+</section>
+
+<section class="card">
+<h2>Related Physics Tools</h2>
+<ul>
+<li><a href="fluid-mechanics-calculator.html">Fluid Mechanics</a></li>
+<li><a href="density-calculator.html">Density Calculator</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="thermodynamics-calculator.html">Thermodynamics</a></li>
+<li><a href="../chapters/properties-of-matter-and-heat.html">Chapter guide: Properties of Matter, Fluids and Heat</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</section>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools | Learn Science Better<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function changeMode(){
+const mode=$("mode").value;
+$("basic").classList.toggle("hidden",mode==="liquid");
+$("liquidBox").classList.toggle("hidden",mode!=="liquid");
+
+$("forceBox").classList.toggle("hidden",mode==="force");
+$("areaBox").classList.toggle("hidden",mode==="area");
+$("pressureBox").classList.toggle("hidden",mode==="pressure");
+
+const formulas={
+pressure:"P = F / A",
+force:"F = P × A",
+area:"A = F / P",
+liquid:"P = ρ × g × h"
+};
+$("formula").textContent=formulas[mode];
+$("result").classList.add("hidden");
+}
+
+function calculate(){
+const mode=$("mode").value;
+let answer,unit,steps,title;
+
+if(mode==="pressure"){
+const F=+$("force").value,A=+$("area").value;
+if($("force").value===""||$("area").value===""||F<0||A<=0)
+return alert("Enter valid force and area. Area must be greater than zero.");
+answer=F/A;unit="Pa";title="Pressure";
+steps=`P = F / A<br>P = ${F} / ${A}<br>P = ${answer} Pa`;
+}
+else if(mode==="force"){
+const P=+$("pressure").value,A=+$("area").value;
+if($("pressure").value===""||$("area").value===""||P<0||A<0)
+return alert("Enter valid pressure and area.");
+answer=P*A;unit="N";title="Force";
+steps=`F = P × A<br>F = ${P} × ${A}<br>F = ${answer} N`;
+}
+else if(mode==="area"){
+const F=+$("force").value,P=+$("pressure").value;
+if($("force").value===""||$("pressure").value===""||F<0||P<=0)
+return alert("Enter valid force and pressure. Pressure must be greater than zero.");
+answer=F/P;unit="m²";title="Area";
+steps=`A = F / P<br>A = ${F} / ${P}<br>A = ${answer} m²`;
+}
+else{
+const rho=+$("density").value,g=+$("gravity").value,h=+$("depth").value;
+if($("density").value===""||$("gravity").value===""||$("depth").value===""||rho<0||g<0||h<0)
+return alert("Enter valid density, gravity and depth.");
+answer=rho*g*h;unit="Pa";title="Liquid Pressure";
+steps=`P = ρ × g × h<br>P = ${rho} × ${g} × ${h}<br>P = ${answer} Pa`;
+}
+
+if(!Number.isFinite(answer))return alert("Calculation error.");
+
+$("result").innerHTML=`
+<h2><span class="tick">✓</span> ${title}</h2>
+<h3>${answer.toLocaleString(undefined,{maximumFractionDigits:8})} ${unit}</h3>
+<hr>
+<b>Step-by-step solution</b><br>${steps}`;
+$("result").classList.remove("hidden");
+}
+
+function resetAll(){
+document.querySelectorAll("input").forEach(x=>x.value="");
+$("density").value=1000;
+$("gravity").value=9.8;
+$("result").classList.add("hidden");
+}
+changeMode();
+</script>
+</body>
+</html>

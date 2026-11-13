@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pH &amp; pOH Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Convert between pH, pOH, hydrogen ion concentration and hydroxide ion concentration, with formulas and a worked example.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/chemistry/ph-calculator">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7fc;color:#17243a}
+header{background:linear-gradient(135deg,#123c91,#1769d2);color:white;padding:20px 16px}
+.nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:22px;font-weight:bold}
+.nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{max-width:1000px;margin:auto;padding:25px 16px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hero h1{font-size:30px;margin:0 0 10px}
+.hero p{line-height:1.6;margin:0;color:#e4efff}
+.hero svg{width:115px;max-width:35%}
+.container{max-width:900px;margin:20px auto;padding:0 14px}
+.card{background:white;border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 5px 20px #17365b0c;border:1px solid #e5edf7}
+h2{font-size:21px;margin-top:0;color:#163d85}
+label{display:block;font-weight:bold;font-size:14px;margin:15px 0 7px}
+input,select{width:100%;padding:13px;border:1px solid #cbd7e7;border-radius:9px;font-size:16px;background:#fff;color:#17243a}
+input:focus,select:focus{outline:2px solid #a8cbff;border-color:#2875df}
+button{width:100%;border:0;border-radius:10px;padding:15px;margin-top:20px;background:#1769d2;color:white;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#1055b0}
+.result{display:none;background:#eaf9ef;border:1px solid #b8e8c7;border-radius:12px;padding:18px;margin-top:20px}
+.result h3{color:#14743b;margin:0 0 12px}
+.tick{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:#19a65a;color:white;margin-right:7px}
+.big{font-size:28px;font-weight:bold;color:#087b3c;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{border:1px solid #dce5f0;padding:10px;text-align:left;font-size:14px}
+th{background:#edf4ff}
+.formula{background:#eef5ff;padding:14px;border-radius:10px;text-align:center;font-size:21px;font-weight:bold;color:#174a9c;margin:10px 0}
+.note{background:#fff8e8;border-left:4px solid #f2b441;padding:13px;border-radius:6px;line-height:1.6}
+p,li{line-height:1.7}
+footer{text-align:center;padding:25px;color:#63738a;font-size:13px}
+@media(max-width:600px){
+.hero h1{font-size:25px}.hero{padding-top:20px}
+.card{padding:17px}.grid{grid-template-columns:1fr}
+.nav a{margin-left:8px}th,td{padding:8px;font-size:13px}
+}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+
+<body>
+<header>
+<div class="nav">
+<div class="logo">🧪 Suno Saathi Tools</div>
+<div><a href="../index.html">Home</a><a href="#tools">Tools</a></div>
+</div>
+
+<div class="hero">
+<div>
+<h1>pH & pOH Calculator</h1>
+<p>Calculate pH, pOH, hydrogen ion and hydroxide ion concentration.</p>
+</div>
+
+<svg viewBox="0 0 120 140" fill="none">
+<path d="M45 10H75M52 10V48L20 105Q13 125 35 130H85Q107 125 100 105L68 48V10" stroke="white" stroke-width="4" stroke-linejoin="round"/>
+<path d="M30 90H90L99 110Q105 125 85 126H35Q15 125 25 110Z" fill="#75d6ff"/>
+<circle cx="45" cy="103" r="5" fill="white"/>
+<circle cx="70" cy="113" r="4" fill="white"/>
+<circle cx="60" cy="94" r="3" fill="white"/>
+</svg>
+</div>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Calculate pH / pOH</h2>
+
+<label>What do you want to calculate?</label>
+<select id="mode" onchange="updateInput()">
+<option value="pH">pH from H⁺ concentration</option>
+<option value="pOH">pOH from OH⁻ concentration</option>
+<option value="H">H⁺ concentration from pH</option>
+<option value="OH">OH⁻ concentration from pOH</option>
+<option value="pOHfrompH">pOH from pH</option>
+<option value="pHfrompOH">pH from pOH</option>
+</select>
+
+<label id="inputLabel">Hydrogen ion concentration [H⁺] (mol/L)</label>
+<input id="inputValue" type="number" step="any" placeholder="e.g. 0.001">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">
+<h3><span class="tick">✓</span>Calculation Result</h3>
+<div class="big" id="answer"></div>
+<p id="details"></p>
+<div id="steps"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Formula Used</h2>
+<div class="formula">pH = −log₁₀[H⁺]</div>
+<div class="formula">pOH = −log₁₀[OH⁻]</div>
+<div class="formula">pH + pOH = 14</div>
+<div class="formula">[H⁺] = 10⁻ᵖᴴ</div>
+<div class="formula">[OH⁻] = 10⁻ᵖᴼᴴ</div>
+<p>At 25°C, pH + pOH = 14 for aqueous solutions.</p>
+</div>
+
+<div class="card">
+<h2>Example</h2>
+<p>If hydrogen ion concentration is 0.001 mol/L:</p>
+<div class="formula">pH = −log₁₀(0.001) = 3</div>
+<table>
+<tr><th>pH</th><th>Nature (25°C)</th></tr>
+<tr><td>Below 7</td><td>Acidic</td></tr>
+<tr><td>7</td><td>Neutral</td></tr>
+<tr><td>Above 7</td><td>Basic</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>How It Works</h2>
+<ol>
+<li>Select the quantity to calculate.</li>
+<li>Enter the known concentration or pH/pOH value.</li>
+<li>Click Calculate.</li>
+<li>Get the answer with the calculation steps.</li>
+</ol>
+</div>
+
+<div class="card">
+<h2>Frequently Asked Questions</h2>
+<p><strong>1. What is pH?</strong><br>pH indicates the acidity or basicity of an aqueous solution.</p>
+<p><strong>2. What is pOH?</strong><br>pOH represents hydroxide ion concentration on a logarithmic scale.</p>
+<p><strong>3. What is neutral pH?</strong><br>At 25°C, neutral aqueous solutions have pH 7.</p>
+<p><strong>4. Is pH always between 0 and 14?</strong><br>No. Concentrated solutions can have pH below 0 or above 14.</p>
+<p><strong>5. Is pH + pOH always 14?</strong><br>This relation is approximately 14 at 25°C. It changes with temperature.</p>
+</div>
+
+<div class="card" id="tools">
+<h2>More Chemistry Tools</h2>
+<ul>
+<li><a href="molarity-calculator.html">Molarity Calculator</a></li>
+<li><a href="dilution-calculator.html">Dilution Calculator</a></li>
+<li><a href="molar-mass-calculator.html">Molar Mass Calculator</a></li>
+<li><a href="mole-calculator.html">Mole Calculator</a></li>
+<li><a href="../chapters/acids-bases-and-ph.html">Chapter guide: Acids, Bases and pH</a></li>
+<li><a href="index.html">All Chemistry Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools · Chemistry Calculators<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+function updateInput(){
+ const mode=document.getElementById("mode").value;
+ const label=document.getElementById("inputLabel");
+ const input=document.getElementById("inputValue");
+
+ const settings={
+ pH:["Hydrogen ion concentration [H⁺] (mol/L)","e.g. 0.001"],
+ pOH:["Hydroxide ion concentration [OH⁻] (mol/L)","e.g. 0.0001"],
+ H:["pH value","e.g. 3"],
+ OH:["pOH value","e.g. 4"],
+ pOHfrompH:["pH value","e.g. 3"],
+ pHfrompOH:["pOH value","e.g. 4"]
+ };
+
+ label.textContent=settings[mode][0];
+ input.placeholder=settings[mode][1];
+ input.value="";
+ document.getElementById("result").style.display="none";
+}
+
+function calculate(){
+ const mode=document.getElementById("mode").value;
+ const raw=document.getElementById("inputValue").value.trim();
+
+ if(raw==="" || !Number.isFinite(Number(raw))){
+ alert("Please enter a valid value.");return;
+ }
+
+ const x=Number(raw);
+ let answer,unit,formula,steps,details;
+
+ if(mode==="pH"){
+  if(x<=0){alert("Concentration must be greater than zero.");return}
+  answer=-Math.log10(x);
+  unit="pH";
+  formula="pH = −log₁₀[H⁺]";
+  steps=`pH = −log₁₀(${x}) = ${answer.toFixed(6)}`;
+  details="Calculated from hydrogen ion concentration.";
+ }
+
+ if(mode==="pOH"){
+  if(x<=0){alert("Concentration must be greater than zero.");return}
+  answer=-Math.log10(x);
+  unit="pOH";
+  formula="pOH = −log₁₀[OH⁻]";
+  steps=`pOH = −log₁₀(${x}) = ${answer.toFixed(6)}`;
+  details="Calculated from hydroxide ion concentration.";
+ }
+
+ if(mode==="H"){
+  answer=Math.pow(10,-x);
+  unit="mol/L";
+  formula="[H⁺] = 10⁻ᵖᴴ";
+  steps=`[H⁺] = 10⁻${x} = ${answer.toExponential(6)} mol/L`;
+  details="Hydrogen ion concentration.";
+ }
+
+ if(mode==="OH"){
+  answer=Math.pow(10,-x);
+  unit="mol/L";
+  formula="[OH⁻] = 10⁻ᵖᴼᴴ";
+  steps=`[OH⁻] = 10⁻${x} = ${answer.toExponential(6)} mol/L`;
+  details="Hydroxide ion concentration.";
+ }
+
+ if(mode==="pOHfrompH"){
+  answer=14-x;
+  unit="pOH";
+  formula="pOH = 14 − pH";
+  steps=`pOH = 14 − ${x} = ${answer}`;
+  details="Using pH + pOH = 14 at 25°C.";
+ }
+
+ if(mode==="pHfrompOH"){
+  answer=14-x;
+  unit="pH";
+  formula="pH = 14 − pOH";
+  steps=`pH = 14 − ${x} = ${answer}`;
+  details="Using pH + pOH = 14 at 25°C.";
+ }
+
+ if(!Number.isFinite(answer)){
+ alert("Invalid calculation.");return;
+ }
+
+ document.getElementById("answer").textContent=
+ (unit==="mol/L"?answer.toExponential(6):answer.toFixed(6))+" "+unit;
+
+ document.getElementById("details").textContent=details;
+ document.getElementById("steps").innerHTML=
+ `<p><strong>Formula:</strong> ${formula}</p>
+ <div class="note"><strong>Calculation:</strong><br>${steps}</div>`;
+
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+updateInput();
+</script>
+</body>
+</html>

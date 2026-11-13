@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conservation of Momentum Calculator | Suno Saathi Tools</title>
+<meta name="description" content="Solve collision problems: find final velocities, total momentum before and after, or the common velocity when objects stick together.">
+<link rel="canonical" href="https://sunosaathilabs.netlify.app/physics/conservation-of-momentum-calculator">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#18233b}
+header{background:#10234d;color:white;padding:22px 16px;text-align:center}
+header .brand{font-weight:bold;margin:0;font-size:25px}
+header p{margin:8px 0 0;color:#cbd8f5;font-size:14px}
+nav{background:#1765d1;color:white;padding:12px;text-align:center;font-size:14px}
+.container{max-width:850px;margin:auto;padding:16px}
+.card{background:white;border-radius:15px;padding:18px;margin:14px 0;box-shadow:0 4px 14px #14254b10}
+h2{font-size:19px;margin:0 0 14px;color:#16366d}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e5;border-radius:9px;font-size:16px;background:#fff}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#1765d1;color:white;font-size:16px;font-weight:bold;margin-top:16px;cursor:pointer}
+button:hover{background:#0d4fae}
+.result{background:#e9f8ef;border:1px solid #b8e6ca;border-radius:12px;padding:16px;margin-top:15px;color:#145b35}
+.result strong{font-size:25px;display:block;margin:8px 0}
+.error{color:#b42318;font-size:14px;margin-top:10px}
+.formula{background:#eef4ff;padding:14px;border-radius:10px;font-size:18px;text-align:center;color:#174a9c;margin:10px 0}
+.diagram{text-align:center;padding:10px;background:#f7faff;border-radius:12px}
+.diagram svg{max-width:100%;height:auto}
+ul{padding-left:20px;line-height:1.8}
+footer{text-align:center;padding:25px;color:#667085;font-size:13px}
+small{color:#667085}
+h1.page-title{font-size:1.5em;margin-block-end:.83em;font-size:19px;margin:0 0 14px;color:#16366d}
+</style>
+<meta name="theme-color" content="#102957">
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/tools.css">
+<script>try{if(localStorage.getItem("sslTheme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script src="../assets/tools.js" defer></script>
+</head>
+<body>
+
+<header>
+<div class="brand">Suno Saathi Tools</div>
+<p>Free Physics & Science Calculators</p>
+</header>
+
+<nav><a href="../index.html">⌂ Home</a> &nbsp; | &nbsp; <a href="index.html">Physics Calculators</a></nav>
+
+<div class="container">
+
+<div class="card">
+<h1 class="page-title">🚀 Conservation of Momentum</h1>
+<p>Calculate collision velocities and momentum using the law of conservation of momentum.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 320 125" role="img" aria-label="Two objects approaching and colliding">
+<rect x="20" y="45" width="65" height="45" rx="8" fill="#2878db"/>
+<text x="52" y="72" text-anchor="middle" fill="white" font-size="15">m₁</text>
+<rect x="235" y="45" width="65" height="45" rx="8" fill="#18a879"/>
+<text x="267" y="72" text-anchor="middle" fill="white" font-size="15">m₂</text>
+<path d="M90 65 H145 M135 55 L145 65 L135 75" stroke="#2878db" stroke-width="3" fill="none"/>
+<path d="M230 65 H175 M185 55 L175 65 L185 75" stroke="#18a879" stroke-width="3" fill="none"/>
+<text x="160" y="25" text-anchor="middle" fill="#16366d" font-size="13">Collision</text>
+<text x="160" y="110" text-anchor="middle" fill="#667085" font-size="12">Momentum before = Momentum after</text>
+</svg>
+</div>
+
+<label for="mode">Calculation Mode</label>
+<select id="mode">
+<option value="v1">Final velocity of object 1 (v₁)</option>
+<option value="v2">Final velocity of object 2 (v₂)</option>
+<option value="p">Total initial momentum</option>
+<option value="pf">Total final momentum</option>
+<option value="common">Common velocity (objects stick together)</option>
+</select>
+
+<label>Mass of object 1 (m₁) — kg</label>
+<input id="m1" type="number" min="0" step="any" placeholder="e.g. 2">
+
+<label>Initial velocity of object 1 (u₁) — m/s</label>
+<input id="u1" type="number" step="any" placeholder="e.g. 5">
+
+<label>Mass of object 2 (m₂) — kg</label>
+<input id="m2" type="number" min="0" step="any" placeholder="e.g. 3">
+
+<label>Initial velocity of object 2 (u₂) — m/s</label>
+<input id="u2" type="number" step="any" placeholder="e.g. -2">
+
+<label>Final velocity of object 1 (v₁) — m/s</label>
+<input id="v1" type="number" step="any" placeholder="Required for v₂ / final momentum">
+
+<label>Final velocity of object 2 (v₂) — m/s</label>
+<input id="v2" type="number" step="any" placeholder="Required for v₁ / final momentum">
+
+<button onclick="calculate()">Calculate</button>
+<div id="result" class="result" style="display:none"></div>
+<div id="error" class="error"></div>
+</div>
+
+<div class="card">
+<h2>📘 Formula</h2>
+<div class="formula">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+<p><b>Momentum:</b> p = mv</p>
+<p><b>Common velocity:</b></p>
+<div class="formula">v = (m₁u₁ + m₂u₂) / (m₁ + m₂)</div>
+<small>Velocity is signed: positive and negative values indicate opposite directions.</small>
+</div>
+
+<div class="card">
+<h2>📝 Example</h2>
+<p>Object 1: mass 2 kg, velocity 5 m/s</p>
+<p>Object 2: mass 3 kg, velocity −2 m/s</p>
+<div class="formula">p = 2×5 + 3×(−2) = 4 kg·m/s</div>
+<p>If both objects stick together:</p>
+<div class="formula">v = 4 / 5 = 0.8 m/s</div>
+</div>
+
+<div class="card">
+<h2>⚙️ How It Works</h2>
+<ul>
+<li>Enter both masses in kilograms.</li>
+<li>Enter initial velocities in m/s with their direction signs.</li>
+<li>Select the calculation you want.</li>
+<li>For final velocity calculations, enter the other object's final velocity.</li>
+<li>Press Calculate to get the result.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>❓ FAQs</h2>
+<p><b>1. What is conservation of momentum?</b><br>Total momentum remains constant in an isolated system.</p>
+<p><b>2. Can velocity be negative?</b><br>Yes. Negative velocity represents motion in the opposite direction.</p>
+<p><b>3. What is a perfectly inelastic collision?</b><br>Objects stick together and move with a common velocity after collision.</p>
+<p><b>4. What is the SI unit of momentum?</b><br>kg·m/s.</p>
+</div>
+
+<div class="card">
+<h2>🔗 Related Physics Tools</h2>
+<ul>
+<li><a href="momentum-impulse-calculator.html">Momentum &amp; Impulse</a></li>
+<li><a href="centre-of-mass-calculator.html">Centre of Mass</a></li>
+<li><a href="force-calculator.html">Force Calculator</a></li>
+<li><a href="work-energy-power.html">Work, Energy &amp; Power</a></li>
+<li><a href="../chapters/motion-and-forces.html">Chapter guide: Motion and Forces</a></li>
+<li><a href="index.html">All Physics Calculators</a></li>
+</ul>
+</div>
+
+</div>
+
+<footer>© 2026 Suno Saathi Tools • Learn Science Smarter<div class="ssl-legal"><a href="../privacy-policy.html">Privacy Policy</a><a href="../contact.html">Contact</a><a href="../about.html">About</a><a href="../terms.html">Terms</a></div>
+</footer>
+
+<script>
+function val(id){
+ const el=document.getElementById(id);
+ return el.value.trim()===""?null:Number(el.value);
+}
+function fmt(n){
+ return Number(n.toFixed(6)).toString();
+}
+function calculate(){
+ const mode=document.getElementById("mode").value;
+ const m1=val("m1"),u1=val("u1"),m2=val("m2"),u2=val("u2");
+ const v1=val("v1"),v2=val("v2");
+ const result=document.getElementById("result");
+ const error=document.getElementById("error");
+ result.style.display="none";
+ error.textContent="";
+
+ if(m1===null||m2===null||u1===null||u2===null){
+ error.textContent="Please enter both masses and initial velocities.";
+ return;
+ }
+ if(m1<=0||m2<=0){
+ error.textContent="Masses must be greater than zero.";
+ return;
+ }
+
+ const pi=m1*u1+m2*u2;
+ let answer,title,unit,steps;
+
+ if(mode==="p"){
+ answer=pi;title="Total Initial Momentum";unit="kg·m/s";
+ steps="p = m₁u₁ + m₂u₂";
+ }
+ else if(mode==="pf"){
+ if(v1===null||v2===null){
+ error.textContent="Enter both final velocities.";
+ return;
+ }
+ answer=m1*v1+m2*v2;
+ title="Total Final Momentum";unit="kg·m/s";
+ steps="p = m₁v₁ + m₂v₂";
+ }
+ else if(mode==="v1"){
+ if(v2===null){
+ error.textContent="Enter final velocity v₂.";
+ return;
+ }
+ answer=(pi-m2*v2)/m1;
+ title="Final Velocity of Object 1";unit="m/s";
+ steps="v₁ = (m₁u₁ + m₂u₂ − m₂v₂) / m₁";
+ }
+ else if(mode==="v2"){
+ if(v1===null){
+ error.textContent="Enter final velocity v₁.";
+ return;
+ }
+ answer=(pi-m1*v1)/m2;
+ title="Final Velocity of Object 2";unit="m/s";
+ steps="v₂ = (m₁u₁ + m₂u₂ − m₁v₁) / m₂";
+ }
+ else{
+ answer=pi/(m1+m2);
+ title="Common Final Velocity";unit="m/s";
+ steps="v = (m₁u₁ + m₂u₂) / (m₁ + m₂)";
+ }
+
+ if(!Number.isFinite(answer)){
+ error.textContent="Calculation error. Check your inputs.";
+ return;
+ }
+
+ result.innerHTML="<b>"+title+"</b><strong>"+fmt(answer)+" "+unit+"</strong><p>"+steps+"</p><p>Initial momentum = "+fmt(pi)+" kg·m/s</p>";
+ result.style.display="block";
+}
+</script>
+</body>
+</html>
